@@ -7,7 +7,7 @@ import './Cart.scss';
 const Cart = ({ cartCount, inverse }) => {
   return (
     <div className="cart">
-      <FontAwesomeIcon icon={faShoppingBag} className={!inverse ? 'cart-bag' : 'inverse-cart-bag'} />
+      <FontAwesomeIcon icon={faShoppingBag} className={!inverse ? 'cart-bag' : 'cart-bag inverse-cart-bag'} />
       <div className={!inverse ? "cart-count" : "cart-count inverse-cart-count"}>
         <span>{cartCount}</span>
       </div>
