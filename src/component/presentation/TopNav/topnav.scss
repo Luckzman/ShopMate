@@ -1,9 +1,14 @@
 @import '../../../styles/color.scss';
 
+.container{
+  padding-left: 0;
+  padding-right: 0;
+
+}
 .top-nav{
   display: flex;
   justify-content: space-between;
-  padding: 10px 50px;
+  padding: 10px 0; 
   font-weight: 600;
   font-size: 0.9rem;
   

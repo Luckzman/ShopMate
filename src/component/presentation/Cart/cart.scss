@@ -3,14 +3,17 @@
 .cart {
   position: relative;
   margin-right: 15px;
-  img{
-    height: 15px;
-    width: 15px;
+  .cart-bag{
+    font-size:1.2rem;
+    color:map-get($color, app-grey);
+  }
+  .inverse-cart-bag{
+    color: map-get($color, app-white);
   }
   .cart-count {
     position: absolute;
-    top: -5px;
-    right: -10px;
+    top: -8.5px;
+    right: -11px;
     height: 18px;
     width: 18px;
     background-color: map-get($color, app-red );
@@ -19,5 +22,9 @@
     text-align: center;
     vertical-align: middle;
     font-size: 0.7rem;
+  }
+  .inverse-cart-count{
+    background-color: map-get($color, app-white);
+    color: map-get($color, app-red);
   }
 }
