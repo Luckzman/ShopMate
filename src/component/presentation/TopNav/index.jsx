@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Cart from '../Cart';
-import './topnav.scss';
+import './TopNav.scss';
 
 const TopNav = () => {
   return (
-    <div className="top-nav">
+    <div className="container top-nav">
       <div className="login-links">
         <span>Hi</span>
         <Link to="/">Log in</Link>

@@ -1,0 +1,13 @@
+@import '../../../styles/color.scss';
+
+.navbar {
+  .search-bar{
+    margin-left: 30px;
+  }
+  .nav{
+    color: map-get($color, app-white);
+  }
+  .cart{
+    margin-left: 30px;
+  }
+}

@@ -1,0 +1,32 @@
+@import '../../../styles/color.scss';
+
+.search-bar {
+  position: relative;
+  color: map-get($color, app-white);
+  
+  input{
+    border-radius: 20px;
+    border: none;
+    background-color: map-get($color, app-grey);
+    padding: 5px 35px;
+    width: 200px;
+    font-size: 0.8rem;
+    
+    &::placeholder{
+      color: map-get($color, app-white);
+    }
+  }
+
+   .search{
+     position: absolute;
+     top: 7px;
+     left: 10px;
+   }
+   .times{
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     font-size: 0.7rem;
+
+   }
+}
