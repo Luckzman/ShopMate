@@ -1,0 +1,76 @@
+@import '../../../styles/color.scss';
+
+.item-card {
+  width: 220px;
+  height: 336px;
+  text-align: center;
+  display: flex;
+  position: relative;
+  padding: 15px 0;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  overflow: hidden;
+  transition: all 0.5s;
+  border-radius: 3px;
+
+  &:hover{
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+
+    img, p {
+      opacity: 0.1;
+    }
+    button {
+      transform: translate(-50%, 30px );
+    }
+    .heart-icon, .heart-icon2 {
+      transform: translate(-50%, -50% );
+    }
+  }
+  
+  img{
+    height: 163px;
+    width: 163px;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -230px );
+    border-radius: 20px;
+    font-size: 0.7rem;
+    padding: 5px 10px;
+    background-color: map-get($color, app-red);
+    color: map-get($color, app-white);
+    border: none;
+    transition: all .5s;
+  }
+  .heart-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 210px );
+    color: map-get($color, app-red );
+    transition: all .5s;
+  }
+  .heart-icon2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 210px );
+    font-size: 0.8rem;
+    color: map-get($color, app-white );
+    transition: all .5s;
+  }
+  .name {
+    margin: 15px 0;
+    font-weight: 700;
+  }
+  .price {
+    color: map-get($color, app-red);
+    font-weight: 700;
+  }
+}
