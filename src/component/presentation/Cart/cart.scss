@@ -1,0 +1,23 @@
+@import '../../../styles/color.scss';
+
+.cart {
+  position: relative;
+  margin-right: 15px;
+  img{
+    height: 15px;
+    width: 15px;
+  }
+  .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    height: 18px;
+    width: 18px;
+    background-color: map-get($color, app-red );
+    color: map-get($color, app-white);
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.7rem;
+  }
+}

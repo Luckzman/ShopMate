@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import TopNav from '../../component/presentation/TopNav';
 
 class Home extends Component {
   render() {
     return (
-      <div>Home Page</div>
+      <div>
+        <TopNav />
+        Home Page
+      </div>
     )
   }
 }
