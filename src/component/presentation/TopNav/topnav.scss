@@ -1,0 +1,42 @@
+@import '../../../styles/color.scss';
+
+.top-nav{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  
+  .login-links{
+    span{
+      padding:0 5px;
+    }
+    a{
+      color: map-get($color, app-red );
+      text-decoration: none;
+    }
+  }
+
+  .center-links{
+    a{
+      color: map-get($color , app-black );
+      padding: 0 10px;
+      text-decoration: none;
+    }
+  }
+
+  .cart-links{
+    display: flex;
+    font-size: 0.8rem;
+    .grp {
+      margin-right: 50px;
+      .grp-img {
+        margin: 0 10px;
+      }
+      span {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
