@@ -4,6 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import './ItemCard.scss';
 
+/**
+ * @description This component return a card of a single product
+ * 
+ * @param {string} name - name of the product
+ * @param {string} thumbnail - image of the product
+ * @param {string} price - price of the product
+ * @returns {JSX}
+ */
 const ItemCard = ({ name, thumbnail, price }) => {
   return (
     <div className="item-card">
