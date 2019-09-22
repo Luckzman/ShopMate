@@ -19,7 +19,7 @@ const ListItem = ({ listArr }) => {
         listArr.map((item, index) => {
           return (
             <ListGroup.Item key={`${item} ${index}`} action onClick={alertClicked}>
-              {item}
+              {item.name}
             </ListGroup.Item>
           )
         })

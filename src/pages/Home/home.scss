@@ -1,10 +1,16 @@
 .homepage{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
-  grid-gap: 10px;
+  grid-gap: 20px;
 
-  .filter-side-bar {
-    grid-row: 1 / 2;
+  .filter-side-bar{
+    grid-column: 1 / 2;
+  }
+
+  .product{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
   }
 }

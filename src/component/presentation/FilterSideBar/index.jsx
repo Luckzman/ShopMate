@@ -38,14 +38,14 @@ const FilterSideBar = ({category, department}) => {
     )
 }
 
-FilterSideBar.propTyes = {
+FilterSideBar.propTypes = {
   category: PropTypes.array,
   department: PropTypes.array,
 }
 
 FilterSideBar.defaultProps = {
-  category: ['shoe', 'bag'],
-  department: ['red', 'green'],
+  category: [],
+  department: [],
 }
 
 export default FilterSideBar;
