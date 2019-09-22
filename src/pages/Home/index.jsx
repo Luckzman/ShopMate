@@ -9,20 +9,13 @@ import {
   getAllDepartments,
   getAllProducts,
   getFilteredProductsByCategory,
+  getFilteredProductsByDepartment,
 } from '../../store/actions';
-import './Home.scss';
+import './home.scss';
+import { categories } from '../../store/reducers';
 
 class Home extends Component {
 
-  // state = {
-  //   productItem: '',
-  // }
-
-  // componentDidUpdate(prevProps) {
-    // this.props.getFilteredProductsByCategory(this.state.productItem);
-    // console.log(this.props.products);
-    // }
-    
     componentDidMount() {
       const {
         getAllCategories,
@@ -37,14 +30,18 @@ class Home extends Component {
     }
   
 
-  filterProduct = (item) => {
-    this.props.getFilteredProductsByCategory(item);
+  filterProduct = (item, department) => {
+    if(Object.keys(department)[0].includes('department')) {
+      this.props.getFilteredProductsByDepartment(item);
+    }
+    else {
+      this.props.getFilteredProductsByCategory(item);
+    }
   }
 
   render() {
     const {categories, departments, products} = this.props;
-    // const { product } = this.state;
-    console.log(products, 'products')
+
     return (
       <div>
         <TopNav />
@@ -94,4 +91,5 @@ export default connect(mapStateToProps, {
   getAllDepartments,
   getAllProducts,
   getFilteredProductsByCategory,
+  getFilteredProductsByDepartment
 })(Home);

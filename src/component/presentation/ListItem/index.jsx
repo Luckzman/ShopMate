@@ -14,9 +14,9 @@ const ListItem = ({ listArr, selectedItem }) => {
     <ListGroup variant="flush">
       {
         listArr.map((item, index) => {
-
+          // console.log(item, 'item')
           return (
-            <ListGroup.Item key={`${item} ${index}`} action onClick={() => selectedItem(index+1)}>
+            <ListGroup.Item key={`${item} ${index}`} action onClick={() => selectedItem(index+1, item)}>
               {item.name}
             </ListGroup.Item>
           )
