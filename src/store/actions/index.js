@@ -7,6 +7,8 @@ export const actionTypes = {
   GET_ALL_DEPARTMENTS_ERROR: "GET_ALL_DEPARTMENTS_ERROR",
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   GET_ALL_PRODUCTS_ERROR: "GET_ALL_PRODUCTS_ERROR",
+  GET_FILTERED_PRODUCTS_BY_CATEGORY: "GET_FILTERED_PRODUCTS_BY_CATEGORY",
+  GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR: "GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR",
 }
 
 export const getAllCategories = () => {
@@ -53,7 +55,6 @@ export const getAllProducts = () => {
   return (dispatch) => {
     return axios.get('https://backendapi.turing.com/products')
       .then((response) => {
-        console.log(response)
         dispatch({
           type: actionTypes.GET_ALL_PRODUCTS,
           payload: response.data,
@@ -63,6 +64,28 @@ export const getAllProducts = () => {
         if(error.response) {
           dispatch({
             type: actionTypes.GET_ALL_PRODUCTS_ERROR,
+            payload: error.response.message
+          })
+        }
+      })
+  }
+}
+
+export const getFilteredProductsByCategory = (categoryId) => {
+  return (dispatch) => {
+    return axios.get(`https://backendapi.turing.com/products/inCategory/${categoryId}`)
+      .then((response) => {
+        dispatch({
+          type: actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log(error.response);
+        if(error.response) {
+          dispatch({
+            type: actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR,
             payload: error.response.message
           })
         }
