@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ListItem from '../ListItem';
 
-const FilterSideBar = ({category, department}) => {
+const FilterSideBar = ({category, department, selectedProduct}) => {
     return (
       <div>
         <Accordion>
@@ -17,7 +17,7 @@ const FilterSideBar = ({category, department}) => {
             </Card.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                <ListItem listArr={category} />
+                <ListItem listArr={category} selectedItem={selectedProduct}/>
               </Card.Body>
             </Accordion.Collapse>
           </Card>
@@ -29,7 +29,7 @@ const FilterSideBar = ({category, department}) => {
             </Card.Header>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <ListItem listArr={department} />
+                <ListItem listArr={department} selectedItem={selectedProduct} />
               </Card.Body>
             </Accordion.Collapse>
           </Card>

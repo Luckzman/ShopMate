@@ -8,17 +8,15 @@ import ListGroup from 'react-bootstrap/ListGroup';
  * @param {array} listArr
  * @param {JSX}
  */
-const ListItem = ({ listArr }) => {
-  const alertClicked = () => {
-    alert('You clicked the third ListGroupItem');
-  }
+const ListItem = ({ listArr, selectedItem }) => {
   
   return (
     <ListGroup variant="flush">
       {
         listArr.map((item, index) => {
+
           return (
-            <ListGroup.Item key={`${item} ${index}`} action onClick={alertClicked}>
+            <ListGroup.Item key={`${item} ${index}`} action onClick={() => selectedItem(index+1)}>
               {item.name}
             </ListGroup.Item>
           )
@@ -30,6 +28,7 @@ const ListItem = ({ listArr }) => {
 
 ListItem.propTypes = {
   listArr: PropTypes.array,
+  selectedItem: PropTypes.func.isRequired,
 }
 ListItem.defaultProps = {
   listArr: [],
