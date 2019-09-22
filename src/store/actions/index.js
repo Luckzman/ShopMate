@@ -8,7 +8,9 @@ export const actionTypes = {
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   GET_ALL_PRODUCTS_ERROR: "GET_ALL_PRODUCTS_ERROR",
   GET_FILTERED_PRODUCTS_BY_CATEGORY: "GET_FILTERED_PRODUCTS_BY_CATEGORY",
+  GET_FILTERED_PRODUCTS_BY_DEPARTMENT: "GET_FILTERED_PRODUCTS_BY_DEPARTMENT",
   GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR: "GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR",
+  GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR: "GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR",
 }
 
 export const getAllCategories = () => {
@@ -86,6 +88,25 @@ export const getFilteredProductsByCategory = (categoryId) => {
         if(error.response) {
           dispatch({
             type: actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR,
+            payload: error.response.message
+          })
+        }
+      })
+  }
+}
+export const getFilteredProductsByDepartment = (departmentId) => {
+  return (dispatch) => {
+    return axios.get(`https://backendapi.turing.com/products/inDepartment/${departmentId}`)
+      .then((response) => {
+        dispatch({
+          type: actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR,
             payload: error.response.message
           })
         }

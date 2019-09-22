@@ -34,9 +34,13 @@ export const products = (state = {}, action) => {
       return action.payload;
     case actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY:
       return action.payload;
+    case actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT:
+      return action.payload;
     case actionTypes.GET_ALL_PRODUCTS_ERROR:
       return action.payload;
     case actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR:
+      return action.payload;
+    case actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR:
       return action.payload;
     default:
       return state
