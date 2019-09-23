@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import './ItemCard.scss';
@@ -12,15 +13,16 @@ import './ItemCard.scss';
  * @param {string} price - price of the product
  * @returns {JSX}
  */
-const ItemCard = ({ name, thumbnail, price }) => {
+const ItemCard = (props) => {
+  const { name, thumbnail, price, id } = props;
   return (
     <div className="item-card">
       <img
         src={thumbnail}
         alt="product" />
       <p className="name">{name}</p>
-      <p className="price">&pound; ${price}</p>
-      <button>Quick View</button>
+      <p className="price">&pound; {price}</p>
+      <Link to={`/product/${id}`}>Quick View</Link>
       <FontAwesomeIcon icon={faHeart} className="heart-icon" />
       <FontAwesomeIcon icon={faHeart} className="heart-icon2" />
     </div>

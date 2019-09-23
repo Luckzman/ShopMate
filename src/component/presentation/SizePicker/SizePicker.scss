@@ -1,0 +1,29 @@
+@import '../../../styles/color.scss';
+.label{
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: lightgray;
+}
+
+.btns-container{
+  display: inline-block;
+  margin-right: 10px;
+ 
+    .btns-grey{
+      width: 50px;
+      height: 25px;
+      color: #5c5c5c;
+      background-color: #cccccc;
+      border: none;
+      padding: 3px 15px;
+      line-height: 1rem;
+      border-radius: 2px;
+      transition: all .5s;
+      
+      &:hover, &:focus, &:active{
+        color: map-get($color, app-white);;
+        background-color: map-get($color, app-red);
+        outline: none;
+      }
+    }
+}

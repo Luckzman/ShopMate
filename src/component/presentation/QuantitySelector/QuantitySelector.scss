@@ -1,0 +1,28 @@
+.qty-selector{
+  margin: 10px 0;
+  p{
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: lightgray;
+    margin: 1.2rem 0 0.3rem 0;
+  }
+  button{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: lightgray;
+    border: none;
+    margin: 10px;
+  }
+  .minus-btn{
+    margin-left: 0
+  }
+  input{
+    width: 50px;
+    border: 1px solid rgb(167, 167, 167);
+    border-radius: 20px;
+    text-align: center;
+    padding: 3px;
+    
+  }
+}

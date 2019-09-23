@@ -47,7 +47,7 @@ class Home extends Component {
 
   render() {
     const {categories, departments, products} = this.props;
-
+    console.log(this.props);
     return (
       <div>
         <TopNav />
@@ -69,6 +69,7 @@ class Home extends Component {
                     name={product.name}
                     thumbnail={`https://backendapi.turing.com/images/products/${product.thumbnail}`}
                     price={product.price}
+                    id={index+1}
                   />)})
             }
           </div>
