@@ -9,7 +9,7 @@ import SearchBar from '../SearchBar';
 import Cart from '../Cart';
 import './NavBar.scss';
 
-const NavBar = () => {
+const NavBar = ({searchProduct}) => {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar" bg="dark" variant="dark">
       <Container>
@@ -23,7 +23,7 @@ const NavBar = () => {
             <Nav.Link href="/" className="text-light ml-3">Shoes</Nav.Link>
             <Nav.Link href="/" className="text-light ml-3">Brands</Nav.Link>
           </Nav>
-          <SearchBar className="search-bar" />
+          <SearchBar className="search-bar" searchProduct={searchProduct} />
           <Cart inverse={true} className="cart" />
         </Navbar.Collapse>
       </Container>
