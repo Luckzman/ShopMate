@@ -5,7 +5,7 @@ import './RadioButton.scss';
 const RadioButton = ({ options, onChange, selected }) => {
   return (
     <div className="color-selector">
-      <p>Select a background</p>
+      <p className="label">Color</p>
       {options.map((color) => {
         const outerBorderColor = {
           border: `1px solid ${selected === color.value ? selected : '#c5c5c5'}`,

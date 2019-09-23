@@ -50,3 +50,14 @@ export const products = (state = {}, action) => {
       return state
   }
 }
+
+export const productDetails = (state = {}, action) => {
+  switch(action.type) {
+    case actionTypes.GET_SINGLE_PRODUCT_DETAILS:
+      return action.payload;
+    case actionTypes.GET_SINGLE_PRODUCT_DETAILS_ERROR:
+      return action.payload;
+    default:
+      return state
+  }
+}

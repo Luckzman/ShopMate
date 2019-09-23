@@ -5,6 +5,8 @@ export const actionTypes = {
   GET_ALL_DEPARTMENTS: "GET_ALL_DEPARTMENTS",
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
   SEARCH_PRODUCTS: "SEARCH_PRODUCTS",
+  GET_SINGLE_PRODUCT_DETAILS: "GET_SINGLE_PRODUCT_DETAILS",
+  GET_SINGLE_PRODUCT_DETAILS_ERROR: "GET_SINGLE_PRODUCT_DETAILS_ERROR",
   GET_FILTERED_PRODUCTS_BY_CATEGORY: "GET_FILTERED_PRODUCTS_BY_CATEGORY",
   GET_FILTERED_PRODUCTS_BY_DEPARTMENT: "GET_FILTERED_PRODUCTS_BY_DEPARTMENT",
   SEARCH_PRODUCTS_ERROR: "SEARCH_PRODUCTS_ERROR",
@@ -134,3 +136,24 @@ export const searchProducts = (inputText) => {
       })
   }
 }
+
+export const getSingleProductDetails = (productId) => {
+  return (dispatch) => {
+    return axios.get(`https://backendapi.turing.com/products/${productId}`)
+      .then((response) => {
+        dispatch({
+          type: actionTypes.GET_SINGLE_PRODUCT_DETAILS,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.GET_SINGLE_PRODUCT_DETAILS_ERROR,
+            payload: error.response.message
+          })
+        }
+      })
+  }
+}
+
