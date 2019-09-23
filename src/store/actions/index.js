@@ -2,13 +2,15 @@ import axios from 'axios';
 
 export const actionTypes = {
   GET_ALL_CATEGORIES: "GET_ALL_CATEGORIES",
-  GET_ALL_CATEGORIES_ERROR: "GET_ALL_CATEGORIES_ERROR",
   GET_ALL_DEPARTMENTS: "GET_ALL_DEPARTMENTS",
-  GET_ALL_DEPARTMENTS_ERROR: "GET_ALL_DEPARTMENTS_ERROR",
   GET_ALL_PRODUCTS: "GET_ALL_PRODUCTS",
-  GET_ALL_PRODUCTS_ERROR: "GET_ALL_PRODUCTS_ERROR",
+  SEARCH_PRODUCTS: "SEARCH_PRODUCTS",
   GET_FILTERED_PRODUCTS_BY_CATEGORY: "GET_FILTERED_PRODUCTS_BY_CATEGORY",
   GET_FILTERED_PRODUCTS_BY_DEPARTMENT: "GET_FILTERED_PRODUCTS_BY_DEPARTMENT",
+  SEARCH_PRODUCTS_ERROR: "SEARCH_PRODUCTS_ERROR",
+  GET_ALL_CATEGORIES_ERROR: "GET_ALL_CATEGORIES_ERROR",
+  GET_ALL_DEPARTMENTS_ERROR: "GET_ALL_DEPARTMENTS_ERROR",
+  GET_ALL_PRODUCTS_ERROR: "GET_ALL_PRODUCTS_ERROR",
   GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR: "GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR",
   GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR: "GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR",
 }
@@ -83,8 +85,6 @@ export const getFilteredProductsByCategory = (categoryId) => {
         })
       })
       .catch((error) => {
-        console.log(error)
-        console.log(error.response);
         if(error.response) {
           dispatch({
             type: actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY_ERROR,
@@ -94,6 +94,7 @@ export const getFilteredProductsByCategory = (categoryId) => {
       })
   }
 }
+
 export const getFilteredProductsByDepartment = (departmentId) => {
   return (dispatch) => {
     return axios.get(`https://backendapi.turing.com/products/inDepartment/${departmentId}`)
@@ -107,6 +108,26 @@ export const getFilteredProductsByDepartment = (departmentId) => {
         if(error.response) {
           dispatch({
             type: actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR,
+            payload: error.response.message
+          })
+        }
+      })
+  }
+}
+
+export const searchProducts = (inputText) => {
+  return (dispatch) => {
+    return axios.get(`https://backendapi.turing.com/products/search?query_string=${inputText}`)
+      .then((response) => {
+        dispatch({
+          type: actionTypes.SEARCH_PRODUCTS,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.SEARCH_PRODUCTS_ERROR,
             payload: error.response.message
           })
         }

@@ -8,6 +8,7 @@ import {
   getAllCategories,
   getAllDepartments,
   getAllProducts,
+  searchProducts,
   getFilteredProductsByCategory,
   getFilteredProductsByDepartment,
 } from '../../store/actions';
@@ -39,13 +40,18 @@ class Home extends Component {
     }
   }
 
+  handleSearch = (inputText) => {
+    const {searchProducts} = this.props;
+    searchProducts(inputText);
+  }
+
   render() {
     const {categories, departments, products} = this.props;
 
     return (
       <div>
         <TopNav />
-        <NavBar />
+        <NavBar searchProduct={this.handleSearch} />
         <div className="container homepage mt-5">
           <div className="filter-side-bar">
             <FilterSideBar
@@ -91,5 +97,6 @@ export default connect(mapStateToProps, {
   getAllDepartments,
   getAllProducts,
   getFilteredProductsByCategory,
-  getFilteredProductsByDepartment
+  getFilteredProductsByDepartment,
+  searchProducts
 })(Home);
