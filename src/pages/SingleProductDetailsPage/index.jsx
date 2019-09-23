@@ -6,14 +6,15 @@ import NavBar from '../../component/presentation/NavBar';
 import SizePicker from '../../component/presentation/SizePicker';
 import RadioButton from '../../component/presentation/RadioButton';
 import QuantitySelector from '../../component/presentation/QuantitySelector';
-import { getSingleProductDetails } from '../../store/actions';
+import { getSingleProductDetails, addProductToCart } from '../../store/actions';
 import './SingleProductDetailsPage.scss';
 
 class SingleProductDetailPage extends Component {
   state = {
-    selectedColor: 'grey',
+    color: 'grey',
     rating: 0,
     quantity: 1,
+    size: ''
   }
 
   componentDidMount(){
@@ -21,31 +22,40 @@ class SingleProductDetailPage extends Component {
     getSingleProductDetails(id);
   }
 
-  handleChange = e => {
-    this.setState({ selectedColor: e.target.value })
+  handleColorChange = e => {
+    console.log(e.target.value, 'e')
+    const {value} = e.target;
+    this.setState(() => ({ color: value }))
+    console.log(this.state.color, 'local state');
   }
-
+  
   changeRating = ( newRating, name ) => {
-    console.log(newRating);
     this.setState({
       rating: newRating
     });
   }
 
-  getQuantity = (quantity) => {
-    console.log(quantity)
-    // this.setState({ quantity })
+  handleGetQuantity = (quantity) => {
+    console.log(quantity, 'quantity');
+    this.setState({ quantity })
   }
-  
-  addToCart = () => {
 
+  handleGetSize = (size) => {
+    console.log(size, 'size')
+    this.setState({ size });
   }
   
+  handleAddToCart = () => {
+    const { addProductToCart, match: { params: { id }} } = this.props;
+    const {size, color} = this.state;
+    const attributes = `${size} ${color}`
+    addProductToCart(id, attributes)
+  }
+
   render() {
-    const colors = [{value:'grey'}, {value: 'blue'}, {value: 'red'}, {value: 'magenta'}, {value: 'yellow'}, {value: 'green'}, {value: 'purple'}];
-    const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+    
     const { productDetails } = this.props;
-    const { selectedColor, rating } = this.state;
+    const { color, rating } = this.state;
     return (
       <>
         <NavBar searchProduct={()=>{}} />
@@ -76,10 +86,10 @@ class SingleProductDetailPage extends Component {
               />
               <h2 className="my-3">{productDetails.name}</h2>
               <p className="price">&pound; {productDetails.price}</p>
-              <RadioButton options={colors} selected={selectedColor} onChange={this.handleChange} />
-              <SizePicker sizes={sizes} />
-              <QuantitySelector quantity={this.getQuantity} />
-              <button className="add-to-cart-btn" onClick={this.addToCart}>Add to cart</button>
+              <RadioButton selected={color} onChange={this.handleColorChange} />
+              <SizePicker getSize={this.handleGetSize} />
+              <QuantitySelector quantity={this.handleGetQuantity} />
+              <button className="add-to-cart-btn" onClick={this.handleAddToCart}>Add to cart</button>
             </div>
           </div>
         </div>
@@ -89,8 +99,9 @@ class SingleProductDetailPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const {productDetails} = state;
-  return {productDetails};
+  const {productDetails, cart} = state;
+  console.log(state, 'state');
+  return {productDetails, cart};
 }
 
-export default connect(mapStateToProps, { getSingleProductDetails })(SingleProductDetailPage);
+export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart })(SingleProductDetailPage);

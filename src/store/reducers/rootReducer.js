@@ -3,12 +3,14 @@ import {
   categories,
   departments,
   products,
-  productDetails
+  productDetails,
+  cart
 } from './';
 
 export default combineReducers({
   categories,
   departments,
   products,
-  productDetails
+  productDetails,
+  cart
 })
