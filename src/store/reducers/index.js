@@ -61,3 +61,14 @@ export const productDetails = (state = {}, action) => {
       return state
   }
 }
+
+export const cart = (state = {}, action) => {
+  switch(action.type) {
+    case actionTypes.ADD_PRODUCT_TO_CART:
+      return action.payload;
+    case actionTypes.ADD_PRODUCT_TO_CART_ERROR:
+      return action.payload;
+    default:
+      return state
+  }
+}

@@ -2,20 +2,21 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import './RadioButton.scss';
 
-const RadioButton = ({ options, onChange, selected }) => {
+const RadioButton = ({onChange, selected }) => {
+  const colors = ['grey', 'blue', 'red', 'magenta', 'yellow', 'green', 'purple'];
   return (
     <div className="color-selector">
       <p className="label">Color</p>
-      {options.map((color) => {
+      {colors.map((color) => {
         const outerBorderColor = {
-          border: `1px solid ${selected === color.value ? selected : '#c5c5c5'}`,
+          border: `1px solid ${selected === color ? selected : '#c5c5c5'}`,
         }
         const innerColor = {
-          border: `1px solid ${color.value}`,
-          backgroundColor: `${color.value}`
+          border: `1px solid ${color}`,
+          backgroundColor: `${color}`
         }
         return (
-          <div className="radio-color" key={color.value}>
+          <div className="radio-color" key={color}>
             <label htmlFor="noteColor">
               <div style={outerBorderColor} className="outer-circle">
                 <div style={innerColor} className="inner-circle">
@@ -25,8 +26,8 @@ const RadioButton = ({ options, onChange, selected }) => {
             <input
               type="radio"
               name="noteColor"
-              value={color.value}
-              checked={selected === color.value}
+              value={color}
+              checked={selected === color}
               onChange={onChange}
             />
           </div>
