@@ -62,12 +62,29 @@ export const productDetails = (state = {}, action) => {
   }
 }
 
-export const cart = (state = {}, action) => {
+export const cart = (state = {isCartCreated: false}, action) => {
   switch(action.type) {
+    case actionTypes.CREATE_CART:
+      return {
+        ...state,
+        ...action.payload,
+        isCartCreated: true
+      }
+    case actionTypes.CREATE_CART_ERROR:
+      return {
+        ...state,
+        ...action.payload
+      }
     case actionTypes.ADD_PRODUCT_TO_CART:
-      return action.payload;
+      return {
+        ...state,
+        data: action.payload
+      }
     case actionTypes.ADD_PRODUCT_TO_CART_ERROR:
-      return action.payload;
+      return {
+        ...state,
+        ...action.payload
+      };
     default:
       return state
   }

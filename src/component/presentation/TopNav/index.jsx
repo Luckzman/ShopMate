@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Cart from '../Cart';
 import './TopNav.scss';
 
-const TopNav = () => {
+const TopNav = ({ cartCount }) => {
   return (
     <div className="container top-nav">
       <div className="login-links">
@@ -25,7 +25,7 @@ const TopNav = () => {
             alt="british logo" />
           <span>&pound; gbp</span>
         </div>
-        <Cart />
+        <Cart cartCount={cartCount} />
         <div>Your bag: &pound; 300</div>
       </div>
     </div>

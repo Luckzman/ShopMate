@@ -9,7 +9,7 @@ import SearchBar from '../SearchBar';
 import Cart from '../Cart';
 import './NavBar.scss';
 
-const NavBar = ({searchProduct}) => {
+const NavBar = ({searchProduct, showModal, cartCount}) => {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar" bg="dark" variant="dark">
       <Container>
@@ -24,7 +24,11 @@ const NavBar = ({searchProduct}) => {
             <Nav.Link href="/" className="text-light ml-3">Brands</Nav.Link>
           </Nav>
           <SearchBar className="search-bar" searchProduct={searchProduct} />
-          <Cart inverse={true} className="cart" />
+          <Cart 
+            inverse={true}
+            className="cart"
+            cartCount={cartCount}
+            onClick={() => showModal()} />
         </Navbar.Collapse>
       </Container>
     </Navbar>
