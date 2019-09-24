@@ -1,28 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import './Cart.scss';
 
-const Cart = ({ cartCount, inverse }) => {
+const Cart = ({cart}) => {
   return (
     <div className="cart">
-      <FontAwesomeIcon icon={faShoppingBag} className={!inverse ? 'cart-bag' : 'cart-bag inverse-cart-bag'} />
-      <div className={!inverse ? "cart-count" : "cart-count inverse-cart-count"}>
-        <span>{cartCount}</span>
+      <h3>{`${cart} in the cart`}</h3>
+      <div className="cart-header">
+        <p className="item-name">Item</p>
+        <p>Size</p>
+        <p>Quantity</p>
+        <p>Price</p>
       </div>
     </div>
   )
-}
-
-Cart.propTypes = {
-  cartCount: PropTypes.number,
-  inverse: PropTypes.bool,
-}
-
-Cart.defaultProps = {
-  cartCount: 0,
-  inverse: false
 }
 
 export default Cart;

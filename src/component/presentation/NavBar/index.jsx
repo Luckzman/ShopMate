@@ -6,7 +6,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import SearchBar from '../SearchBar';
-import Cart from '../Cart';
+import CartIcon from '../CartIcon';
 import './NavBar.scss';
 
 const NavBar = ({searchProduct, showModal, cartCount}) => {
@@ -24,11 +24,12 @@ const NavBar = ({searchProduct, showModal, cartCount}) => {
             <Nav.Link href="/" className="text-light ml-3">Brands</Nav.Link>
           </Nav>
           <SearchBar className="search-bar" searchProduct={searchProduct} />
-          <Cart 
+          <CartIcon
             inverse={true}
-            className="cart"
+            className="cart-icon"
             cartCount={cartCount}
-            onClick={() => showModal()} />
+            showModal={showModal}
+          />
         </Navbar.Collapse>
       </Container>
     </Navbar>

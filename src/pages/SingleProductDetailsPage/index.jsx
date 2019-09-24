@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import Ratings from 'react-star-ratings';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import NavBar from '../../component/presentation/NavBar';
+import Cart from '../../component/presentation/Cart';
+import Modal from '../../component/presentation/Modal';
 import SizePicker from '../../component/presentation/SizePicker';
 import RadioButton from '../../component/presentation/RadioButton';
 import QuantitySelector from '../../component/presentation/QuantitySelector';
@@ -13,12 +15,11 @@ import './SingleProductDetailsPage.scss';
 class SingleProductDetailPage extends Component {
   state = {
     color: 'grey',
-    rating: 0,
+    rating: 4,
     quantity: 1,
-    size: ''
+    size: '',
+    displayModal: false,
   }
-
-  // [modalShow, setModalShow] = React.useState(false);
 
   componentDidMount(){
     const { getSingleProductDetails, match: { params: { id }} } = this.props;
@@ -30,11 +31,11 @@ class SingleProductDetailPage extends Component {
     this.setState(() => ({ color: value }))
   }
   
-  changeRating = ( newRating, name ) => {
-    this.setState({
-      rating: newRating
-    });
-  }
+  // changeRating = ( newRating, name ) => {
+  //   this.setState({
+  //     rating: newRating
+  //   });
+  // }
   
   handleGetQuantity = (quantity) => {
     this.setState({ quantity })
@@ -52,18 +53,25 @@ class SingleProductDetailPage extends Component {
   }
   
   handleShowModal = () => {
-    
+    this.setState(() => ({displayModal: true}));
   }
-  
-  
+
+  handleHideModal = () => {
+    this.setState(() => ({displayModal: false }));
+  }
   
   render() {
     const { productDetails, cart } = this.props;
-    const { color, rating } = this.state;
-    console.log(cart, 'cart');
+    const { color, rating, displayModal } = this.state;
+    console.log(displayModal, 'displayModal');
     return (
       <>
-        <NavBar searchProduct={()=>{}} showModal={this.handleShowModal} cartCount={(cart.data) ? cart.data.length : 0} />
+        <NavBar 
+          searchProduct={()=>{}} 
+          showModal={this.handleShowModal} 
+          cartCount={(cart.data) ? cart.data.length : 0}
+        />
+        {displayModal && <Modal hideModal={this.handleHideModal}><Cart /></Modal> }
         <div className="container">
           <div className="product">
             <div className="product-img">
