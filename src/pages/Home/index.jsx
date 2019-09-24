@@ -13,7 +13,7 @@ import {
   getFilteredProductsByDepartment,
 } from '../../store/actions';
 import './home.scss';
-import { categories } from '../../store/reducers';
+// import { categories } from '../../store/reducers';
 
 class Home extends Component {
 
@@ -46,12 +46,12 @@ class Home extends Component {
   }
 
   render() {
-    const {categories, departments, products} = this.props;
+    const {categories, departments, products, cart} = this.props;
     console.log(this.props);
     return (
       <div>
-        <TopNav />
-        <NavBar searchProduct={this.handleSearch} />
+        <TopNav cartCount={(cart.data) ? cart.data.length: 0} />
+        <NavBar searchProduct={this.handleSearch} cartCount={(cart.data) ? cart.data.length: 0} />
         <div className="container homepage mt-5">
           <div className="filter-side-bar">
             <FilterSideBar
@@ -83,13 +83,15 @@ const mapStateToProps = (state) => {
   const {
     categories,
     departments,
-    products
+    products,
+    cart
   } = state;
 
   return {
     categories,
     departments,
-    products
+    products,
+    cart
   }
 }
 

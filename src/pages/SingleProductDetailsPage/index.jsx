@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom'
 import Ratings from 'react-star-ratings';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import NavBar from '../../component/presentation/NavBar';
@@ -17,16 +18,16 @@ class SingleProductDetailPage extends Component {
     size: ''
   }
 
+  // [modalShow, setModalShow] = React.useState(false);
+
   componentDidMount(){
     const { getSingleProductDetails, match: { params: { id }} } = this.props;
     getSingleProductDetails(id);
   }
 
   handleColorChange = e => {
-    console.log(e.target.value, 'e')
     const {value} = e.target;
     this.setState(() => ({ color: value }))
-    console.log(this.state.color, 'local state');
   }
   
   changeRating = ( newRating, name ) => {
@@ -34,14 +35,12 @@ class SingleProductDetailPage extends Component {
       rating: newRating
     });
   }
-
+  
   handleGetQuantity = (quantity) => {
-    console.log(quantity, 'quantity');
     this.setState({ quantity })
   }
-
+  
   handleGetSize = (size) => {
-    console.log(size, 'size')
     this.setState({ size });
   }
   
@@ -51,14 +50,20 @@ class SingleProductDetailPage extends Component {
     const attributes = `${size} ${color}`
     addProductToCart(id, attributes)
   }
-
-  render() {
+  
+  handleShowModal = () => {
     
-    const { productDetails } = this.props;
+  }
+  
+  
+  
+  render() {
+    const { productDetails, cart } = this.props;
     const { color, rating } = this.state;
+    console.log(cart, 'cart');
     return (
       <>
-        <NavBar searchProduct={()=>{}} />
+        <NavBar searchProduct={()=>{}} showModal={this.handleShowModal} cartCount={(cart.data) ? cart.data.length : 0} />
         <div className="container">
           <div className="product">
             <div className="product-img">
@@ -71,8 +76,8 @@ class SingleProductDetailPage extends Component {
             </div>
             <div className="product-details">
               <Breadcrumb>
-                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="/">All Categories</Breadcrumb.Item>
+                <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
+                <Breadcrumb.Item><Link to="/">All Categories</Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Men's Clothing &amp; Accessories</Breadcrumb.Item>
               </Breadcrumb>
               <Ratings
@@ -100,7 +105,6 @@ class SingleProductDetailPage extends Component {
 
 const mapStateToProps = (state) => {
   const {productDetails, cart} = state;
-  console.log(state, 'state');
   return {productDetails, cart};
 }
 
