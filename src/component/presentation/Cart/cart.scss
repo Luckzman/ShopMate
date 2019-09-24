@@ -1,9 +1,105 @@
+@import '../../../styles/color.scss';
+
 .cart{
+  .title{
+    font-size: 1.25rem;
+    font-weight: 900;
+  }
   .cart-header{
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    border-bottom: 2px solid #dddddd;
     .item-name{
-      grid-column: 1/5
+      grid-column: 1/4;
+    }
+    p{
+      font-weight: 900;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+    .qty{
+      text-align: center;
+    }
+    .price{
+      grid-column: 7/8;
+    }
+  }
+  .cart-container{
+    overflow: auto;
+    max-height: 350px;
+    border-bottom: 2px solid #dddddd;
+    .cart-body{
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      align-items: center;
+      margin: 10px;
+      p{
+        font-size: 0.8rem;
+        color: #aaa;
+        margin-bottom: 0;
+      }
+      img{
+        height: 50px;
+        width: 50px;
+        object-fit: fill;
+        border: 1px solid #bdbdbd;
+        border-radius: 5px;
+        grid-column: 1/2;
+      }
+      .item-details{
+        grid-column: 2/4;
+        p{
+          margin-bottom: 0;
+        }
+        .name{
+          font-weight: 900;
+          color: #4d4d4d;
+        }
+        .remove-btn{
+          font-size: 0.8rem;
+          font-weight: 800;
+          color: map-get($color, app-red);
+          margin-right: 5px;
+        }
+        .remove-text{
+          font-size: 0.534rem;
+          margin-top: 3px;
+          cursor: pointer;
+        }
+      }
+      .size{
+        grid-column: 4/5;
+      }
+      .qty{
+        grid-column: 5/7;
+      }
+      .price{
+        grid-column: 7/8;
+        font-weight: 900;
+        font-size: 1rem;
+        color: #4d4d4d;
+      }
+    }
+  }
+  .cart-footer{
+    display: flex;
+    margin: 20px 0 0;
+    justify-content: space-between;
+    .back-btn, .checkout-btn{
+      background-color: #ff4363;
+      color: #fff;
+      padding: 5px 10px;
+      margin: 0 10px;
+      width: 100px;
+      border: none;
+      border-radius: 25px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .back-btn{
+      background-color: #fff;
+      color: #ff4363;
+      border: 1px solid #b9b9b9;
     }
   }
 }

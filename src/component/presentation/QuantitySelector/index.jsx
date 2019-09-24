@@ -26,10 +26,9 @@ class QuantitySelector extends Component {
     const { quantity } = this.state;
     return (
       <div className="qty-selector">
-        <p>Quantity</p>
-        <button className="minus-btn" onClick={this.decrement}>&#06;</button>
-        <input disabled value={quantity} />
-        <button onClick={this.increment}>+</button>
+        <button className="qty-btn minus-btn" onClick={this.decrement}>&#06;</button>
+        <input className="qty-input" disabled value={quantity} />
+        <button className="qty-btn" onClick={this.increment}>+</button>
       </div>
     )
   }
