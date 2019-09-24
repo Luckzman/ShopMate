@@ -31,16 +31,6 @@ class SingleProductDetailPage extends Component {
     this.setState(() => ({ color: value }))
   }
   
-  // changeRating = ( newRating, name ) => {
-  //   this.setState({
-  //     rating: newRating
-  //   });
-  // }
-  
-  handleGetQuantity = (quantity) => {
-    this.setState({ quantity })
-  }
-  
   handleGetSize = (size) => {
     this.setState({ size });
   }
@@ -71,7 +61,7 @@ class SingleProductDetailPage extends Component {
           showModal={this.handleShowModal} 
           cartCount={(cart.data) ? cart.data.length : 0}
         />
-        {displayModal && <Modal hideModal={this.handleHideModal}><Cart /></Modal> }
+        {displayModal && cart.data && <Modal hideModal={this.handleHideModal}><Cart cart={cart} /></Modal> }
         <div className="container">
           <div className="product">
             <div className="product-img">
@@ -101,7 +91,6 @@ class SingleProductDetailPage extends Component {
               <p className="price">&pound; {productDetails.price}</p>
               <RadioButton selected={color} onChange={this.handleColorChange} />
               <SizePicker getSize={this.handleGetSize} />
-              <QuantitySelector quantity={this.handleGetQuantity} />
               <button className="add-to-cart-btn" onClick={this.handleAddToCart}>Add to cart</button>
             </div>
           </div>

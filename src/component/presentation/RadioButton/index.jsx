@@ -26,6 +26,7 @@ const RadioButton = ({onChange, selected }) => {
             <input
               type="radio"
               name="noteColor"
+              className="radio-input"
               value={color}
               checked={selected === color}
               onChange={onChange}
