@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Input from '../../presentation/Input';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
-import { signupValidator } from '../../../utils/validate';
+import { userProfileValidator } from '../../../utils/validate';
 import '../LoginForm/LoginForm.scss';
 
 export class SignupForm extends Component {
@@ -15,7 +15,9 @@ export class SignupForm extends Component {
         name: '',
         email: '',
         password: '',
-        repeatPassword: ''
+        mobilePhone: '',
+        dayPhone: '',
+        eveningPhone: '',
       },
       errors: {}
     };
@@ -24,7 +26,7 @@ export class SignupForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
-    const errors = signupValidator(user);
+    const errors = userProfileValidator(user);
     if (errors) {
       this.setState({ errors });
     }
@@ -49,7 +51,8 @@ export class SignupForm extends Component {
           onChange={this.handleChange}
           placeholder="Name"
         />
-        {errors.email && <InlineError text={errors.email} />}
+        {errors.name && <InlineError text={errors.name} />}
+        
         <Input
           name="email"
           value={user.email}
@@ -65,17 +68,37 @@ export class SignupForm extends Component {
           placeholder="Password"
           onChange={this.handleChange}
         />
+        {errors.password && <InlineError text={errors.password} />}
 
         <Input
-          name="repeat-password"
-          value={user.repeatPassword}
-          type="password"
-          placeholder="Repeat Password"
+          name="mobile-phone"
+          value={user.mobilePhone}
+          type="text"
+          placeholder="Mobile Phone"
           onChange={this.handleChange}
         />
-        {errors.password && <InlineError text={errors.password} />}
-        <Button type="submit" name="Register" handleClick={this.handleSubmit} />
-        <p className="mt-3">I already have an account <span className="register-link" onClick={displayLoginModal}>Login</span></p>
+        {errors.mobilePhone && <InlineError text={errors.mobilePhone} />}
+        
+        <Input
+          name="day-phone"
+          value={user.dayPhone}
+          type="text"
+          placeholder= "Day Phone"
+          onChange={this.handleChange}
+        />
+        {errors.dayPhone && <InlineError text={errors.dayPhone} />}
+        
+        <Input
+          name="evening-phone"
+          value={user.eveningPhone}
+          type="text"
+          placeholder= "Evening Phone"
+          onChange={this.handleChange}
+        />
+        {errors.eveningPhone && <InlineError text={errors.eveningPhone} />}
+        
+        
+        <Button type="submit" name="Update Profile" handleClick={this.handleSubmit} />
       </form>
     );
   }

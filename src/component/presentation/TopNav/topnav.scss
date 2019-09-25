@@ -13,14 +13,16 @@
   font-size: 0.9rem;
   
   .login-links{
+    display: flex;
     span{
       padding:0 5px;
     }
-    button{
+    .links{
       color: map-get($color, app-red );
       border: none;
       background-color: #fff;
     }
+    
   }
 
   .center-links{
