@@ -9,7 +9,7 @@ import Modal from '../../component/presentation/Modal';
 import SizePicker from '../../component/presentation/SizePicker';
 import RadioButton from '../../component/presentation/RadioButton';
 import QuantitySelector from '../../component/presentation/QuantitySelector';
-import { getSingleProductDetails, addProductToCart } from '../../store/actions';
+import { getSingleProductDetails, addProductToCart, removeCartItem } from '../../store/actions';
 import './SingleProductDetailsPage.scss';
 
 class SingleProductDetailPage extends Component {
@@ -42,26 +42,30 @@ class SingleProductDetailPage extends Component {
     addProductToCart(id, attributes)
   }
   
-  handleShowModal = () => {
-    this.setState(() => ({displayModal: true}));
+  handleToggleModal = () => {
+    const { displayModal } = this.state;
+    this.setState(() => ({ displayModal: !displayModal }));
   }
 
-  handleHideModal = () => {
-    this.setState(() => ({displayModal: false }));
+  handleRemoveCartItem = (id, productId) => {
+    console.log(id, productId);
+    const { removeCartItem } = this.props;
+    removeCartItem(id, productId);
   }
   
   render() {
     const { productDetails, cart } = this.props;
     const { color, rating, displayModal } = this.state;
-    console.log(displayModal, 'displayModal');
     return (
       <>
         <NavBar 
           searchProduct={()=>{}} 
-          showModal={this.handleShowModal} 
+          showModal={this.handleToggleModal} 
           cartCount={(cart.data) ? cart.data.length : 0}
         />
-        {displayModal && cart.data && <Modal hideModal={this.handleHideModal}><Cart cart={cart} /></Modal> }
+        {displayModal && cart.data && <Modal hideModal={this.handleToggleModal}>
+          <Cart cart={cart} removeCartItem={this.handleRemoveCartItem} />
+        </Modal> }
         <div className="container">
           <div className="product">
             <div className="product-img">
@@ -102,7 +106,8 @@ class SingleProductDetailPage extends Component {
 
 const mapStateToProps = (state) => {
   const {productDetails, cart} = state;
+  console.log(cart);
   return {productDetails, cart};
 }
 
-export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart })(SingleProductDetailPage);
+export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem })(SingleProductDetailPage);

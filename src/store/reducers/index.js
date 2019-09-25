@@ -80,6 +80,11 @@ export const cart = (state = {isCartCreated: false}, action) => {
         ...state,
         data: action.payload
       }
+    case actionTypes.REMOVE_CART_ITEM:
+      return {
+        ...state,
+        data: state.data.filter((data, i) => i !== action.id)
+      }
     case actionTypes.ADD_PRODUCT_TO_CART_ERROR:
       return {
         ...state,

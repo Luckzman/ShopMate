@@ -19,7 +19,8 @@ export const actionTypes = {
   CREATE_CART_ERROR: "CREATE_CART_ERROR",
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
   ADD_PRODUCT_TO_CART_ERROR: "ADD_PRODUCT_TO_CART_ERROR",
-
+  REMOVE_CART_ITEM: "REMOVE_CART_ITEM",
+  REMOVE_CART_ITEM_ERROR: "REMOVE_CART_ITEM_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -225,3 +226,23 @@ export const addProductToCart = (productId, attributes) => {
   }
 }
 
+
+export const removeCartItem = (id, productId) => {
+  return (dispatch) => {
+    return axios.delete(`https://backendapi.turing.com/shoppingCart/removeProduct/${productId}`)
+      .then(() => {
+        dispatch({
+          type: actionTypes.REMOVE_CART_ITEM,
+          id
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.REMOVE_CART_ITEM_ERROR,
+            payload: error.response.message
+          })
+        }
+      })
+  }
+}
