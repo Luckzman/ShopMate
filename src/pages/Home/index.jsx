@@ -133,14 +133,16 @@ const mapStateToProps = (state) => {
     categories,
     departments,
     products,
-    cart
+    cart,
+    customers,
   } = state;
 
   return {
     categories,
     departments,
     products,
-    cart
+    cart,
+    customers
   }
 }
 

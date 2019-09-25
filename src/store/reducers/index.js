@@ -62,6 +62,23 @@ export const productDetails = (state = {}, action) => {
   }
 }
 
+export const customers = (state = {message: '', error: false}, action) => {
+  switch(action.type) {
+    case actionTypes.SIGNUP_CUSTOMER:
+      return {
+        ...action.payload
+      };
+    case actionTypes.SIGNUP_CUSTOMER_ERROR:
+      return {
+        ...state,
+        error: true,
+        message: action.payload,
+      };
+    default:
+      return state
+  }
+}
+
 export const cart = (state = {isCartCreated: false}, action) => {
   switch(action.type) {
     case actionTypes.CREATE_CART:

@@ -4,7 +4,8 @@ import {
   departments,
   products,
   productDetails,
-  cart
+  cart,
+  customers
 } from './';
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   departments,
   products,
   productDetails,
-  cart
+  cart,
+  customers
 })

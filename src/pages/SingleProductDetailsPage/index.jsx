@@ -105,9 +105,9 @@ class SingleProductDetailPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const {productDetails, cart} = state;
-  console.log(cart);
-  return {productDetails, cart};
+  const {productDetails, cart, customers} = state;
+  console.log(customers);
+  return {productDetails, cart, customers};
 }
 
 export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem })(SingleProductDetailPage);
