@@ -7,6 +7,7 @@ import FilterSideBar from '../../component/presentation/FilterSideBar';
 import SignupForm from '../../component/container/SignupForm';
 import LoginForm from '../../component/container/LoginForm';
 import UserProfileForm from '../../component/container/UserProfileForm';
+import ShippingDetailsForm from '../../component/container/ShippingDetailsForm';
 import ItemCard from '../../component/presentation/ItemCard';
 import {
   getAllCategories,
@@ -24,7 +25,8 @@ class Home extends Component {
   state = {
     displayLoginModal: false,
     displaySignupModal: false,
-    displayProfileModal: false
+    displayProfileModal: false,
+    displayShippingDetailsModal: false,
   }
 
   componentDidMount() {
@@ -67,18 +69,24 @@ class Home extends Component {
     const { displayProfileModal } = this.state;
     this.setState(() => ({displayProfileModal: !displayProfileModal}));
   }
+  
+  handleToggleShippingDetailsModal = () => {
+    const { displayShippingDetailsModal } = this.state;
+    this.setState(() => ({displayShippingDetailsModal: !displayShippingDetailsModal}));
+  }
 
   render() {
     const {categories, departments, products, cart} = this.props;
-    const { displayLoginModal, displaySignupModal, displayProfileModal } = this.state;
+    const { displayLoginModal, displaySignupModal, displayProfileModal, displayShippingDetailsModal } = this.state;
     return (
       <div>
         <TopNav
-          name="Lucky"
+          name=""
           cartCount={(cart.data) ? cart.data.length: 0}
           triggerLoginModal={this.handleToggleLoginModal}
           triggerSignupModal={this.handleToggleSignupModal}
           handleProfileModal={this.handleToggleProfileModal}
+          handleShippingDetailsModal={this.handleToggleShippingDetailsModal}
         />
         <NavBar searchProduct={this.handleSearch} cartCount={(cart.data) ? cart.data.length: 0} />
         {displayLoginModal && <Modal classes="modal-width" hideModal={this.handleToggleLoginModal} >
@@ -89,6 +97,9 @@ class Home extends Component {
         </Modal>}
         {displayProfileModal && <Modal classes="modal-width" hideModal={this.handleToggleProfileModal}>
           <UserProfileForm />
+        </Modal>}
+        {displayShippingDetailsModal && <Modal classes="modal-width" hideModal={this.handleToggleShippingDetailsModal}>
+          <ShippingDetailsForm />
         </Modal>}
         <div className="container homepage mt-5">
           <div className="filter-side-bar">

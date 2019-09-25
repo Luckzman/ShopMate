@@ -4,7 +4,7 @@ import DropdownMenu from '../DropdownMenu';
 import CartIcon from '../CartIcon';
 import './topnav.scss';
 
-const TopNav = ({ name, cartCount, triggerLoginModal, triggerSignupModal, handleProfileModal }) => {
+const TopNav = ({ name, cartCount, triggerLoginModal, triggerSignupModal, handleProfileModal, handleShippingDetailsModal }) => {
   return (
     <div className="container top-nav">
       <div className="login-links">
@@ -16,7 +16,11 @@ const TopNav = ({ name, cartCount, triggerLoginModal, triggerSignupModal, handle
               <span>or</span>
               <button className="links" onClick={triggerSignupModal}>Register</button>
             </>
-          ) : <DropdownMenu name={name} handleProfileModal={handleProfileModal} /> 
+          ) : <DropdownMenu 
+          name={name} 
+          handleProfileModal={handleProfileModal}
+          handleShippingDetailsModal={handleShippingDetailsModal}
+          /> 
         }
       </div>
       <div className="center-links">
