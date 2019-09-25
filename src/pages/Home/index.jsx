@@ -6,6 +6,7 @@ import NavBar from '../../component/presentation/NavBar';
 import FilterSideBar from '../../component/presentation/FilterSideBar';
 import SignupForm from '../../component/container/SignupForm';
 import LoginForm from '../../component/container/LoginForm';
+import UserProfileForm from '../../component/container/UserProfileForm';
 import ItemCard from '../../component/presentation/ItemCard';
 import {
   getAllCategories,
@@ -22,7 +23,8 @@ class Home extends Component {
 
   state = {
     displayLoginModal: false,
-    displaySignupModal: false
+    displaySignupModal: false,
+    displayProfileModal: false
   }
 
   componentDidMount() {
@@ -51,38 +53,42 @@ class Home extends Component {
     searchProducts(inputText);
   }
 
-  handleDisplayLoginModal = () => {
-    this.setState(() => ({displayLoginModal: true}))
+  handleToggleLoginModal = () => {
+    const { displayLoginModal } = this.state;
+    this.setState(() => ({displayLoginModal: !displayLoginModal}))
   }
 
-  handleDisplaySignupModal = () => {
-    this.setState(() => ({displaySignupModal: true}));
+  handleToggleSignupModal = () => {
+    const { displaySignupModal } = this.state;
+    this.setState(() => ({displaySignupModal: !displaySignupModal}));
   }
-
-  handleHideLoginModal = () => {
-    this.setState(() => ({displayLoginModal: false}))
-  }
-
-  handleHideSignupModal = () => {
-    this.setState(() => ({displaySignupModal: false}))
+  
+  handleToggleProfileModal = () => {
+    const { displayProfileModal } = this.state;
+    this.setState(() => ({displayProfileModal: !displayProfileModal}));
   }
 
   render() {
     const {categories, departments, products, cart} = this.props;
-    const { displayLoginModal, displaySignupModal } = this.state;
+    const { displayLoginModal, displaySignupModal, displayProfileModal } = this.state;
     return (
       <div>
-        <TopNav 
+        <TopNav
+          name="Lucky"
           cartCount={(cart.data) ? cart.data.length: 0}
-          triggerLoginModal={this.handleDisplayLoginModal}
-          triggerSignupModal={this.handleDisplaySignupModal}
+          triggerLoginModal={this.handleToggleLoginModal}
+          triggerSignupModal={this.handleToggleSignupModal}
+          handleProfileModal={this.handleToggleProfileModal}
         />
         <NavBar searchProduct={this.handleSearch} cartCount={(cart.data) ? cart.data.length: 0} />
-        {displayLoginModal && <Modal classes="modal-width" hideModal={this.handleHideLoginModal} >
+        {displayLoginModal && <Modal classes="modal-width" hideModal={this.handleToggleLoginModal} >
           <LoginForm />
         </Modal>}
-        {displaySignupModal && <Modal classes="modal-width" hideModal={this.handleHideSignupModal}>
+        {displaySignupModal && <Modal classes="modal-width" hideModal={this.handleToggleSignupModal}>
           <SignupForm />
+        </Modal>}
+        {displayProfileModal && <Modal classes="modal-width" hideModal={this.handleToggleProfileModal}>
+          <UserProfileForm />
         </Modal>}
         <div className="container homepage mt-5">
           <div className="filter-side-bar">

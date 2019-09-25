@@ -1,16 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DropdownMenu from '../DropdownMenu';
 import CartIcon from '../CartIcon';
 import './topnav.scss';
 
-const TopNav = ({ cartCount, triggerLoginModal, triggerSignupModal }) => {
+const TopNav = ({ name, cartCount, triggerLoginModal, triggerSignupModal, handleProfileModal }) => {
   return (
     <div className="container top-nav">
       <div className="login-links">
         <span>Hi</span>
-        <button onClick={triggerLoginModal}>Log in</button>
-        <span>or</span>
-        <button onClick={triggerSignupModal}>Register</button>
+        {
+          !name ? (
+            <>
+              <button className="links" onClick={triggerLoginModal}>Log in</button>
+              <span>or</span>
+              <button className="links" onClick={triggerSignupModal}>Register</button>
+            </>
+          ) : <DropdownMenu name={name} handleProfileModal={handleProfileModal} /> 
+        }
       </div>
       <div className="center-links">
         <Link to="/">Daily Deals</Link>
