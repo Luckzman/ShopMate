@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import QuantitySelector from '../QuantitySelector';
-import './Cart.scss';
+import './cart.scss';
 
 const Cart = ({cart, removeCartItem}) => {
   const { data } = cart;

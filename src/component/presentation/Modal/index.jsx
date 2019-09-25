@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Modal.scss';
 
-function Modal({ children, hideModal }) {
+function Modal({ children, hideModal, classes }) {
   return (
     <div className="overlay">
-      <div className="cart-modal">
+      <div className={`cart-modal ${classes}`}>
         <button type="button" className="close" onClick={hideModal}>&times;</button>
         <div className="modalContent">
           {children}

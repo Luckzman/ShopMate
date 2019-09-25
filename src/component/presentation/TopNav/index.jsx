@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import CartIcon from '../CartIcon';
 import './TopNav.scss';
 
-const TopNav = ({ cartCount }) => {
+const TopNav = ({ cartCount, triggerLoginModal, triggerSignupModal }) => {
   return (
     <div className="container top-nav">
       <div className="login-links">
         <span>Hi</span>
-        <Link to="/">Log in</Link>
+        <button onClick={triggerLoginModal}>Log in</button>
         <span>or</span>
-        <Link to="/">Register</Link>
+        <button onClick={triggerSignupModal}>Register</button>
       </div>
       <div className="center-links">
         <Link to="/">Daily Deals</Link>
