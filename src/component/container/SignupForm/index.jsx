@@ -5,6 +5,7 @@ import Input from '../../presentation/Input';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
 import { signupValidator } from '../../../utils/validate';
+import { signupCustomer } from '../../../store/actions';
 import '../LoginForm/LoginForm.scss';
 
 export class SignupForm extends Component {
@@ -24,10 +25,13 @@ export class SignupForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
+    const {signupCustomer} = this.props;
     const errors = signupValidator(user);
     if (errors) {
       this.setState({ errors });
     }
+    delete user.repeatPassword;
+    signupCustomer(user)
   };
 
   handleChange = (event) => {
@@ -67,7 +71,7 @@ export class SignupForm extends Component {
         />
 
         <Input
-          name="repeat-password"
+          name="repeatPassword"
           value={user.repeatPassword}
           type="password"
           placeholder="Repeat Password"
@@ -82,7 +86,9 @@ export class SignupForm extends Component {
 }
 
 const mapStateToProps = state => {
-  return ({ user: state.auth })
+  const { customers } = state;
+  console.log(customers,'customer');
+  return ({ customers })
 };
 
 SignupForm.propTypes = {
@@ -91,4 +97,4 @@ SignupForm.propTypes = {
 
 SignupForm.defaultProps = { user: {} };
 
-export default connect(mapStateToProps, null)(SignupForm);
+export default connect(mapStateToProps, {signupCustomer})(SignupForm);

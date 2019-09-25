@@ -20,7 +20,9 @@ export const actionTypes = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
   ADD_PRODUCT_TO_CART_ERROR: "ADD_PRODUCT_TO_CART_ERROR",
   REMOVE_CART_ITEM: "REMOVE_CART_ITEM",
-  REMOVE_CART_ITEM_ERROR: "REMOVE_CART_ITEM_ERROR"
+  REMOVE_CART_ITEM_ERROR: "REMOVE_CART_ITEM_ERROR",
+  SIGNUP_CUSTOMER: "SIGNUP_CUSTOMER",
+  SIGNUP_CUSTOMER_ERROR: "SIGNUP_CUSTOMER_ERROR",
 }
 
 export const getAllCategories = () => {
@@ -163,6 +165,27 @@ export const getSingleProductDetails = (productId) => {
   }
 }
 
+export const signupCustomer = (user) => {
+  return (dispatch) => {
+    return axios.post("https://backendapi.turing.com/customers", user)
+      .then((response) => {
+        dispatch({
+          type: actionTypes.SIGNUP_CUSTOMER,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          console.log(error.response.data.error.message, 'message');
+          dispatch({
+            type: actionTypes.SIGNUP_CUSTOMER_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
 export const addProductToCart = (productId, attributes) => {
   return (dispatch, getState) => {
     if(!getState().cart.isCartCreated){
@@ -226,7 +249,6 @@ export const addProductToCart = (productId, attributes) => {
   }
 }
 
-
 export const removeCartItem = (id, productId) => {
   return (dispatch) => {
     return axios.delete(`https://backendapi.turing.com/shoppingCart/removeProduct/${productId}`)
@@ -246,3 +268,5 @@ export const removeCartItem = (id, productId) => {
       })
   }
 }
+
+
