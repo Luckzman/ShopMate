@@ -5,16 +5,17 @@ import Input from '../../presentation/Input';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
 import { loginValidator } from '../../../utils/validate';
-import './LoginForm.scss';
+import '../LoginForm/LoginForm.scss';
 
-
-export class LoginForm extends Component {
+export class SignupForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {
+        name: '',
         email: '',
-        password: ''
+        password: '',
+        repeatPassword: ''
       },
       errors: {}
     };
@@ -38,10 +39,17 @@ export class LoginForm extends Component {
 
   render() {
     const { user, errors } = this.state;
-    const { displaySignupModal } = this.props;
+    const { displayLoginModal } = this.props;
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
-        <h3 className="heading">LOGIN</h3>
+        <h3 className="heading">SIGNUP</h3>
+        <Input
+          name="name"
+          value={user.name}
+          onChange={this.handleChange}
+          placeholder="Name"
+        />
+        {errors.email && <InlineError text={errors.email} />}
         <Input
           name="email"
           value={user.email}
@@ -57,9 +65,17 @@ export class LoginForm extends Component {
           placeholder="Password"
           onChange={this.handleChange}
         />
+
+        <Input
+          name="repeat-password"
+          value={user.repeatPassword}
+          type="password"
+          placeholder="Repeat Password"
+          onChange={this.handleChange}
+        />
         {errors.password && <InlineError text={errors.password} />}
-        <Button type="submit" name="Login" handleClick={this.handleSubmit} />
-        <p className="mt-3">I don't have an account <span className="register-link" onClick={displaySignupModal}>Register</span></p>
+        <Button type="submit" name="Register" handleClick={this.handleSubmit} />
+        <p className="mt-3">I already have an account <span className="register-link" onClick={displayLoginModal}>Login</span></p>
       </form>
     );
   }
@@ -69,10 +85,10 @@ const mapStateToProps = state => {
   return ({ user: state.auth })
 };
 
-LoginForm.propTypes = {
+SignupForm.propTypes = {
   user: PropTypes.object,
 };
 
-LoginForm.defaultProps = { user: {} };
+SignupForm.defaultProps = { user: {} };
 
-export default connect(mapStateToProps, null)(LoginForm);
+export default connect(mapStateToProps, null)(SignupForm);

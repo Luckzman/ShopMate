@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CartIcon from '../CartIcon';
-import './TopNav.scss';
+import './topnav.scss';
 
 const TopNav = ({ cartCount, triggerLoginModal, triggerSignupModal }) => {
   return (

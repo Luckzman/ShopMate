@@ -4,6 +4,7 @@ import TopNav from '../../component/presentation/TopNav';
 import Modal from '../../component/presentation/Modal';
 import NavBar from '../../component/presentation/NavBar';
 import FilterSideBar from '../../component/presentation/FilterSideBar';
+import SignupForm from '../../component/container/SignupForm';
 import LoginForm from '../../component/container/LoginForm';
 import ItemCard from '../../component/presentation/ItemCard';
 import {
@@ -77,8 +78,12 @@ class Home extends Component {
           triggerSignupModal={this.handleDisplaySignupModal}
         />
         <NavBar searchProduct={this.handleSearch} cartCount={(cart.data) ? cart.data.length: 0} />
-        {displayLoginModal && <Modal classes="modal-width" hideModal={this.handleHideLoginModal} ><LoginForm /></Modal>}
-        {displaySignupModal && <Modal classes="modal-width" hideModal={this.handleHideSignupModal}></Modal>}
+        {displayLoginModal && <Modal classes="modal-width" hideModal={this.handleHideLoginModal} >
+          <LoginForm />
+        </Modal>}
+        {displaySignupModal && <Modal classes="modal-width" hideModal={this.handleHideSignupModal}>
+          <SignupForm />
+        </Modal>}
         <div className="container homepage mt-5">
           <div className="filter-side-bar">
             <FilterSideBar
