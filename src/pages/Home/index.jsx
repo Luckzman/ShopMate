@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import TopNav from '../../component/presentation/TopNav';
+import Modal from '../../component/presentation/Modal';
 import NavBar from '../../component/presentation/NavBar';
 import FilterSideBar from '../../component/presentation/FilterSideBar';
+import LoginForm from '../../component/container/LoginForm';
 import ItemCard from '../../component/presentation/ItemCard';
 import {
   getAllCategories,
@@ -17,21 +19,24 @@ import './home.scss';
 
 class Home extends Component {
 
-    componentDidMount() {
-      const {
-        getAllCategories,
-        getAllDepartments,
-        getAllProducts,
-      } = this.props;
-      
-      getAllCategories();
-      getAllDepartments();
-      getAllProducts();
-      
-    }
-  
+  state = {
+    displayLoginModal: false,
+    displaySignupModal: false
+  }
 
-  filterProduct = (item, department) => {
+  componentDidMount() {
+    const {
+      getAllCategories,
+      getAllDepartments,
+      getAllProducts,
+    } = this.props;
+    
+    getAllCategories();
+    getAllDepartments();
+    getAllProducts();
+  }
+  
+  handleFilterProduct = (item, department) => {
     if(Object.keys(department)[0].includes('department')) {
       this.props.getFilteredProductsByDepartment(item);
     }
@@ -45,19 +50,41 @@ class Home extends Component {
     searchProducts(inputText);
   }
 
+  handleDisplayLoginModal = () => {
+    this.setState(() => ({displayLoginModal: true}))
+  }
+
+  handleDisplaySignupModal = () => {
+    this.setState(() => ({displaySignupModal: true}));
+  }
+
+  handleHideLoginModal = () => {
+    this.setState(() => ({displayLoginModal: false}))
+  }
+
+  handleHideSignupModal = () => {
+    this.setState(() => ({displaySignupModal: false}))
+  }
+
   render() {
     const {categories, departments, products, cart} = this.props;
-    console.log(this.props);
+    const { displayLoginModal, displaySignupModal } = this.state;
     return (
       <div>
-        <TopNav cartCount={(cart.data) ? cart.data.length: 0} />
+        <TopNav 
+          cartCount={(cart.data) ? cart.data.length: 0}
+          triggerLoginModal={this.handleDisplayLoginModal}
+          triggerSignupModal={this.handleDisplaySignupModal}
+        />
         <NavBar searchProduct={this.handleSearch} cartCount={(cart.data) ? cart.data.length: 0} />
+        {displayLoginModal && <Modal classes="modal-width" hideModal={this.handleHideLoginModal} ><LoginForm /></Modal>}
+        {displaySignupModal && <Modal classes="modal-width" hideModal={this.handleHideSignupModal}></Modal>}
         <div className="container homepage mt-5">
           <div className="filter-side-bar">
             <FilterSideBar
               category={categories.rows}
               department={departments}
-              selectedProduct={this.filterProduct}
+              selectedProduct={this.handleFilterProduct}
             />
           </div>
           <div className="product">

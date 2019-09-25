@@ -16,9 +16,10 @@
     span{
       padding:0 5px;
     }
-    a{
+    button{
       color: map-get($color, app-red );
-      text-decoration: none;
+      border: none;
+      background-color: #fff;
     }
   }
 
