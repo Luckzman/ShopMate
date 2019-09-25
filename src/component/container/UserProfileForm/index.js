@@ -41,7 +41,6 @@ export class SignupForm extends Component {
 
   render() {
     const { user, errors } = this.state;
-    const { displayLoginModal } = this.props;
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
         <h3 className="heading">SIGNUP</h3>
