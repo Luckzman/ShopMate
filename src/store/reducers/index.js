@@ -66,14 +66,26 @@ export const customers = (state = {message: '', error: false}, action) => {
   switch(action.type) {
     case actionTypes.SIGNUP_CUSTOMER:
       return {
-        ...action.payload
-      };
-    case actionTypes.SIGNUP_CUSTOMER_ERROR:
-      return {
         ...state,
-        error: true,
-        message: action.payload,
-      };
+        ...action.payload
+      }
+      case actionTypes.SIGNUP_CUSTOMER_ERROR:
+        return {
+          ...state,
+          error: true,
+          message: action.payload,
+        }
+      case actionTypes.LOGIN_CUSTOMER:
+        return {
+          ...state,
+          ...action.payload
+        }
+      case actionTypes.LOGIN_CUSTOMER_ERROR:
+        return {
+          ...state,
+          error: true,
+          message: action.payload
+        }
     default:
       return state
   }

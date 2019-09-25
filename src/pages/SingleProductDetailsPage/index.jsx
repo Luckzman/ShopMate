@@ -106,7 +106,7 @@ class SingleProductDetailPage extends Component {
 
 const mapStateToProps = (state) => {
   const {productDetails, cart, customers} = state;
-  console.log(customers);
+  console.log(state, 'state');
   return {productDetails, cart, customers};
 }
 

@@ -23,6 +23,8 @@ export const actionTypes = {
   REMOVE_CART_ITEM_ERROR: "REMOVE_CART_ITEM_ERROR",
   SIGNUP_CUSTOMER: "SIGNUP_CUSTOMER",
   SIGNUP_CUSTOMER_ERROR: "SIGNUP_CUSTOMER_ERROR",
+  LOGIN_CUSTOMER: "LOGIN_CUSTOMER",
+  LOGIN_CUSTOMER_ERROR: "LOGIN_CUSTOMER_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -179,6 +181,28 @@ export const signupCustomer = (user) => {
           console.log(error.response.data.error.message, 'message');
           dispatch({
             type: actionTypes.SIGNUP_CUSTOMER_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const loginCustomer = (user) => {
+  return (dispatch) => {
+    return axios.post("https://backendapi.turing.com/customers/login", user)
+    .then((response) => {
+        console.log(response);
+        dispatch({
+          type: actionTypes.LOGIN_CUSTOMER,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          console.log(error.response.data.error.message, 'message');
+          dispatch({
+            type: actionTypes.LOGIN_CUSTOMER_ERROR,
             payload: error.response.data.error.message
           })
         }
