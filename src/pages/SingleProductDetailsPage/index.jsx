@@ -9,7 +9,11 @@ import Modal from '../../component/presentation/Modal';
 import SizePicker from '../../component/presentation/SizePicker';
 import RadioButton from '../../component/presentation/RadioButton';
 import QuantitySelector from '../../component/presentation/QuantitySelector';
-import { getSingleProductDetails, addProductToCart, removeCartItem } from '../../store/actions';
+import {
+  getSingleProductDetails,
+  addProductToCart,
+  removeCartItem,
+  updateCartItemQty} from '../../store/actions';
 import './SingleProductDetailsPage.scss';
 
 class SingleProductDetailPage extends Component {
@@ -48,9 +52,13 @@ class SingleProductDetailPage extends Component {
   }
 
   handleRemoveCartItem = (id, productId) => {
-    console.log(id, productId);
     const { removeCartItem } = this.props;
     removeCartItem(id, productId);
+  }
+
+  handleUpdateCartQty = (cartQty, productId) => {
+    console.log(cartQty, productId);
+    updateCartItemQty(cartQty, productId);
   }
   
   render() {
@@ -64,7 +72,10 @@ class SingleProductDetailPage extends Component {
           cartCount={(cart.data) ? cart.data.length : 0}
         />
         {displayModal && cart.data && <Modal hideModal={this.handleToggleModal}>
-          <Cart cart={cart} removeCartItem={this.handleRemoveCartItem} />
+          <Cart 
+            cart={cart}
+            updateCartQty={this.handleUpdateCartQty}
+            removeCartItem={this.handleRemoveCartItem} />
         </Modal> }
         <div className="container">
           <div className="product">
@@ -110,4 +121,10 @@ const mapStateToProps = (state) => {
   return {productDetails, cart};
 }
 
-export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem })(SingleProductDetailPage);
+export default connect(mapStateToProps,
+  { 
+    getSingleProductDetails,
+    addProductToCart, 
+    removeCartItem,
+    updateCartItemQty
+   })(SingleProductDetailPage);

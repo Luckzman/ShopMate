@@ -80,6 +80,16 @@ export const cart = (state = {isCartCreated: false}, action) => {
         ...state,
         data: action.payload
       }
+    case actionTypes.UPDATE_CART_ITEM_QTY:
+      return {
+        ...state,
+        ...action.payload
+      }
+    case actionTypes.UPDATE_CART_ITEM_QTY_ERROR:
+      return {
+        ...state,
+        ...action.payload
+      }
     case actionTypes.REMOVE_CART_ITEM:
       return {
         ...state,

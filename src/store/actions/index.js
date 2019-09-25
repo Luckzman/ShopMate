@@ -20,7 +20,9 @@ export const actionTypes = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
   ADD_PRODUCT_TO_CART_ERROR: "ADD_PRODUCT_TO_CART_ERROR",
   REMOVE_CART_ITEM: "REMOVE_CART_ITEM",
-  REMOVE_CART_ITEM_ERROR: "REMOVE_CART_ITEM_ERROR"
+  REMOVE_CART_ITEM_ERROR: "REMOVE_CART_ITEM_ERROR",
+  UPDATE_CART_ITEM_QTY: "UPDATE_CART_ITEM_QTY",
+  UPDATE_CART_ITEM_QTY_ERROR: "UPDATE_CART_ITEM_QTY_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -240,6 +242,30 @@ export const removeCartItem = (id, productId) => {
         if(error.response) {
           dispatch({
             type: actionTypes.REMOVE_CART_ITEM_ERROR,
+            payload: error.response.message
+          })
+        }
+      })
+  }
+}
+
+export const updateCartItemQty = (quantity, productId) => {
+  console.log(`${quantity}, ${productId}`, 'action');
+  return (dispatch) => {
+    return axios.put(`https://backendapi.turing.com/shoppingcart/update/${productId}`, {quantity})
+      .then((response) => {
+        console.log(response, 'response')
+        dispatch({
+          type: actionTypes.UPDATE_CART_ITEM_QTY,
+          payload: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log(error.response)
+        if(error.response) {
+          dispatch({
+            type: actionTypes.UPDATE_CART_ITEM_QTY_ERROR,
             payload: error.response.message
           })
         }
