@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Input from '../../presentation/Input';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
+import { loginCustomer } from '../../../store/actions';
 import { loginValidator } from '../../../utils/validate';
 import './LoginForm.scss';
 
@@ -23,10 +24,13 @@ export class LoginForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
+    const { loginCustomer } = this.props;
     const errors = loginValidator(user);
     if (errors) {
       this.setState({ errors });
     }
+    // console.log(user, 'user')
+    loginCustomer(user);
   };
 
   handleChange = (event) => {
@@ -66,7 +70,9 @@ export class LoginForm extends Component {
 }
 
 const mapStateToProps = state => {
-  return ({ user: state.auth })
+  const { customers } = state;
+  console.log(customers, 'customers');
+  return ({ customers })
 };
 
 LoginForm.propTypes = {
@@ -75,4 +81,4 @@ LoginForm.propTypes = {
 
 LoginForm.defaultProps = { user: {} };
 
-export default connect(mapStateToProps, null)(LoginForm);
+export default connect(mapStateToProps, { loginCustomer })(LoginForm);
