@@ -76,12 +76,12 @@ class Home extends Component {
   }
 
   render() {
-    const {categories, departments, products, cart} = this.props;
+    const {categories, departments, products, cart, customers} = this.props;
     const { displayLoginModal, displaySignupModal, displayProfileModal, displayShippingDetailsModal } = this.state;
     return (
       <div>
         <TopNav
-          name=""
+          name={customers.isAuthenticated ? customers.customer.name : ''}
           cartCount={(cart.data) ? cart.data.length: 0}
           triggerLoginModal={this.handleToggleLoginModal}
           triggerSignupModal={this.handleToggleSignupModal}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setToken, config, getToken, getUserIdFromLocalStorage } from '../../utils/authHelper';
 
 export const actionTypes = {
   GET_ALL_CATEGORIES: "GET_ALL_CATEGORIES",
@@ -24,7 +25,11 @@ export const actionTypes = {
   SIGNUP_CUSTOMER: "SIGNUP_CUSTOMER",
   SIGNUP_CUSTOMER_ERROR: "SIGNUP_CUSTOMER_ERROR",
   LOGIN_CUSTOMER: "LOGIN_CUSTOMER",
-  LOGIN_CUSTOMER_ERROR: "LOGIN_CUSTOMER_ERROR"
+  LOGIN_CUSTOMER_ERROR: "LOGIN_CUSTOMER_ERROR",
+  GET_CUSTOMER_PROFILE: "GET_CUSTOMER_PROFILE",
+  GET_CUSTOMER_PROFILE_ERROR: "GET_CUSTOMER_PROFILE_ERROR",
+  UPDATE_CUSTOMER_PROFILE: "UPDATE_CUSTOMER_PROFILE",
+  UPDATE_CUSTOMER_PROFILE_ERROR: "UPDATE_CUSTOMER_PROFILE_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -175,10 +180,10 @@ export const signupCustomer = (user) => {
           type: actionTypes.SIGNUP_CUSTOMER,
           payload: response.data,
         })
+        setToken(response.data.accessToken)
       })
       .catch((error) => {
         if(error.response) {
-          console.log(error.response.data.error.message, 'message');
           dispatch({
             type: actionTypes.SIGNUP_CUSTOMER_ERROR,
             payload: error.response.data.error.message
@@ -192,17 +197,58 @@ export const loginCustomer = (user) => {
   return (dispatch) => {
     return axios.post("https://backendapi.turing.com/customers/login", user)
     .then((response) => {
-        console.log(response);
         dispatch({
           type: actionTypes.LOGIN_CUSTOMER,
+          payload: response.data,
+        })
+        setToken(response.data.accessToken)
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.LOGIN_CUSTOMER_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const getCustomerProfile = () => {
+  return (dispatch) => {
+    return axios.get("https://backendapi.turing.com/customer", config)
+    .then((response) => {
+        dispatch({
+          type: actionTypes.GET_CUSTOMER_PROFILE,
           payload: response.data,
         })
       })
       .catch((error) => {
         if(error.response) {
-          console.log(error.response.data.error.message, 'message');
           dispatch({
-            type: actionTypes.LOGIN_CUSTOMER_ERROR,
+            type: actionTypes.GET_CUSTOMER_PROFILE_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const updateCustomerProfile = (userProfile) => {
+  return (dispatch) => {
+    return axios.put("https://backendapi.turing.com/customer", userProfile, config)
+    .then((response) => {
+      console.log(response)
+        dispatch({
+          type: actionTypes.UPDATE_CUSTOMER_PROFILE,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error.response)
+        if(error.response) {
+          dispatch({
+            type: actionTypes.UPDATE_CUSTOMER_PROFILE_ERROR,
             payload: error.response.data.error.message
           })
         }

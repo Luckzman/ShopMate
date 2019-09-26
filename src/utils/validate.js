@@ -45,8 +45,8 @@ const userProfileValidator = (user) => {
   } else if (!validator.isEmail(user.email)) {
     errors.email = 'Invalid Email Address';
   }
-  if (validator.isEmpty(user.password)) {
-    errors.password = 'Password field is required';
+  if (validator.isEmpty(user.name)) {
+    errors.name = 'Name field is required';
   } 
   return errors;
 }

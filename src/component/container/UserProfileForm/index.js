@@ -4,32 +4,43 @@ import { connect } from 'react-redux';
 import Input from '../../presentation/Input';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
+import { getCustomerProfile, updateCustomerProfile } from '../../../store/actions';
 import { userProfileValidator } from '../../../utils/validate';
 import '../LoginForm/LoginForm.scss';
 
-export class SignupForm extends Component {
+export class UserProfileForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {
-        name: '',
-        email: '',
-        password: '',
-        mobilePhone: '',
-        dayPhone: '',
-        eveningPhone: '',
+        mob_phone: '',
+        day_phone: '',
+        eve_phone: '',
       },
       errors: {}
     };
   }
 
+  componentDidMount = () => {
+    const { getCustomerProfile } = this.props;
+    getCustomerProfile();
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
+    const {customers: { customer: { name, email } }} = this.props;
+    console.log(user, 'user');
+    user.name = name;
+    user.email = email;
+    const { updateCustomerProfile } = this.props;
     const errors = userProfileValidator(user);
     if (errors) {
+      console.log(errors, 'errors')
       this.setState({ errors });
     }
+    updateCustomerProfile(user);
+    
   };
 
   handleChange = (event) => {
@@ -41,37 +52,30 @@ export class SignupForm extends Component {
 
   render() {
     const { user, errors } = this.state;
+    const { customers } = this.props;
+    console.log(customers, 'customers')
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
-        <h3 className="heading">SIGNUP</h3>
+        <h3 className="heading">Customer Profile</h3>
         <Input
           name="name"
-          value={user.name}
-          onChange={this.handleChange}
+          value={ customers.customer.name}
+          disabled={true}
           placeholder="Name"
         />
         {errors.name && <InlineError text={errors.name} />}
         
         <Input
           name="email"
-          value={user.email}
-          onChange={this.handleChange}
+          value={ customers.customer.email }
+          disabled={true}
           placeholder="Email"
         />
         {errors.email && <InlineError text={errors.email} />}
 
         <Input
-          name="password"
-          value={user.password}
-          type="password"
-          placeholder="Password"
-          onChange={this.handleChange}
-        />
-        {errors.password && <InlineError text={errors.password} />}
-
-        <Input
-          name="mobile-phone"
-          value={user.mobilePhone}
+          name="mob_phone"
+          value={user.mob_phone }
           type="text"
           placeholder="Mobile Phone"
           onChange={this.handleChange}
@@ -79,8 +83,8 @@ export class SignupForm extends Component {
         {errors.mobilePhone && <InlineError text={errors.mobilePhone} />}
         
         <Input
-          name="day-phone"
-          value={user.dayPhone}
+          name="day_phone"
+          value={ user.day_phone }
           type="text"
           placeholder= "Day Phone"
           onChange={this.handleChange}
@@ -88,14 +92,13 @@ export class SignupForm extends Component {
         {errors.dayPhone && <InlineError text={errors.dayPhone} />}
         
         <Input
-          name="evening-phone"
-          value={user.eveningPhone}
+          name="eve_phone"
+          value={ user.eve_phone }
           type="text"
           placeholder= "Evening Phone"
           onChange={this.handleChange}
         />
         {errors.eveningPhone && <InlineError text={errors.eveningPhone} />}
-        
         
         <Button type="submit" name="Update Profile" handleClick={this.handleSubmit} />
       </form>
@@ -104,13 +107,14 @@ export class SignupForm extends Component {
 }
 
 const mapStateToProps = state => {
-  return ({ user: state.auth })
+  const { customers } = state;
+  return ({ customers })
 };
 
-SignupForm.propTypes = {
-  user: PropTypes.object,
+UserProfileForm.propTypes = {
+  customers: PropTypes.object,
 };
 
-SignupForm.defaultProps = { user: {} };
+UserProfileForm.defaultProps = { customers: {} };
 
-export default connect(mapStateToProps, null)(SignupForm);
+export default connect(mapStateToProps, { getCustomerProfile, updateCustomerProfile })(UserProfileForm);
