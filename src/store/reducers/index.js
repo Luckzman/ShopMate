@@ -47,7 +47,7 @@ export const products = (state = {}, action) => {
     case actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT_ERROR:
       return action.payload;
     default:
-      return state
+      return state;
   }
 }
 
@@ -101,6 +101,16 @@ export const customers = (state = {message: '', isAuthenticated: false}, action)
           ...state,
           message: action.payload
         }
+      case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS:
+        return {
+          ...state,
+          customer: action.payload,
+        }
+      case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERRORR:
+        return {
+          ...state,
+          message: action.payload
+        }
       case actionTypes.LOGIN_CUSTOMER_ERROR:
         return {
           ...state,
@@ -139,6 +149,17 @@ export const cart = (state = {isCartCreated: false}, action) => {
         ...state,
         ...action.payload
       };
+    default:
+      return state
+  }
+}
+
+export const regions = (state = [], action) => {
+  switch(action.type) {
+    case actionTypes.GET_REGION:
+      return action.payload
+    case actionTypes.GET_REGION_ERROR:
+      return action.payload
     default:
       return state
   }

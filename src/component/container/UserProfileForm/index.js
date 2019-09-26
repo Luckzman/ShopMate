@@ -46,7 +46,7 @@ export class UserProfileForm extends Component {
   handleChange = (event) => {
     const { user } = this.state;
     const { name, value } = event.target;
-    user[name] = value;
+    user[name] = value
     this.setState({ user });
   };
 
