@@ -1,5 +1,5 @@
 .qty-selector{
-  margin: 10px 0;
+  text-align: center;
   .qty-name{
     font-size: 0.8rem;
     font-weight: 900;
@@ -21,8 +21,16 @@
     width: 50px;
     border: 1px solid rgb(167, 167, 167);
     border-radius: 20px;
-    text-align: center;
     padding: 3px;
-    
+    text-align: center;
+  }
+  .update-qty{
+    cursor: pointer;
+    font-size: 0.7rem;
+    text-align: center;
+    .icon{
+      color: #ffa500;
+      margin-right: 5px;
+    }
   }
 }

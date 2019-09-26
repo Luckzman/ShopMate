@@ -35,7 +35,9 @@ export const actionTypes = {
   UPDATE_CUSTOMER_SHIPPING_DETAILS: "UPDATE_CUSTOMER_SHIPPING_DETAILS",
   UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR: "UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR",
   UPDATE_CART_ITEM_QUANTITY: "UPDATE_CART_ITEM_QUANTITY",
-  UPDATE_CART_ITEM_QUANTITY_ERROR: "UPDATE_CART_ITEM_QUANTITY_ERROR"
+  UPDATE_CART_ITEM_QUANTITY_ERROR: "UPDATE_CART_ITEM_QUANTITY_ERROR",
+  GET_CART_ITEMS: "GET_CART_ITEMS",
+  GET_CART_ITEMS_ERROR: "GET_CART_ITEMS_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -295,6 +297,26 @@ export const updateCartItemQuantity = (itemId, quantity) => {
         if(error.response) {
           dispatch({
             type: actionTypes.UPDATE_CART_ITEM_QUANTITY_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const getAllCartItem = (cartId) => {
+  return (dispatch) => {
+    return axios.get(`https://backendapi.turing.com/shoppingcart/${cartId}`)
+    .then((response) => {
+        dispatch({
+          type: actionTypes.GET_CART_ITEMS,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.GET_CART_ITEMS_ERROR,
             payload: error.response.data.error.message
           })
         }
