@@ -33,7 +33,9 @@ export const actionTypes = {
   GET_REGION: "GET_REGION",
   GET_REGION_ERROR: "GET_REGION_ERROR",
   UPDATE_CUSTOMER_SHIPPING_DETAILS: "UPDATE_CUSTOMER_SHIPPING_DETAILS",
-  UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR: "UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR"
+  UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR: "UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR",
+  UPDATE_CART_ITEM_QUANTITY: "UPDATE_CART_ITEM_QUANTITY",
+  UPDATE_CART_ITEM_QUANTITY_ERROR: "UPDATE_CART_ITEM_QUANTITY_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -261,21 +263,38 @@ export const updateCustomerProfile = (userProfile) => {
 }
 
 export const updateShippingInfo = (shippingDetails) => {
-  console.log(shippingDetails, '>>><<<>>')
   return (dispatch) => {
     return axios.put("https://backendapi.turing.com/customers/address", shippingDetails, config)
     .then((response) => {
-      console.log(response)
         dispatch({
           type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS,
           payload: response.data,
         })
       })
       .catch((error) => {
-        console.log(error.response)
         if(error.response) {
           dispatch({
             type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+    }
+}
+
+export const updateCartItemQuantity = (itemId, quantity) => {
+  return (dispatch) => {
+    return axios.put(`https://backendapi.turing.com/shoppingcart/update/${itemId}`, {quantity})
+    .then((response) => {
+        dispatch({
+          type: actionTypes.UPDATE_CART_ITEM_QUANTITY,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.UPDATE_CART_ITEM_QUANTITY_ERROR,
             payload: error.response.data.error.message
           })
         }

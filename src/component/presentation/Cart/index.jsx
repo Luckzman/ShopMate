@@ -3,9 +3,8 @@ import {Link} from 'react-router-dom';
 import QuantitySelector from '../QuantitySelector';
 import './cart.scss';
 
-const Cart = ({cart, removeCartItem}) => {
+const Cart = ({cart, removeCartItem,  updateCartQty}) => {
   const { data } = cart;
-  console.log(data, 'cart')
   return (
     <div className="cart">
       <h5 className="title">{`${data.length} Item In Your Cart`}</h5>
@@ -30,7 +29,7 @@ const Cart = ({cart, removeCartItem}) => {
                 </div>
                 <p className="size">{size}</p>
                 <div className="qty">
-                  <QuantitySelector />
+                  <QuantitySelector getQuantity={(quantity) => {updateCartQty(item.item_id, quantity )}} />
                 </div>
                 <p className="price">&pound;{item.price}</p>
               </div>
