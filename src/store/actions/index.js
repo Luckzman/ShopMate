@@ -29,7 +29,11 @@ export const actionTypes = {
   GET_CUSTOMER_PROFILE: "GET_CUSTOMER_PROFILE",
   GET_CUSTOMER_PROFILE_ERROR: "GET_CUSTOMER_PROFILE_ERROR",
   UPDATE_CUSTOMER_PROFILE: "UPDATE_CUSTOMER_PROFILE",
-  UPDATE_CUSTOMER_PROFILE_ERROR: "UPDATE_CUSTOMER_PROFILE_ERROR"
+  UPDATE_CUSTOMER_PROFILE_ERROR: "UPDATE_CUSTOMER_PROFILE_ERROR",
+  GET_REGION: "GET_REGION",
+  GET_REGION_ERROR: "GET_REGION_ERROR",
+  UPDATE_CUSTOMER_SHIPPING_DETAILS: "UPDATE_CUSTOMER_SHIPPING_DETAILS",
+  UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR: "UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -249,6 +253,51 @@ export const updateCustomerProfile = (userProfile) => {
         if(error.response) {
           dispatch({
             type: actionTypes.UPDATE_CUSTOMER_PROFILE_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const updateShippingInfo = (shippingDetails) => {
+  console.log(shippingDetails, '>>><<<>>')
+  return (dispatch) => {
+    return axios.put("https://backendapi.turing.com/customers/address", shippingDetails, config)
+    .then((response) => {
+      console.log(response)
+        dispatch({
+          type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error.response)
+        if(error.response) {
+          dispatch({
+            type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const getRegions = () => {
+  return (dispatch) => {
+    return axios.get("https://backendapi.turing.com/shipping/regions")
+    .then((response) => {
+      console.log(response)
+        dispatch({
+          type: actionTypes.GET_REGION,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error.response)
+        if(error.response) {
+          dispatch({
+            type: actionTypes.GET_REGION_ERROR,
             payload: error.response.data.error.message
           })
         }
