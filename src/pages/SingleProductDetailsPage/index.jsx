@@ -4,26 +4,25 @@ import {Link} from 'react-router-dom'
 import Ratings from 'react-star-ratings';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import NavBar from '../../component/presentation/NavBar';
-import Cart from '../../component/presentation/Cart';
+import Cart from '../../component/container/Cart';
 import Modal from '../../component/presentation/Modal';
 import SizePicker from '../../component/presentation/SizePicker';
 import RadioButton from '../../component/presentation/RadioButton';
-import QuantitySelector from '../../component/presentation/QuantitySelector';
-import { getSingleProductDetails, addProductToCart, removeCartItem, updateCartItemQuantity } from '../../store/actions';
+import { getSingleProductDetails, addProductToCart, removeCartItem, updateCartItemQuantity, getAllCartItem } from '../../store/actions';
 import './SingleProductDetailsPage.scss';
 
 class SingleProductDetailPage extends Component {
   state = {
     color: 'grey',
     rating: 4,
-    quantity: 1,
     size: '',
     displayModal: false,
   }
 
   componentDidMount(){
-    const { getSingleProductDetails, match: { params: { id }} } = this.props;
+    const { getSingleProductDetails, getAllCartItem, match: { params: { id }}, cart } = this.props;
     getSingleProductDetails(id);
+    getAllCartItem(cart.cart_id);
   }
 
   handleColorChange = e => {
@@ -47,15 +46,6 @@ class SingleProductDetailPage extends Component {
     this.setState(() => ({ displayModal: !displayModal }));
   }
 
-  handleRemoveCartItem = (id, productId) => {
-    const { removeCartItem } = this.props;
-    removeCartItem(id, productId);
-  }
-  
-  handleCartQuantity = (itemId, quantity) => {
-    const { updateCartItemQuantity } = this.props;
-    updateCartItemQuantity(itemId, quantity)
-  }
 
   
   render() {
@@ -68,8 +58,8 @@ class SingleProductDetailPage extends Component {
           showModal={this.handleToggleModal} 
           cartCount={(cart.data) ? cart.data.length : 0}
         />
-        {displayModal && cart.data && <Modal hideModal={this.handleToggleModal}>
-          <Cart cart={cart} removeCartItem={this.handleRemoveCartItem} updateCartQty={this.handleCartQuantity} />
+        {displayModal && <Modal hideModal={this.handleToggleModal}>
+          <Cart />
         </Modal> }
         <div className="container">
           <div className="product">
@@ -111,7 +101,8 @@ class SingleProductDetailPage extends Component {
 
 const mapStateToProps = (state) => {
   const {productDetails, cart, customers} = state;
+  // console.log(cart);
   return {productDetails, cart, customers};
 }
 
-export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem, updateCartItemQuantity })(SingleProductDetailPage);
+export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem, updateCartItemQuantity, getAllCartItem })(SingleProductDetailPage);

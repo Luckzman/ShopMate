@@ -139,6 +139,16 @@ export const cart = (state = {isCartCreated: false}, action) => {
         ...state,
         data: action.payload
       }
+    case actionTypes.GET_CART_ITEMS:
+      return {
+        ...state,
+        data: action.payload
+      }
+    case actionTypes.GET_CART_ITEMS_ERROR:
+      return {
+        ...state,
+        ...action.payload
+      }
     case actionTypes.UPDATE_CART_ITEM_QUANTITY:
       return {
         ...state,
