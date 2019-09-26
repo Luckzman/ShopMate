@@ -12,18 +12,17 @@ class QuantitySelector extends Component {
     const { quantity } = this.state;
     if(quantity > 1) {
       this.setState({quantity: quantity-1})
-      this.props.quantity(quantity)
     }
   }
   
   increment = () => {
     const { quantity } = this.state;
     this.setState({quantity: quantity+1})
-    this.props.quantity(quantity)
   }
   
   render() {
     const { quantity } = this.state;
+    this.props.getQuantity(quantity)
     return (
       <div className="qty-selector">
         <button className="qty-btn minus-btn" onClick={this.decrement}>&#06;</button>

@@ -9,7 +9,7 @@ import Modal from '../../component/presentation/Modal';
 import SizePicker from '../../component/presentation/SizePicker';
 import RadioButton from '../../component/presentation/RadioButton';
 import QuantitySelector from '../../component/presentation/QuantitySelector';
-import { getSingleProductDetails, addProductToCart, removeCartItem } from '../../store/actions';
+import { getSingleProductDetails, addProductToCart, removeCartItem, updateCartItemQuantity } from '../../store/actions';
 import './SingleProductDetailsPage.scss';
 
 class SingleProductDetailPage extends Component {
@@ -48,10 +48,15 @@ class SingleProductDetailPage extends Component {
   }
 
   handleRemoveCartItem = (id, productId) => {
-    console.log(id, productId);
     const { removeCartItem } = this.props;
     removeCartItem(id, productId);
   }
+  
+  handleCartQuantity = (itemId, quantity) => {
+    const { updateCartItemQuantity } = this.props;
+    updateCartItemQuantity(itemId, quantity)
+  }
+
   
   render() {
     const { productDetails, cart } = this.props;
@@ -64,7 +69,7 @@ class SingleProductDetailPage extends Component {
           cartCount={(cart.data) ? cart.data.length : 0}
         />
         {displayModal && cart.data && <Modal hideModal={this.handleToggleModal}>
-          <Cart cart={cart} removeCartItem={this.handleRemoveCartItem} />
+          <Cart cart={cart} removeCartItem={this.handleRemoveCartItem} updateCartQty={this.handleCartQuantity} />
         </Modal> }
         <div className="container">
           <div className="product">
@@ -106,8 +111,7 @@ class SingleProductDetailPage extends Component {
 
 const mapStateToProps = (state) => {
   const {productDetails, cart, customers} = state;
-  console.log(state, 'state');
   return {productDetails, cart, customers};
 }
 
-export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem })(SingleProductDetailPage);
+export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem, updateCartItemQuantity })(SingleProductDetailPage);
