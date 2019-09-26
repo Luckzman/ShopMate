@@ -62,28 +62,48 @@ export const productDetails = (state = {}, action) => {
   }
 }
 
-export const customers = (state = {message: '', error: false}, action) => {
+export const customers = (state = {message: '', isAuthenticated: false}, action) => {
   switch(action.type) {
     case actionTypes.SIGNUP_CUSTOMER:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
+        isAuthenticated: true
       }
       case actionTypes.SIGNUP_CUSTOMER_ERROR:
         return {
           ...state,
-          error: true,
           message: action.payload,
         }
       case actionTypes.LOGIN_CUSTOMER:
         return {
           ...state,
-          ...action.payload
+          ...action.payload,
+          isAuthenticated: true
+        }
+      case actionTypes.GET_CUSTOMER_PROFILE:
+        return {
+          ...state,
+          customer: action.payload,
+        }
+      case actionTypes.GET_CUSTOMER_PROFILE_ERRORR:
+        return {
+          ...state,
+          message: action.payload
+        }
+      case actionTypes.UPDATE_CUSTOMER_PROFILE:
+        return {
+          ...state,
+          customer: action.payload,
+        }
+      case actionTypes.UPDATE_CUSTOMER_PROFILE_ERRORR:
+        return {
+          ...state,
+          message: action.payload
         }
       case actionTypes.LOGIN_CUSTOMER_ERROR:
         return {
           ...state,
-          error: true,
           message: action.payload
         }
     default:
