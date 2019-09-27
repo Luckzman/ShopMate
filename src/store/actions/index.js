@@ -248,14 +248,12 @@ export const updateCustomerProfile = (userProfile) => {
   return (dispatch) => {
     return axios.put("https://backendapi.turing.com/customer", userProfile, config)
     .then((response) => {
-      console.log(response)
         dispatch({
           type: actionTypes.UPDATE_CUSTOMER_PROFILE,
           payload: response.data,
         })
       })
       .catch((error) => {
-        console.log(error.response)
         if(error.response) {
           dispatch({
             type: actionTypes.UPDATE_CUSTOMER_PROFILE_ERROR,
@@ -327,20 +325,15 @@ export const getAllCartItem = (cartId) => {
 }
 
 export const getTotalAmount = (cartId) => {
-  console.log("hiiiiiiiiiii")
-  console.log(cartId);
   return (dispatch) => {
     return axios.get(`https://backendapi.turing.com/shoppingcart/totalAmount/${cartId}`)
     .then((response) => {
-        console.log(response)
         dispatch({
           type: actionTypes.GET_TOTAL_AMOUNT,
           payload: response.data,
         })
       })
       .catch((error) => {
-        console.log(error)
-        console.log(error.response)
         if(error.response) {
           dispatch({
             type: actionTypes.GET_TOTAL_AMOUNT_ERROR,
@@ -355,14 +348,12 @@ export const getRegions = () => {
   return (dispatch) => {
     return axios.get("https://backendapi.turing.com/shipping/regions")
     .then((response) => {
-      console.log(response)
         dispatch({
           type: actionTypes.GET_REGION,
           payload: response.data,
         })
       })
       .catch((error) => {
-        console.log(error.response)
         if(error.response) {
           dispatch({
             type: actionTypes.GET_REGION_ERROR,
@@ -372,29 +363,6 @@ export const getRegions = () => {
       })
   }
 }
-
-// export const getTotalAmount = (cartId) => {
-//   console.log(cartId, 'cartId');
-//   return (dispatch) => {
-//     return axios.get(`https://backendapi.turing.com/shoppingcart/totalAmoun/${cartId}`)
-//     .then((response) => {
-//       console.log(response)
-//         dispatch({
-//           type: actionTypes.GET_TOTAL_AMOUNT,
-//           payload: response.data,
-//         })
-//       })
-//       .catch((error) => {
-//         console.log(error.response)
-//         if(error.response) {
-//           dispatch({
-//             type: actionTypes.GET_TOTAL_AMOUNT_ERROR,
-//             payload: error.response.error.message
-//           })
-//         }
-//       })
-//   }
-// }
 
 export const addProductToCart = (productId, attributes) => {
   return (dispatch, getState) => {

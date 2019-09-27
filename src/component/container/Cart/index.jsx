@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
+import Modal from '../../presentation/Modal';
+import OrderSummaryCard from '../../presentation/OrderSummaryCard';
 import {
   removeCartItem,
   getTotalAmount,
@@ -11,6 +13,10 @@ import QuantitySelector from '../../presentation/QuantitySelector';
 import './cart.scss';
 
 class Cart extends Component {
+
+  state = {
+    showOrderSummaryModal: false,
+  }
 
   componentDidMount() {
     const { getAllCartItem, cart } = this.props;
@@ -27,11 +33,24 @@ class Cart extends Component {
     updateCartItemQuantity(itemId, quantity)  
     getTotalAmount(cart.cart_id);  
   }
+
+  handleShowOrderSummaryModal = () => {
+    const { showOrderSummaryModal } = this.state;
+    this.setState({ showOrderSummaryModal: !showOrderSummaryModal });
+  }
   
   render() {
     const { cart } = this.props;
+    const { showOrderSummaryModal } = this.state;
     return (
       <div className="cart">
+        {showOrderSummaryModal &&
+          <Modal 
+            modalSize={"sm"}
+            hideModal={this.handleShowOrderSummaryModal}
+          >
+            <OrderSummaryCard cart={cart} />
+          </Modal>}
         <h5 className="title">{`${cart.data.length} Item In Your Cart`}</h5>
         <div className="cart-header">
           <p className="item-name">Item</p>
@@ -65,7 +84,7 @@ class Cart extends Component {
         </div>
         <div className="cart-footer">
           <Link className="back-btn" to="/">Back to Shop</Link>
-          <button className="checkout-btn" onClick={this.showOrderSummary}>Order</button>
+          <button className="checkout-btn" onClick={this.handleShowOrderSummaryModal}>Order</button>
         </div>
       </div>
     )

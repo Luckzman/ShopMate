@@ -1,0 +1,31 @@
+.summary {
+  color: #555;
+  .summary-heading{
+    margin-bottom: 10px;
+  }
+  .summary-content{
+    margin-top: 15px;
+    .details{
+      font-weight: 800;
+      color: #777;
+    }
+  }
+  .summary-details{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    .price{
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+  }
+  .summary-footer{
+    display: flex;
+    // border-top: 2px solid #ccc;
+    padding-top: 10px;
+    justify-content: space-between;
+    .total-price{
+      font-weight: 700;
+    }
+  }
+}

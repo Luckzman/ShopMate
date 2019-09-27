@@ -89,16 +89,16 @@ class Home extends Component {
           handleShippingDetailsModal={this.handleToggleShippingDetailsModal}
         />
         <NavBar searchProduct={this.handleSearch} cartCount={(cart.data) ? cart.data.length: 0} />
-        {displayLoginModal && <Modal classes="modal-width" hideModal={this.handleToggleLoginModal} >
+        {displayLoginModal && <Modal modalSize={"sm"} hideModal={this.handleToggleLoginModal} >
           <LoginForm />
         </Modal>}
-        {displaySignupModal && <Modal classes="modal-width" hideModal={this.handleToggleSignupModal}>
+        {displaySignupModal && <Modal modalSize={"sm"}  hideModal={this.handleToggleSignupModal}>
           <SignupForm />
         </Modal>}
-        {displayProfileModal && <Modal classes="modal-width" hideModal={this.handleToggleProfileModal}>
+        {displayProfileModal && <Modal modalSize={"sm"} hideModal={this.handleToggleProfileModal}>
           <UserProfileForm />
         </Modal>}
-        {displayShippingDetailsModal && <Modal classes="modal-width" hideModal={this.handleToggleShippingDetailsModal}>
+        {displayShippingDetailsModal && <Modal modalSize={"sm"} hideModal={this.handleToggleShippingDetailsModal}>
           <ShippingDetailsForm />
         </Modal>}
         <div className="container homepage mt-5">
