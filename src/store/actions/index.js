@@ -37,7 +37,9 @@ export const actionTypes = {
   UPDATE_CART_ITEM_QUANTITY: "UPDATE_CART_ITEM_QUANTITY",
   UPDATE_CART_ITEM_QUANTITY_ERROR: "UPDATE_CART_ITEM_QUANTITY_ERROR",
   GET_CART_ITEMS: "GET_CART_ITEMS",
-  GET_CART_ITEMS_ERROR: "GET_CART_ITEMS_ERROR"
+  GET_CART_ITEMS_ERROR: "GET_CART_ITEMS_ERROR",
+  GET_TOTAL_AMOUNT: "GET_TOTAL_AMOUNT",
+  GET_TOTAL_AMOUNT_ERROR: "GET_TOTAL_AMOUNT_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -324,6 +326,31 @@ export const getAllCartItem = (cartId) => {
   }
 }
 
+export const getTotalAmount = (cartId) => {
+  console.log("hiiiiiiiiiii")
+  console.log(cartId);
+  return (dispatch) => {
+    return axios.get(`https://backendapi.turing.com/shoppingcart/totalAmount/${cartId}`)
+    .then((response) => {
+        console.log(response)
+        dispatch({
+          type: actionTypes.GET_TOTAL_AMOUNT,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+        console.log(error.response)
+        if(error.response) {
+          dispatch({
+            type: actionTypes.GET_TOTAL_AMOUNT_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
 export const getRegions = () => {
   return (dispatch) => {
     return axios.get("https://backendapi.turing.com/shipping/regions")
@@ -345,6 +372,29 @@ export const getRegions = () => {
       })
   }
 }
+
+// export const getTotalAmount = (cartId) => {
+//   console.log(cartId, 'cartId');
+//   return (dispatch) => {
+//     return axios.get(`https://backendapi.turing.com/shoppingcart/totalAmoun/${cartId}`)
+//     .then((response) => {
+//       console.log(response)
+//         dispatch({
+//           type: actionTypes.GET_TOTAL_AMOUNT,
+//           payload: response.data,
+//         })
+//       })
+//       .catch((error) => {
+//         console.log(error.response)
+//         if(error.response) {
+//           dispatch({
+//             type: actionTypes.GET_TOTAL_AMOUNT_ERROR,
+//             payload: error.response.error.message
+//           })
+//         }
+//       })
+//   }
+// }
 
 export const addProductToCart = (productId, attributes) => {
   return (dispatch, getState) => {
