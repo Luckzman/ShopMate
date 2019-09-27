@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { removeCartItem, updateCartItemQuantity, getAllCartItem } from '../../../store/actions';
+import {
+  removeCartItem,
+  getTotalAmount,
+  updateCartItemQuantity,
+  getAllCartItem
+} from '../../../store/actions';
 import QuantitySelector from '../../presentation/QuantitySelector';
 import './cart.scss';
 
@@ -9,9 +14,8 @@ class Cart extends Component {
 
   componentDidMount() {
     const { getAllCartItem, cart } = this.props;
-    getAllCartItem(cart.cart_id);
+    getAllCartItem(cart.cart_id); 
   }
-
   
   handleRemoveCartItem = (id, productId) => {
     const { removeCartItem } = this.props;
@@ -19,17 +23,16 @@ class Cart extends Component {
   }
   
   handleCartQuantity = (itemId, quantity) => {
-    console.log(itemId, quantity)
-    const { updateCartItemQuantity } = this.props;
-    updateCartItemQuantity(itemId, quantity)
+    const { updateCartItemQuantity, getTotalAmount, cart } = this.props;
+    updateCartItemQuantity(itemId, quantity)  
+    getTotalAmount(cart.cart_id);  
   }
   
   render() {
-    const { cart: {data} } = this.props;
-    console.log(this.props.cart)
+    const { cart } = this.props;
     return (
       <div className="cart">
-        <h5 className="title">{`${data.length} Item In Your Cart`}</h5>
+        <h5 className="title">{`${cart.data.length} Item In Your Cart`}</h5>
         <div className="cart-header">
           <p className="item-name">Item</p>
           <p className="size">Size</p>
@@ -39,7 +42,7 @@ class Cart extends Component {
         </div>
         <div className="cart-container">
           {
-            data.map((item, index) => {
+            cart.data.map((item, index) => {
               const size = item.attributes.split(' ')[0];
               const color = item.attributes.split(' ')[1];
               return (
@@ -55,7 +58,6 @@ class Cart extends Component {
                   </div>
                   <p className="price">&pound;{item.price}</p>
                   <p className="subtotal">&pound;{item.subtotal}</p>
-                  
                 </div>
               )
             })
@@ -63,7 +65,7 @@ class Cart extends Component {
         </div>
         <div className="cart-footer">
           <Link className="back-btn" to="/">Back to Shop</Link>
-          <button className="checkout-btn">Checkout</button>
+          <button className="checkout-btn" onClick={this.showOrderSummary}>Order</button>
         </div>
       </div>
     )
@@ -72,8 +74,12 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   const { cart } = state;
-  // console.log(cart, 'cart');
   return {cart}
 }
 
-export default connect(mapStateToProps, {removeCartItem, updateCartItemQuantity, getAllCartItem })(Cart);
+export default connect(mapStateToProps, {
+  removeCartItem,
+  getTotalAmount,
+  updateCartItemQuantity,
+  getAllCartItem
+})(Cart);
