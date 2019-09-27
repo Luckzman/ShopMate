@@ -2,25 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import Modal from '../../presentation/Modal';
-import OrderSummaryCard from '../../presentation/OrderSummaryCard';
+import OrderSummaryCard from '../OrderSummaryCard';
 import {
   removeCartItem,
   getTotalAmount,
   updateCartItemQuantity,
-  getAllCartItem
+  getAllCartItem,
+  getCustomerProfile,
+  placeOrder,
 } from '../../../store/actions';
 import QuantitySelector from '../../presentation/QuantitySelector';
 import './cart.scss';
 
 class Cart extends Component {
-
+  
   state = {
     showOrderSummaryModal: false,
   }
-
+  
   componentDidMount() {
-    const { getAllCartItem, cart } = this.props;
+    const { getAllCartItem, getTotalAmount, getCustomerProfile, cart } = this.props;
     getAllCartItem(cart.cart_id); 
+    getTotalAmount(cart.cart_id);
+    getCustomerProfile();
   }
   
   handleRemoveCartItem = (id, productId) => {
@@ -29,18 +33,28 @@ class Cart extends Component {
   }
   
   handleCartQuantity = (itemId, quantity) => {
-    const { updateCartItemQuantity, getTotalAmount, cart } = this.props;
-    updateCartItemQuantity(itemId, quantity)  
-    getTotalAmount(cart.cart_id);  
+    const { updateCartItemQuantity, cart } = this.props;
+    updateCartItemQuantity(itemId, quantity); 
   }
-
+  
+  // check if user is authenticated else display signup/login modal
+  // check if user shipping details is updated else display shipping update modal
+  // proceed to order summary modal and checkout.
   handleShowOrderSummaryModal = () => {
     const { showOrderSummaryModal } = this.state;
+    const { placeOrder, cart } = this.props;
+    const order = {
+      cart_id: cart.cart_id,
+      shipping_id: 1,
+      tax_id: 1
+    }
+    placeOrder(order);
     this.setState({ showOrderSummaryModal: !showOrderSummaryModal });
   }
   
   render() {
-    const { cart } = this.props;
+    const { cart, customers } = this.props;
+    // console.log(customers, 'customers')
     const { showOrderSummaryModal } = this.state;
     return (
       <div className="cart">
@@ -49,7 +63,7 @@ class Cart extends Component {
             modalSize={"sm"}
             hideModal={this.handleShowOrderSummaryModal}
           >
-            <OrderSummaryCard cart={cart} />
+            <OrderSummaryCard />
           </Modal>}
         <h5 className="title">{`${cart.data.length} Item In Your Cart`}</h5>
         <div className="cart-header">
@@ -92,13 +106,16 @@ class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { cart } = state;
-  return {cart}
+  const { cart, customers } = state;
+  console.log(state, 'store');
+  return {cart, customers}
 }
 
 export default connect(mapStateToProps, {
   removeCartItem,
-  getTotalAmount,
   updateCartItemQuantity,
-  getAllCartItem
+  getTotalAmount,
+  getAllCartItem,
+  getCustomerProfile,
+  placeOrder
 })(Cart);

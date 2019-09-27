@@ -39,7 +39,11 @@ export const actionTypes = {
   GET_CART_ITEMS: "GET_CART_ITEMS",
   GET_CART_ITEMS_ERROR: "GET_CART_ITEMS_ERROR",
   GET_TOTAL_AMOUNT: "GET_TOTAL_AMOUNT",
-  GET_TOTAL_AMOUNT_ERROR: "GET_TOTAL_AMOUNT_ERROR"
+  GET_TOTAL_AMOUNT_ERROR: "GET_TOTAL_AMOUNT_ERROR",
+  PLACE_ORDER: "PLACE_ORDER",
+  PLACE_ORDER_ERROR: "PLACE_ORDER_ERROR",
+  GET_ORDER_DETAILS: "GET_ORDER_DETAILS",
+  GET_ORDER_DETAILS_ERROR: "GET_ORDER_DETAILS_ERROR"
 }
 
 export const getAllCategories = () => {
@@ -218,6 +222,48 @@ export const loginCustomer = (user) => {
           dispatch({
             type: actionTypes.LOGIN_CUSTOMER_ERROR,
             payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const placeOrder = (order) => {
+  return (dispatch) => {
+    return axios.post("https://backendapi.turing.com/orders", order, config)
+    .then((response) => {
+        dispatch({
+          type: actionTypes.PLACE_ORDER,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        if(error.response) {
+          dispatch({
+            type: actionTypes.PLACE_ORDER_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
+export const getOrderDetails = (orderId) => {
+  console.log(orderId, 'id');
+  return (dispatch) => {
+    return axios.get(`https://backendapi.turing.com/orders/${orderId}`, config)
+    .then((response) => {
+        dispatch({
+          type: actionTypes.GET_ORDER_DETAILS,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error.response);
+        if(error.response) {
+          dispatch({
+            type: actionTypes.GET_ORDER_DETAILS_ERROR,
+            payload: error.response.data.message
           })
         }
       })

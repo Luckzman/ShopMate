@@ -194,3 +194,27 @@ export const regions = (state = [], action) => {
       return state
   }
 }
+
+export const orders = (state = {}, action) => {
+  switch(action.type) {
+    case actionTypes.PLACE_ORDER:
+      return action.payload
+    case actionTypes.PLACE_ORDER_ERROR:
+      return {
+        ...state,
+        ...action.payload
+      }
+    case actionTypes.GET_ORDER_DETAILS:
+      return {
+        ...state,
+        data: action.payload
+      }
+    case actionTypes.GET_ORDER_DETAILS_ERROR:
+      return {
+        ...state,
+        error_message: action.payload
+      }
+    default:
+      return state;
+  }
+}
