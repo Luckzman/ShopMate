@@ -36,10 +36,12 @@
       }
     }
     .modalContent {
-      // overflow-y: scroll;
+      overflow-y: auto;
       padding: 10px;
-      // height: 480px;
-
+      max-height: 480px;
     }
+  }
+  .sm-size {
+    width: 320px;
   }
 }
