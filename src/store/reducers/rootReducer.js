@@ -7,7 +7,8 @@ import {
   cart,
   customers,
   regions,
-  orders
+  orders,
+  stripe
 } from './';
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
   cart,
   customers,
   regions,
-  orders
+  orders,
+  stripe
 })

@@ -218,3 +218,14 @@ export const orders = (state = {}, action) => {
       return state;
   }
 }
+
+export const stripe = (state = {}, action) => {
+  switch(action.type) {
+    case actionTypes.CREATE_STRIPE_CHARGE:
+      return action.payload
+    case actionTypes.CREATE_STRIPE_CHARGE_ERROR:
+      return action.payload
+    default:
+      return state;
+  }
+}

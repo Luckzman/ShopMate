@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Elements, StripeProvider } from 'react-stripe-elements';
 import {Link} from 'react-router-dom';
 import Modal from '../../presentation/Modal';
 import OrderSummaryCard from '../OrderSummaryCard';
@@ -54,53 +55,56 @@ class Cart extends Component {
   
   render() {
     const { cart, customers } = this.props;
-    // console.log(customers, 'customers')
     const { showOrderSummaryModal } = this.state;
     return (
-      <div className="cart">
-        {showOrderSummaryModal &&
-          <Modal 
-            modalSize={"sm"}
-            hideModal={this.handleShowOrderSummaryModal}
-          >
-            <OrderSummaryCard />
-          </Modal>}
-        <h5 className="title">{`${cart.data.length} Item In Your Cart`}</h5>
-        <div className="cart-header">
-          <p className="item-name">Item</p>
-          <p className="size">Size</p>
-          <p className="qty">Quantity</p>
-          <p className="price">Price</p>
-          <p>SubTotal</p>
-        </div>
-        <div className="cart-container">
-          {
-            cart.data.map((item, index) => {
-              const size = item.attributes.split(' ')[0];
-              const color = item.attributes.split(' ')[1];
-              return (
-                <div key={`${item}${index}`} className="cart-body">
-                  <div className="item-details">
-                    <p className="name">{item.name}</p>
-                    <p>{color}</p>
-                    <p className="remove-text" onClick={() => {this.handleRemoveCartItem(index, item.item_id)}}><span className="remove-btn">&times;</span>Remove</p>
+      <StripeProvider apiKey="pk_test_Si8RHCPkzNZuBJAmF9WkCr5p00kHHjk4wO">
+        <div className="cart">
+          {showOrderSummaryModal &&
+            <Modal 
+              modalSize={"sm"}
+              hideModal={this.handleShowOrderSummaryModal}
+            >
+              <Elements>
+                <OrderSummaryCard />
+              </Elements>
+            </Modal>}
+          <h5 className="title">{`${cart.data.length} Item In Your Cart`}</h5>
+          <div className="cart-header">
+            <p className="item-name">Item</p>
+            <p className="size">Size</p>
+            <p className="qty">Quantity</p>
+            <p className="price">Price</p>
+            <p>SubTotal</p>
+          </div>
+          <div className="cart-container">
+            {
+              cart.data.map((item, index) => {
+                const size = item.attributes.split(' ')[0];
+                const color = item.attributes.split(' ')[1];
+                return (
+                  <div key={`${item}${index}`} className="cart-body">
+                    <div className="item-details">
+                      <p className="name">{item.name}</p>
+                      <p>{color}</p>
+                      <p className="remove-text" onClick={() => {this.handleRemoveCartItem(index, item.item_id)}}><span className="remove-btn">&times;</span>Remove</p>
+                    </div>
+                    <p className="size">{size}</p>
+                    <div className="qty">
+                      <QuantitySelector getQuantity={(quantity) => {this.handleCartQuantity(item.item_id, quantity )}} />
+                    </div>
+                    <p className="price">&pound;{item.price}</p>
+                    <p className="subtotal">&pound;{item.subtotal}</p>
                   </div>
-                  <p className="size">{size}</p>
-                  <div className="qty">
-                    <QuantitySelector getQuantity={(quantity) => {this.handleCartQuantity(item.item_id, quantity )}} />
-                  </div>
-                  <p className="price">&pound;{item.price}</p>
-                  <p className="subtotal">&pound;{item.subtotal}</p>
-                </div>
-              )
-            })
-          }
+                )
+              })
+            }
+          </div>
+          <div className="cart-footer">
+            <Link className="back-btn" to="/">Back to Shop</Link>
+            <button className="checkout-btn" onClick={this.handleShowOrderSummaryModal}>Order</button>
+          </div>
         </div>
-        <div className="cart-footer">
-          <Link className="back-btn" to="/">Back to Shop</Link>
-          <button className="checkout-btn" onClick={this.handleShowOrderSummaryModal}>Order</button>
-        </div>
-      </div>
+      </StripeProvider>
     )
   }
 }

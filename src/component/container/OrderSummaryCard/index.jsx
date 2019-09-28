@@ -1,53 +1,79 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '../../presentation/Button';
-import { getOrderDetails, getTotalAmount } from '../../../store/actions'
+import { CardElement, injectStripe } from 'react-stripe-elements';
+import { createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile } from '../../../store/actions'
 import './OrderSummaryCard.scss';
 
 class OrderSummaryCard extends Component {
+
+  state = {
+    showModal: false
+  }
+
   componentDidMount() {
-    const {getOrderDetails, getTotalAmount, orders, cart } = this.props;
-    // console.log(orders.orderId)
+    const {getTotalAmount, getCustomerProfile, cart } = this.props;
     getTotalAmount(cart.cart_id);
+    getCustomerProfile();
   }
   
   componentDidUpdate(prevProps) {
-    if (this.props.orders.orderId !== prevProps.orders.orderId) {
-      this.props.getOrderDetails(this.props.orders.orderId);
+    const {orders: { orderId }, getOrderDetails} = this.props;
+    if (orderId !== prevProps.orders.orderId) {
+      getOrderDetails(orderId);
     }
   }
 
+  handleCheckout = async() => {
+    const {createStripeCharge, stripe: { createToken }, orders: {orderId}, cart: {total_amount}} = this.props;
+    const { token: {id} } = await createToken();
+    const paymentDetails = {
+      stripeToken: id,
+      order_id: orderId,
+      description: `Checkout with ${orderId}`,
+      amount: total_amount,
+      currency: 'GBP'
+    }
+    createStripeCharge(paymentDetails);
+  }
+
   render() {
-    const {orders, cart} = this.props;
-    console.log(orders, 'orders');
+    const {orders, cart, customers} = this.props;
+    console.log(customers, 'cutomers');
     return (
-      <div className="summary">
-        <h3 className="summary-heading title">Order Summary</h3>
-        <div className="summary-content">
-          <h6 className="details">{`Order Id: ${orders.orderId}`}</h6>
-          <h6 className="details">Details</h6>
-          {orders.data && orders.data.map((order, i) => {
-            return (
-            <div key={`order${i}`} className="summary-details">
-              <p className="details-title">{order.product_name}</p>
-              <p className="price">&pound; {order.subtotal}</p>
-            </div>)})
-          }
+      <>
+        <div className="summary">
+          <h3 className="summary-heading title">Order Summary</h3>
+          <div className="summary-content">
+            <h6 className="details">{`Order Id: ${orders.orderId}`}</h6>
+            <h6 className="details">Details</h6>
+            {orders.data && orders.data.map((order, i) => {
+              return (
+                <div key={`order${i}`} className="summary-details">
+                  <p className="details-title">{order.product_name}</p>
+                  <p className="price">&pound; {order.subtotal}</p>
+                </div>)})
+            }
+          </div>
+          <div className="summary-footer">
+            <h6 className="details">Total</h6>
+            <h6 className="total-price">&pound; {cart.total_amount}</h6>
+          </div>
+          <hr />
+          <div className="checkout">
+            <p>Complete the purchase</p>
+              <CardElement />
+            <Button handleClick={this.handleCheckout}>Pay &pound;{`${cart.total_amount}`}</Button>
+          </div>
         </div>
-        <div className="summary-footer">
-          <h6>Total</h6>
-          <h6 className="total-price">&pound; {cart.total_amount}</h6>
-        </div>
-        <Button name="Checkout" />
-      </div>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { cart, orders } = state;
-  console.log(cart, orders)
-  return { cart, orders };
+  const { cart, orders, customers } = state;
+  return { cart, orders, customers };
 }
 
-export default connect(mapStateToProps, {getOrderDetails, getTotalAmount})(OrderSummaryCard);
+export default injectStripe(connect(mapStateToProps, {createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile})(OrderSummaryCard));
