@@ -100,7 +100,7 @@ export class UserProfileForm extends Component {
         />
         {errors.eveningPhone && <InlineError text={errors.eveningPhone} />}
         
-        <Button type="submit" name="Update Profile" handleClick={this.handleSubmit} />
+        <Button type="submit" handleClick={this.handleSubmit}>Update Profile</Button>
       </form>
     );
   }

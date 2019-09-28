@@ -78,7 +78,7 @@ export class SignupForm extends Component {
           onChange={this.handleChange}
         />
         {errors.password && <InlineError text={errors.password} />}
-        <Button type="submit" name="Register" handleClick={this.handleSubmit} />
+        <Button type="submit" handleClick={this.handleSubmit}>Register</Button>
         <p className="mt-3">I already have an account <span className="register-link" onClick={displayLoginModal}>Login</span></p>
       </form>
     );

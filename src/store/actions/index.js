@@ -43,7 +43,9 @@ export const actionTypes = {
   PLACE_ORDER: "PLACE_ORDER",
   PLACE_ORDER_ERROR: "PLACE_ORDER_ERROR",
   GET_ORDER_DETAILS: "GET_ORDER_DETAILS",
-  GET_ORDER_DETAILS_ERROR: "GET_ORDER_DETAILS_ERROR"
+  GET_ORDER_DETAILS_ERROR: "GET_ORDER_DETAILS_ERROR",
+  CREATE_STRIPE_CHARGE: "CREATE_STRIPE_CHARGE",
+  CREATE_STRIPE_CHARGE_ERROR: "CREATE_STRIPE_CHARGE_ERROR",
 }
 
 export const getAllCategories = () => {
@@ -248,8 +250,29 @@ export const placeOrder = (order) => {
   }
 }
 
+export const createStripeCharge = (data) => {
+  return (dispatch) => {
+    return axios.post("https://backendapi.turing.com/stripe/charge", data)
+    .then((response) => {
+        console.log(response, 'response')
+        dispatch({
+          type: actionTypes.CREATE_STRIPE_CHARGE,
+          payload: response.data,
+        })
+      })
+      .catch((error) => {
+        console.log(error.response, 'error')
+        if(error.response) {
+          dispatch({
+            type: actionTypes.CREATE_STRIPE_CHARGE_ERROR,
+            payload: error.response.data.error.message
+          })
+        }
+      })
+  }
+}
+
 export const getOrderDetails = (orderId) => {
-  console.log(orderId, 'id');
   return (dispatch) => {
     return axios.get(`https://backendapi.turing.com/orders/${orderId}`, config)
     .then((response) => {
@@ -259,7 +282,6 @@ export const getOrderDetails = (orderId) => {
         })
       })
       .catch((error) => {
-        console.log(error.response);
         if(error.response) {
           dispatch({
             type: actionTypes.GET_ORDER_DETAILS_ERROR,

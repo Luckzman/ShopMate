@@ -115,7 +115,7 @@ export class ShippingDetailsForm extends Component {
           disabled={true}
         />
 
-        <Button type="submit" name="Update Profile" handleClick={this.handleSubmit} />
+        <Button type="submit" handleClick={this.handleSubmit}>Update Profile</Button>
       </form>
     );
   }
