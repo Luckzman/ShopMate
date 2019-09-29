@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from '../../presentation/Input';
 import Button from '../../presentation/Button';
+import { SmallLoader }  from '../../presentation/Loader';
 import InlineError from '../../presentation/InlineError';
 import { signupValidator } from '../../../utils/validate';
 import { signupCustomer } from '../../../store/actions';
@@ -50,7 +51,7 @@ export class SignupForm extends Component {
 
   render() {
     const { user, errors } = this.state;
-    const { displayLoginModal } = this.props;
+    const { customers } = this.props;
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
         <h3 className="heading">SIGNUP</h3>
@@ -85,7 +86,12 @@ export class SignupForm extends Component {
           onChange={this.handleChange}
         />
         {errors.password && <InlineError text={errors.password} />}
-        <Button type="submit" handleClick={this.handleSubmit}>Register</Button>
+        <Button
+          type="submit"
+          handleClick={this.handleSubmit}
+        >
+          {customers.isLoading ? <SmallLoader /> : 'Register'}
+        </Button>
         <p className="mt-3">I already have an account <span className="register-link" onClick={this.displayLoginModal}>Login</span></p>
       </form>
     );

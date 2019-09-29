@@ -110,10 +110,10 @@ class Home extends Component {
           <SignupForm hideModal={this.handleToggleSignupModal} displayLogin={this.handleToggleLoginModal} />
         </Modal>}
         {displayProfileModal && <Modal modalSize={"sm"} hideModal={this.handleToggleProfileModal}>
-          <UserProfileForm />
+          <UserProfileForm hideModal={this.handleToggleProfileModal}/>
         </Modal>}
         {displayShippingDetailsModal && <Modal modalSize={"sm"} hideModal={this.handleToggleShippingDetailsModal}>
-          <ShippingDetailsForm />
+          <ShippingDetailsForm hideModal={this.handleToggleShippingDetailsModal} />
         </Modal>}
         {displayCartModal && cart.data && <Modal hideModal={this.handleToggleCartModal}>
           <Cart />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from '../../presentation/Input';
+import { SmallLoader }  from '../../presentation/Loader';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
 import { getCustomerProfile, updateCustomerProfile } from '../../../store/actions';
@@ -33,13 +34,13 @@ export class UserProfileForm extends Component {
     console.log(user, 'user');
     user.name = name;
     user.email = email;
-    const { updateCustomerProfile } = this.props;
+    const { updateCustomerProfile, hideModal } = this.props;
     const errors = userProfileValidator(user);
     if (errors) {
       console.log(errors, 'errors')
       this.setState({ errors });
     }
-    updateCustomerProfile(user);
+    updateCustomerProfile(user, hideModal);
     
   };
 
@@ -53,7 +54,6 @@ export class UserProfileForm extends Component {
   render() {
     const { user, errors } = this.state;
     const { customers } = this.props;
-    console.log(customers, 'customers')
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
         <h3 className="heading">Customer Profile</h3>
@@ -99,8 +99,9 @@ export class UserProfileForm extends Component {
           onChange={this.handleChange}
         />
         {errors.eveningPhone && <InlineError text={errors.eveningPhone} />}
-        
-        <Button type="submit" handleClick={this.handleSubmit}>Update Profile</Button>
+        <Button type="submit" handleClick={this.handleSubmit}>
+          {customers.isLoading ? <SmallLoader /> : 'Update Profile'}
+        </Button>
       </form>
     );
   }

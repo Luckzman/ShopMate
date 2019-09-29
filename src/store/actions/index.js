@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from "react-toastify";
 import { setToken, config, getToken, getUserIdFromLocalStorage } from '../../utils/authHelper';
 
 export const actionTypes = {
@@ -201,8 +202,9 @@ export const getSingleProductDetails = (productId) => {
   }
 }
 
-export const signupCustomer = (user) => {
+export const signupCustomer = (user, hideModal) => {
   return (dispatch) => {
+    dispatch(authRequest);
     return axios.post("https://backendapi.turing.com/customers", user)
       .then((response) => {
         dispatch({
@@ -210,6 +212,9 @@ export const signupCustomer = (user) => {
           payload: response.data,
         })
         setToken(response.data.accessToken)
+        toast.success("Signup Successful", {
+          onOpen: () => {hideModal()}
+        });
       })
       .catch((error) => {
         if(error.response) {
@@ -217,6 +222,7 @@ export const signupCustomer = (user) => {
             type: actionTypes.SIGNUP_CUSTOMER_ERROR,
             payload: error.response.data.error.message
           })
+          toast.error(error.response.data.error.message);
         }
       })
   }
@@ -227,8 +233,8 @@ export const authRequest = {
 }
 
 
-export const loginCustomer = (user) => {
-  return (dispatch, getState) => {
+export const loginCustomer = (user, hideModal) => {
+  return (dispatch) => {
     dispatch(authRequest);
     return axios.post("https://backendapi.turing.com/customers/login", user)
     .then((response) => {
@@ -237,6 +243,9 @@ export const loginCustomer = (user) => {
           payload: response.data,
         })
         setToken(response.data.accessToken)
+        toast.success("Login Successful", {
+          onOpen: () => {hideModal()}
+        });
       })
       .catch((error) => {
         if(error.response) {
@@ -244,6 +253,7 @@ export const loginCustomer = (user) => {
             type: actionTypes.LOGIN_CUSTOMER_ERROR,
             payload: error.response.data.error.message
           })
+          toast.error(error.response.data.error.message);
         }
       })
     }
@@ -331,14 +341,18 @@ export const getCustomerProfile = () => {
   }
 }
 
-export const updateCustomerProfile = (userProfile) => {
+export const updateCustomerProfile = (userProfile, hideModal) => {
   return (dispatch) => {
+    dispatch(authRequest);
     return axios.put("https://backendapi.turing.com/customer", userProfile, config)
     .then((response) => {
         dispatch({
           type: actionTypes.UPDATE_CUSTOMER_PROFILE,
           payload: response.data,
         })
+        toast.success("Profile Update Successful", {
+          onOpen: () => {hideModal()}
+        });
       })
       .catch((error) => {
         if(error.response) {
@@ -346,29 +360,35 @@ export const updateCustomerProfile = (userProfile) => {
             type: actionTypes.UPDATE_CUSTOMER_PROFILE_ERROR,
             payload: error.response.data.error.message
           })
+          toast.error(error.response.data.error.message);
         }
       })
   }
 }
 
-export const updateShippingInfo = (shippingDetails) => {
+export const updateShippingInfo = (shippingDetails, hideModal) => {
   return (dispatch) => {
+    dispatch(authRequest);
     return axios.put("https://backendapi.turing.com/customers/address", shippingDetails, config)
     .then((response) => {
+      dispatch({
+        type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS,
+        payload: response.data,
+      })
+      toast.success("Shipping Details Update Successful", {
+        onOpen: () => {hideModal()}
+      });
+    })
+    .catch((error) => {
+      if(error.response) {
         dispatch({
-          type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS,
-          payload: response.data,
+          type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR,
+          payload: error.response.data.error.message
         })
-      })
-      .catch((error) => {
-        if(error.response) {
-          dispatch({
-            type: actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERROR,
-            payload: error.response.data.error.message
-          })
-        }
-      })
-    }
+        toast.error(error.response.data.error.message);
+      }
+    })
+  }
 }
 
 export const updateCartItemQuantity = (itemId, quantity) => {
@@ -379,6 +399,7 @@ export const updateCartItemQuantity = (itemId, quantity) => {
           type: actionTypes.UPDATE_CART_ITEM_QUANTITY,
           payload: response.data,
         })
+        toast.success("Cart Quantity Update Successful");
       })
       .catch((error) => {
         if(error.response) {
@@ -451,6 +472,16 @@ export const getRegions = () => {
   }
 }
 
+const addToCart = (response) => ({
+  type: actionTypes.ADD_PRODUCT_TO_CART,
+  payload: response.data,
+})
+
+const addToCartError = (error) => ({
+  type: actionTypes.ADD_PRODUCT_TO_CART_ERROR,
+  payload: error.response.message
+})
+
 export const addProductToCart = (productId, attributes) => {
   return (dispatch, getState) => {
     if(!getState().cart.isCartCreated){
@@ -466,18 +497,10 @@ export const addProductToCart = (productId, attributes) => {
           attributes
         }
         return axios.post("https://backendapi.turing.com/shoppingcart/add", cart )
-          .then((response) => {
-              dispatch({
-                type: actionTypes.ADD_PRODUCT_TO_CART,
-                payload: response.data,
-              })
-            })
+          .then((response) => {dispatch(addToCart(response))})
             .catch((error) => {
               if(error.response) {
-                dispatch({
-                  type: actionTypes.ADD_PRODUCT_TO_CART_ERROR,
-                  payload: error.response.message
-                })
+                dispatch(addToCartError(error))
               }
             })
       })
@@ -496,18 +519,10 @@ export const addProductToCart = (productId, attributes) => {
         attributes
       }
       return axios.post("https://backendapi.turing.com/shoppingcart/add", cart )
-      .then((response) => {
-          dispatch({
-            type: actionTypes.ADD_PRODUCT_TO_CART,
-            payload: response.data,
-          })
-        })
+      .then((response) => {dispatch(addToCart(response))})
         .catch((error) => {
           if(error.response) {
-            dispatch({
-              type: actionTypes.ADD_PRODUCT_TO_CART_ERROR,
-              payload: error.response.message
-            })
+            dispatch(addToCartError(error))
           }
         })
     }
@@ -522,6 +537,7 @@ export const removeCartItem = (id, productId) => {
           type: actionTypes.REMOVE_CART_ITEM,
           id
         })
+        toast.success("Cart Item Delete Operation Successful");
       })
       .catch((error) => {
         if(error.response) {

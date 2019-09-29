@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from '../../presentation/Input';
 import SelectBox from '../../presentation/SelectBox';
+import { SmallLoader }  from '../../presentation/Loader';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
 import {getRegions, updateShippingInfo} from '../../../store/actions';
@@ -34,13 +35,12 @@ export class ShippingDetailsForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
-    const { updateShippingInfo } = this.props;
-    // console.log(user, 'user');
+    const { updateShippingInfo, hideModal } = this.props;
     const errors = shippingDetailsValidator(user);
     if (errors) {
       this.setState({ errors });
     }
-    updateShippingInfo(user);
+    updateShippingInfo(user, hideModal);
   };
 
   handleChange = (event) => {
@@ -56,7 +56,6 @@ export class ShippingDetailsForm extends Component {
   render() {
     const { user, errors } = this.state;
     const { regions, customers } = this.props;
-    console.log(customers)
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
         <h3 className="heading">SIGNUP</h3>
@@ -64,16 +63,9 @@ export class ShippingDetailsForm extends Component {
           name="address_1"
           value={user.address_1}
           onChange={this.handleChange}
-          placeholder="Address 1"
+          placeholder="Address"
         />
         {errors.address_1 && <InlineError text={errors.address_1} />}
-        
-        <Input
-          name="address_2"
-          value={user.address_2}
-          onChange={this.handleChange}
-          placeholder="Address 2"
-        />
         
         <Input
           name="city"
@@ -115,7 +107,9 @@ export class ShippingDetailsForm extends Component {
           disabled={true}
         />
 
-        <Button type="submit" handleClick={this.handleSubmit}>Update Profile</Button>
+        <Button type="submit" handleClick={this.handleSubmit}>
+        {customers.isLoading ? <SmallLoader /> : 'Update Shipping Details'}
+        </Button>
       </form>
     );
   }
