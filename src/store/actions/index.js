@@ -46,6 +46,17 @@ export const actionTypes = {
   GET_ORDER_DETAILS_ERROR: "GET_ORDER_DETAILS_ERROR",
   CREATE_STRIPE_CHARGE: "CREATE_STRIPE_CHARGE",
   CREATE_STRIPE_CHARGE_ERROR: "CREATE_STRIPE_CHARGE_ERROR",
+  INITIATE_LOADING: "INITIATE_LOADING",
+  RESET_LOADING: "RESET_LOADING",
+  AUTH_REQUEST: "AUTH_REQUEST"
+}
+
+export const initiateLoading = {
+  type: actionTypes.INITIATE_LOADING
+}
+
+export const resetLoading = {
+  type: actionTypes.RESET_LOADING
 }
 
 export const getAllCategories = () => {
@@ -105,12 +116,12 @@ export const getAllProducts = () => {
           })
         }
       })
+    }
   }
-}
-
-export const getFilteredProductsByCategory = (categoryId) => {
-  return (dispatch) => {
-    return axios.get(`https://backendapi.turing.com/products/inCategory/${categoryId}`)
+  
+  export const getFilteredProductsByCategory = (categoryId) => {
+    return (dispatch) => {
+      return axios.get(`https://backendapi.turing.com/products/inCategory/${categoryId}`)
       .then((response) => {
         dispatch({
           type: actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY,
@@ -132,10 +143,12 @@ export const getFilteredProductsByDepartment = (departmentId) => {
   return (dispatch) => {
     return axios.get(`https://backendapi.turing.com/products/inDepartment/${departmentId}`)
       .then((response) => {
+        dispatch(resetLoading)
         dispatch({
           type: actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT,
           payload: response.data,
         })
+        dispatch(initiateLoading)
       })
       .catch((error) => {
         if(error.response) {
@@ -209,8 +222,14 @@ export const signupCustomer = (user) => {
   }
 }
 
+export const authRequest = {
+  type: actionTypes.AUTH_REQUEST
+}
+
+
 export const loginCustomer = (user) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    dispatch(authRequest);
     return axios.post("https://backendapi.turing.com/customers/login", user)
     .then((response) => {
         dispatch({
@@ -227,7 +246,7 @@ export const loginCustomer = (user) => {
           })
         }
       })
-  }
+    }
 }
 
 export const placeOrder = (order) => {

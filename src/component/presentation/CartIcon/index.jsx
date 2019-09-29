@@ -6,11 +6,10 @@ import './CartIcon.scss';
 
 const CartIcon = ({ cartCount, inverse, showModal }) => {
   return (
-    <div className="cart-icon">
+    <div className="cart-icon" onClick={showModal}>
       <FontAwesomeIcon icon={faShoppingBag} className={!inverse ? 'cart-bag' : 'cart-bag inverse-cart-bag'} />
       <div
         className={!inverse ? "cart-count" : "cart-count inverse-cart-count"}
-        onClick={showModal}
         >
         <span>{cartCount}</span>
       </div>

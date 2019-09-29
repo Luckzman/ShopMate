@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { PageLoader } from '../../component/presentation/Loader';
 import TopNav from '../../component/presentation/TopNav';
+import Cart from '../../component/container/Cart';
 import Modal from '../../component/presentation/Modal';
 import NavBar from '../../component/presentation/NavBar';
 import FilterSideBar from '../../component/presentation/FilterSideBar';
@@ -27,6 +29,7 @@ class Home extends Component {
     displaySignupModal: false,
     displayProfileModal: false,
     displayShippingDetailsModal: false,
+    displayCartModal: false,
   }
 
   componentDidMount() {
@@ -48,6 +51,7 @@ class Home extends Component {
     else {
       this.props.getFilteredProductsByCategory(item);
     }
+    this.setState({isLoading: false});
   }
 
   handleSearch = (inputText) => {
@@ -75,9 +79,14 @@ class Home extends Component {
     this.setState(() => ({displayShippingDetailsModal: !displayShippingDetailsModal}));
   }
 
+  handleToggleCartModal = () => {
+    const { displayCartModal } = this.state;
+    this.setState(() => ({displayCartModal: !displayCartModal}));
+  }
+
   render() {
     const {categories, departments, products, cart, customers} = this.props;
-    const { displayLoginModal, displaySignupModal, displayProfileModal, displayShippingDetailsModal } = this.state;
+    const { displayLoginModal, displayCartModal, displaySignupModal, displayProfileModal, displayShippingDetailsModal } = this.state;
     return (
       <div>
         <TopNav
@@ -87,19 +96,27 @@ class Home extends Component {
           triggerSignupModal={this.handleToggleSignupModal}
           handleProfileModal={this.handleToggleProfileModal}
           handleShippingDetailsModal={this.handleToggleShippingDetailsModal}
+          showModal={this.handleToggleCartModal}
         />
-        <NavBar searchProduct={this.handleSearch} cartCount={(cart.data) ? cart.data.length: 0} />
+        <NavBar 
+          searchProduct={this.handleSearch} 
+          cartCount={(cart.data) ? cart.data.length: 0}
+          showModal={this.handleToggleCartModal}
+        />
         {displayLoginModal && <Modal modalSize={"sm"} hideModal={this.handleToggleLoginModal} >
-          <LoginForm />
+          <LoginForm hideModal={this.handleToggleLoginModal} displaySignup={this.handleToggleSignupModal} />
         </Modal>}
         {displaySignupModal && <Modal modalSize={"sm"}  hideModal={this.handleToggleSignupModal}>
-          <SignupForm />
+          <SignupForm hideModal={this.handleToggleSignupModal} displayLogin={this.handleToggleLoginModal} />
         </Modal>}
         {displayProfileModal && <Modal modalSize={"sm"} hideModal={this.handleToggleProfileModal}>
           <UserProfileForm />
         </Modal>}
         {displayShippingDetailsModal && <Modal modalSize={"sm"} hideModal={this.handleToggleShippingDetailsModal}>
           <ShippingDetailsForm />
+        </Modal>}
+        {displayCartModal && cart.data && <Modal hideModal={this.handleToggleCartModal}>
+          <Cart />
         </Modal>}
         <div className="container homepage mt-5">
           <div className="filter-side-bar">
@@ -109,7 +126,7 @@ class Home extends Component {
               selectedProduct={this.handleFilterProduct}
             />
           </div>
-          <div className="product">
+          {products.isLoading ? <PageLoader />  : <div className="product">
             {
               products.rows && products.rows.map((product, index) => {
                 return (
@@ -121,9 +138,10 @@ class Home extends Component {
                     id={index+1}
                   />)})
             }
-          </div>
+          </div>}
         </div>
       </div>
+    
     )
   }
 }

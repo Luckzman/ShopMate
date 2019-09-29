@@ -28,16 +28,29 @@ export const departments = (state = [], action) => {
   }
 }
 
-export const products = (state = {}, action) => {
+export const products = (state = {isLoading: true}, action) => {
   switch(action.type) {
     case actionTypes.GET_ALL_PRODUCTS:
-      return action.payload;
+      return {
+        ...state,
+        ...action.payload,
+        isLoading: false,
+      }
     case actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY:
-      return action.payload;
+      return {
+        ...state,
+        ...action.payload
+      }
     case actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT:
-      return action.payload;
+        return {
+          ...state,
+          ...action.payload
+        }
     case actionTypes.SEARCH_PRODUCTS:
-      return action.payload;
+        return {
+          ...state,
+          ...action.payload
+        }
     case actionTypes.SEARCH_PRODUCTS_ERROR:
       return action.payload;
     case actionTypes.GET_ALL_PRODUCTS_ERROR:
@@ -51,10 +64,14 @@ export const products = (state = {}, action) => {
   }
 }
 
-export const productDetails = (state = {}, action) => {
+export const productDetails = (state = {isLoading: true}, action) => {
   switch(action.type) {
     case actionTypes.GET_SINGLE_PRODUCT_DETAILS:
-      return action.payload;
+      return {
+        ...state,
+        ...action.payload,
+        isLoading: false
+      }
     case actionTypes.GET_SINGLE_PRODUCT_DETAILS_ERROR:
       return action.payload;
     default:
@@ -62,24 +79,36 @@ export const productDetails = (state = {}, action) => {
   }
 }
 
-export const customers = (state = {message: '', isAuthenticated: false}, action) => {
+const user  = {
+  message: '',
+  isAuthenticated: false,
+  isLoading: false
+}
+export const customers = (state = user, action) => {
   switch(action.type) {
     case actionTypes.SIGNUP_CUSTOMER:
       return {
         ...state,
         ...action.payload,
-        isAuthenticated: true
+        isAuthenticated: true,
+        isLoading: false
       }
       case actionTypes.SIGNUP_CUSTOMER_ERROR:
         return {
           ...state,
           message: action.payload,
         }
-      case actionTypes.LOGIN_CUSTOMER:
-        return {
-          ...state,
-          ...action.payload,
-          isAuthenticated: true
+        case actionTypes.AUTH_REQUEST:
+          return {
+            ...state,
+            isLoading: true,
+          }
+        case actionTypes.LOGIN_CUSTOMER:
+          return {
+            ...state,
+            ...action.payload,
+            isAuthenticated: true,
+            isLoading: false
         }
       case actionTypes.GET_CUSTOMER_PROFILE:
         return {
@@ -195,7 +224,7 @@ export const regions = (state = [], action) => {
   }
 }
 
-export const orders = (state = {}, action) => {
+export const orders = (state = {isLoading: true}, action) => {
   switch(action.type) {
     case actionTypes.PLACE_ORDER:
       return action.payload
@@ -207,7 +236,8 @@ export const orders = (state = {}, action) => {
     case actionTypes.GET_ORDER_DETAILS:
       return {
         ...state,
-        data: action.payload
+        data: action.payload,
+        isLoading: false
       }
     case actionTypes.GET_ORDER_DETAILS_ERROR:
       return {

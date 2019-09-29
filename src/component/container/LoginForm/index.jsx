@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from '../../presentation/Input';
+import { SmallLoader }  from '../../presentation/Loader';
 import Button from '../../presentation/Button';
 import InlineError from '../../presentation/InlineError';
 import { loginCustomer } from '../../../store/actions';
 import { loginValidator } from '../../../utils/validate';
 import './LoginForm.scss';
-
 
 export class LoginForm extends Component {
   constructor(props) {
@@ -24,14 +24,20 @@ export class LoginForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
-    const { loginCustomer } = this.props;
+    const { loginCustomer, hideModal } = this.props;
     const errors = loginValidator(user);
     if (errors) {
       this.setState({ errors });
     }
-    // console.log(user, 'user')
     loginCustomer(user);
+    hideModal()
   };
+  
+  displaySignupModal = () => {
+    const { displaySignup, hideModal } = this.props;
+    hideModal();
+    displaySignup()
+  }
 
   handleChange = (event) => {
     const { user } = this.state;
@@ -42,7 +48,7 @@ export class LoginForm extends Component {
 
   render() {
     const { user, errors } = this.state;
-    const { displaySignupModal } = this.props;
+    const { displaySignupModal, customers } = this.props;
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
         <h3 className="heading">LOGIN</h3>
@@ -62,8 +68,8 @@ export class LoginForm extends Component {
           onChange={this.handleChange}
         />
         {errors.password && <InlineError text={errors.password} />}
-        <Button type="submit" name="Login" handleClick={this.handleSubmit} />
-        <p className="mt-3">I don't have an account <span className="register-link" onClick={displaySignupModal}>Register</span></p>
+    <Button type="submit" handleClick={this.handleSubmit}>{customers.isLoading ? <SmallLoader /> : 'Login'}</Button>
+        <p className="mt-3">I don't have an account <span className="register-link" onClick={this.displaySignupModal}>Register</span></p>
       </form>
     );
   }

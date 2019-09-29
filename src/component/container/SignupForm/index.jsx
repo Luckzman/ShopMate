@@ -25,14 +25,21 @@ export class SignupForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
-    const {signupCustomer} = this.props;
+    const {signupCustomer, hideModal} = this.props;
     const errors = signupValidator(user);
     if (errors) {
       this.setState({ errors });
     }
     delete user.repeatPassword;
-    signupCustomer(user)
+    signupCustomer(user);
+    hideModal();
   };
+  
+  displayLoginModal = () => {
+    const {displayLogin, hideModal} = this.props;
+    hideModal();
+    displayLogin();
+  }
 
   handleChange = (event) => {
     const { user } = this.state;
@@ -79,7 +86,7 @@ export class SignupForm extends Component {
         />
         {errors.password && <InlineError text={errors.password} />}
         <Button type="submit" handleClick={this.handleSubmit}>Register</Button>
-        <p className="mt-3">I already have an account <span className="register-link" onClick={displayLoginModal}>Login</span></p>
+        <p className="mt-3">I already have an account <span className="register-link" onClick={this.displayLoginModal}>Login</span></p>
       </form>
     );
   }

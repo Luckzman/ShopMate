@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import SingleProductDetailsPage from './pages/SingleProductDetailsPage';
 import NotFound from './pages/NotFound';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 const App = () => {
   return (
