@@ -4,7 +4,7 @@ import DropdownMenu from '../DropdownMenu';
 import CartIcon from '../CartIcon';
 import './topnav.scss';
 
-const TopNav = ({ name, cartCount, triggerLoginModal, triggerSignupModal, handleProfileModal, handleShippingDetailsModal }) => {
+const TopNav = ({ name, cartCount, triggerLoginModal, showModal, triggerSignupModal, handleProfileModal, handleShippingDetailsModal }) => {
   return (
     <div className="container top-nav">
       <div className="login-links">
@@ -36,7 +36,7 @@ const TopNav = ({ name, cartCount, triggerLoginModal, triggerSignupModal, handle
             alt="british logo" />
           <span>&pound; gbp</span>
         </div>
-        <CartIcon cartCount={cartCount} />
+        <CartIcon cartCount={cartCount} showModal={showModal} />
         <div>Your bag: &pound; 300</div>
       </div>
     </div>

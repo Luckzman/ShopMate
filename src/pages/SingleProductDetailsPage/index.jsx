@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import Ratings from 'react-star-ratings';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
+import { PageLoader } from '../../component/presentation/Loader';
 import NavBar from '../../component/presentation/NavBar';
 import Cart from '../../component/container/Cart';
 import Modal from '../../component/presentation/Modal';
@@ -46,8 +47,6 @@ class SingleProductDetailPage extends Component {
     this.setState(() => ({ displayModal: !displayModal }));
   }
 
-
-  
   render() {
     const { productDetails, cart } = this.props;
     const { color, rating, displayModal } = this.state;
@@ -58,11 +57,11 @@ class SingleProductDetailPage extends Component {
           showModal={this.handleToggleModal} 
           cartCount={(cart.data) ? cart.data.length : 0}
         />
-        {displayModal && <Modal hideModal={this.handleToggleModal}>
+        {displayModal && cart.data.length>0 && <Modal hideModal={this.handleToggleModal}>
           <Cart />
         </Modal> }
         <div className="container">
-          <div className="product">
+          {productDetails.isLoading ? <PageLoader /> : <div className="product">
             <div className="product-img">
               <img src={`https://backendapi.turing.com/images/products/${productDetails.image}`} className="main-img" />
               <div className="thumbnail-grp">
@@ -92,7 +91,7 @@ class SingleProductDetailPage extends Component {
               <SizePicker getSize={this.handleGetSize} />
               <button className="add-to-cart-btn" onClick={this.handleAddToCart}>Add to cart</button>
             </div>
-          </div>
+          </div>}
         </div>
       </>
     )

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '../../presentation/Button';
+import { MiniLoader } from '../../presentation/Loader';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile } from '../../../store/actions'
 import './OrderSummaryCard.scss';
@@ -42,7 +43,7 @@ class OrderSummaryCard extends Component {
     console.log(customers, 'cutomers');
     return (
       <>
-        <div className="summary">
+        {orders.isLoading ? <MiniLoader /> : <div className="summary">
           <h3 className="summary-heading title">Order Summary</h3>
           <div className="summary-content">
             <h6 className="details">{`Order Id: ${orders.orderId}`}</h6>
@@ -61,11 +62,11 @@ class OrderSummaryCard extends Component {
           </div>
           <hr />
           <div className="checkout">
-            <p>Complete the purchase</p>
-              <CardElement />
+            <p>Enter Your Card Details</p>
+            <CardElement />
             <Button handleClick={this.handleCheckout}>Pay &pound;{`${cart.total_amount}`}</Button>
           </div>
-        </div>
+        </div>}
       </>
     );
   }

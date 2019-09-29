@@ -45,6 +45,10 @@
       border: none;
       border-radius: 25px;
       margin: 40px 0 0;
+      display: block;
+      &:focus{
+        outline: none;
+      }
     }
   }
 }
