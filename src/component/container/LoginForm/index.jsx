@@ -29,8 +29,7 @@ export class LoginForm extends Component {
     if (errors) {
       this.setState({ errors });
     }
-    loginCustomer(user);
-    hideModal()
+    loginCustomer(user, hideModal);
   };
   
   displaySignupModal = () => {
@@ -48,7 +47,7 @@ export class LoginForm extends Component {
 
   render() {
     const { user, errors } = this.state;
-    const { displaySignupModal, customers } = this.props;
+    const { customers } = this.props;
     return (
       <form className="custom-form" onSubmit={this.handleSubmit}>
         <h3 className="heading">LOGIN</h3>
@@ -68,7 +67,12 @@ export class LoginForm extends Component {
           onChange={this.handleChange}
         />
         {errors.password && <InlineError text={errors.password} />}
-    <Button type="submit" handleClick={this.handleSubmit}>{customers.isLoading ? <SmallLoader /> : 'Login'}</Button>
+        <Button
+          type="submit"
+          handleClick={this.handleSubmit}
+        >
+          {customers.isLoading ? <SmallLoader /> : 'Login'}
+        </Button>
         <p className="mt-3">I don't have an account <span className="register-link" onClick={this.displaySignupModal}>Register</span></p>
       </form>
     );

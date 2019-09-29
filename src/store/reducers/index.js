@@ -93,58 +93,60 @@ export const customers = (state = user, action) => {
         isAuthenticated: true,
         isLoading: false
       }
-      case actionTypes.SIGNUP_CUSTOMER_ERROR:
-        return {
-          ...state,
-          message: action.payload,
-        }
-        case actionTypes.AUTH_REQUEST:
-          return {
-            ...state,
-            isLoading: true,
-          }
-        case actionTypes.LOGIN_CUSTOMER:
-          return {
-            ...state,
-            ...action.payload,
-            isAuthenticated: true,
-            isLoading: false
-        }
-      case actionTypes.GET_CUSTOMER_PROFILE:
-        return {
-          ...state,
-          customer: action.payload,
-        }
-      case actionTypes.GET_CUSTOMER_PROFILE_ERRORR:
-        return {
-          ...state,
-          message: action.payload
-        }
-      case actionTypes.UPDATE_CUSTOMER_PROFILE:
-        return {
-          ...state,
-          customer: action.payload,
-        }
-      case actionTypes.UPDATE_CUSTOMER_PROFILE_ERRORR:
-        return {
-          ...state,
-          message: action.payload
-        }
-      case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS:
-        return {
-          ...state,
-          customer: action.payload,
-        }
-      case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERRORR:
-        return {
-          ...state,
-          message: action.payload
-        }
-      case actionTypes.LOGIN_CUSTOMER_ERROR:
-        return {
-          ...state,
-          message: action.payload
-        }
+    case actionTypes.SIGNUP_CUSTOMER_ERROR:
+      return {
+        ...state,
+        message: action.payload,
+      }
+    case actionTypes.AUTH_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case actionTypes.LOGIN_CUSTOMER:
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        isLoading: false
+      }
+    case actionTypes.GET_CUSTOMER_PROFILE:
+      return {
+        ...state,
+        customer: action.payload,
+      }
+    case actionTypes.GET_CUSTOMER_PROFILE_ERRORR:
+      return {
+        ...state,
+        message: action.payload
+      }
+    case actionTypes.UPDATE_CUSTOMER_PROFILE:
+      return {
+        ...state,
+        customer: action.payload,
+        isLoading: false
+      }
+    case actionTypes.UPDATE_CUSTOMER_PROFILE_ERROR:
+      return {
+        ...state,
+        message: action.payload
+      }
+    case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS:
+      return {
+        ...state,
+        customer: action.payload,
+        isLoading: false
+    }
+    case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERRORR:
+      return {
+        ...state,
+        message: action.payload
+      }
+    case actionTypes.LOGIN_CUSTOMER_ERROR:
+      return {
+        ...state,
+        message: action.payload
+      }
     default:
       return state
   }
