@@ -93,7 +93,7 @@ class Cart extends Component {
     const { cart, customers } = this.props;
     const { showOrderSummaryModal, displayShippingDetailsModal, displaySignupModal, displayLoginModal } = this.state;
     return (
-      <StripeProvider apiKey="pk_test_Si8RHCPkzNZuBJAmF9WkCr5p00kHHjk4wO">
+      <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
         <div className="cart">
           {showOrderSummaryModal &&
             <Modal 

@@ -4,7 +4,6 @@ import { setToken, configUser, configs, getUser } from '../../utils/authHelper';
 
 const config = configUser(getUser);
 
-
 export const actionTypes = {
   GET_ALL_CATEGORIES: "GET_ALL_CATEGORIES",
   GET_ALL_DEPARTMENTS: "GET_ALL_DEPARTMENTS",
@@ -103,9 +102,9 @@ export const getAllDepartments = () => {
   }
 }
 
-export const getAllProducts = () => {
+export const getAllProducts = (page, limit) => {
   return (dispatch) => {
-    return axios.get('https://backendapi.turing.com/products')
+    return axios.get(`https://backendapi.turing.com/products?page=${page}&limit=${limit}`)
       .then((response) => {
         dispatch({
           type: actionTypes.GET_ALL_PRODUCTS,
