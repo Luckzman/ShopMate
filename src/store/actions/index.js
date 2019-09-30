@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toast } from "react-toastify";
-import { setToken, configUser, configs, getUser } from '../../utils/authHelper';
+import { setToken, configUser, getUser } from '../../utils/authHelper';
 
 const config = configUser(getUser);
 
