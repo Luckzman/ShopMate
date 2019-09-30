@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import {withRouter} from 'react'
+import {Redirect, withRouter} from 'react-router-dom';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import {Link} from 'react-router-dom';
 import Modal from '../../presentation/Modal';
+import { getUser, configUser } from '../../../utils/authHelper';
+import LoginForm from '../LoginForm';
+import SignupForm from '../SignupForm';
+import ShippingDetailsForm from '../ShippingDetailsForm';
 import OrderSummaryCard from '../OrderSummaryCard';
 import {
   removeCartItem,
@@ -14,11 +20,17 @@ import {
 } from '../../../store/actions';
 import QuantitySelector from '../../presentation/QuantitySelector';
 import './cart.scss';
+import { async } from 'q';
+import { customers } from '../../../store/reducers';
+
+const config = configUser(getUser);
 
 class Cart extends Component {
   
   state = {
     showOrderSummaryModal: false,
+    displayLoginModal: false,
+    displaySignupModal: false,
   }
   
   componentDidMount() {
@@ -37,25 +49,49 @@ class Cart extends Component {
     const { updateCartItemQuantity, cart } = this.props;
     updateCartItemQuantity(itemId, quantity); 
   }
+
+  handleToggleLoginModal = () => {
+    const { displayLoginModal } = this.state;
+    const { placeOrder, customers,  cart } = this.props;
+    this.setState({displayLoginModal: !displayLoginModal})
+      const order = {
+        cart_id: cart.cart_id,
+        shipping_id: 1,
+        tax_id: 1
+    }
+    const configs = {
+      headers: { 'user-key': customers.accessToken}
+    }
+    if(customers.isAuthenticated){
+      return placeOrder(order, configs);
+    }
+  }
+
+  handleToggleSignupModal = () => {
+    const { displaySignupModal } = this.state;
+    this.setState(() => ({displaySignupModal: !displaySignupModal}));
+  }
   
   // check if user is authenticated else display signup/login modal
-  // check if user shipping details is updated else display shipping update modal
   // proceed to order summary modal and checkout.
   handleShowOrderSummaryModal = () => {
     const { showOrderSummaryModal } = this.state;
-    const { placeOrder, cart } = this.props;
+    const { placeOrder, cart, customers, login } = this.props;
     const order = {
       cart_id: cart.cart_id,
       shipping_id: 1,
       tax_id: 1
     }
-    placeOrder(order);
+    if(!getUser) {
+      this.handleToggleLoginModal();
+    }
+    placeOrder(order, config);
     this.setState({ showOrderSummaryModal: !showOrderSummaryModal });
   }
   
   render() {
     const { cart, customers } = this.props;
-    const { showOrderSummaryModal } = this.state;
+    const { showOrderSummaryModal, displayShippingDetailsModal, displaySignupModal, displayLoginModal } = this.state;
     return (
       <StripeProvider apiKey="pk_test_Si8RHCPkzNZuBJAmF9WkCr5p00kHHjk4wO">
         <div className="cart">
@@ -68,6 +104,12 @@ class Cart extends Component {
                 <OrderSummaryCard />
               </Elements>
             </Modal>}
+          {displayLoginModal && <Modal modalSize={"sm"} hideModal={this.handleToggleLoginModal}>
+            <LoginForm hideModal={this.handleToggleLoginModal} displaySignup={this.handleToggleSignupModal} />
+          </Modal>}
+          {displaySignupModal && <Modal modalSize={"sm"}  hideModal={this.handleToggleSignupModal}>
+            <SignupForm hideModal={this.handleToggleSignupModal} displayLogin={this.handleToggleLoginModal} />
+          </Modal>}
           <h5 className="title">{`${cart.data.length} Item In Your Cart`}</h5>
           <div className="cart-header">
             <p className="item-name">Item</p>
@@ -111,7 +153,6 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   const { cart, customers } = state;
-  console.log(state, 'store');
   return {cart, customers}
 }
 
@@ -122,4 +163,4 @@ export default connect(mapStateToProps, {
   getAllCartItem,
   getCustomerProfile,
   placeOrder
-})(Cart);
+})(withRouter(Cart));

@@ -1,3 +1,4 @@
+import { getUser } from '../../utils/authHelper';
 import { actionTypes } from '../actions';
 
 export const categories = (state = {error: false}, action) => {
@@ -79,12 +80,13 @@ export const productDetails = (state = {isLoading: true}, action) => {
   }
 }
 
-const user  = {
-  message: '',
-  isAuthenticated: false,
-  isLoading: false
-}
-export const customers = (state = user, action) => {
+const initialState = getUser ? {
+  isAuthenticated: true, 
+  isLoading: false,
+  ...getUser
+} : { isAuthenticated: false, isLoading: false};
+
+export const customers = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.SIGNUP_CUSTOMER:
       return {
@@ -97,6 +99,7 @@ export const customers = (state = user, action) => {
       return {
         ...state,
         message: action.payload,
+        isLoading: false,
       }
     case actionTypes.AUTH_REQUEST:
       return {
@@ -115,10 +118,11 @@ export const customers = (state = user, action) => {
         ...state,
         customer: action.payload,
       }
-    case actionTypes.GET_CUSTOMER_PROFILE_ERRORR:
-      return {
-        ...state,
-        message: action.payload
+      case actionTypes.GET_CUSTOMER_PROFILE_ERRORR:
+        return {
+          ...state,
+          message: action.payload,
+          isLoading: false
       }
     case actionTypes.UPDATE_CUSTOMER_PROFILE:
       return {
@@ -129,23 +133,26 @@ export const customers = (state = user, action) => {
     case actionTypes.UPDATE_CUSTOMER_PROFILE_ERROR:
       return {
         ...state,
-        message: action.payload
+        message: action.payload,
+        isLoading: false
       }
     case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS:
       return {
         ...state,
         customer: action.payload,
         isLoading: false
-    }
-    case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERRORR:
-      return {
-        ...state,
-        message: action.payload
       }
-    case actionTypes.LOGIN_CUSTOMER_ERROR:
-      return {
-        ...state,
-        message: action.payload
+      case actionTypes.UPDATE_CUSTOMER_SHIPPING_DETAILS_ERRORR:
+        return {
+          ...state,
+          message: action.payload,
+          isLoading: false
+        }
+      case actionTypes.LOGIN_CUSTOMER_ERROR:
+        return {
+          ...state,
+          message: action.payload,
+          isLoading: false
       }
     default:
       return state
@@ -233,7 +240,7 @@ export const orders = (state = {isLoading: true}, action) => {
     case actionTypes.PLACE_ORDER_ERROR:
       return {
         ...state,
-        ...action.payload
+        error: action.payload
       }
     case actionTypes.GET_ORDER_DETAILS:
       return {

@@ -81,7 +81,6 @@ export class LoginForm extends Component {
 
 const mapStateToProps = state => {
   const { customers } = state;
-  console.log(customers, 'customers');
   return ({ customers })
 };
 

@@ -20,7 +20,6 @@ import {
   getFilteredProductsByDepartment,
 } from '../../store/actions';
 import './home.scss';
-// import { categories } from '../../store/reducers';
 
 class Home extends Component {
 
@@ -97,6 +96,7 @@ class Home extends Component {
           handleProfileModal={this.handleToggleProfileModal}
           handleShippingDetailsModal={this.handleToggleShippingDetailsModal}
           showModal={this.handleToggleCartModal}
+          totalAmount={cart ? cart.total_amount : 0}
         />
         <NavBar 
           searchProduct={this.handleSearch} 
@@ -154,7 +154,7 @@ const mapStateToProps = (state) => {
     cart,
     customers,
   } = state;
-
+  console.log(state, 'state')
   return {
     categories,
     departments,
