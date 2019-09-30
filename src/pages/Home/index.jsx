@@ -136,12 +136,14 @@ class Home extends Component {
             />
           </div>
           {products.isLoading ? <PageLoader />  : <div className="product">
-            <Pagination
-              totalRecords={products.count}
-              pageLimit={5}
-              pageNeighbours={1}
-              onPageChanged={this.onPageChanged}
-            />
+            <div className="paginate">
+              <Pagination
+                totalRecords={products.count}
+                pageLimit={5}
+                pageNeighbours={1}
+                onPageChanged={this.onPageChanged}
+              />
+            </div>
             {
               products.rows && products.rows.map((product, index) => {
                 return (
