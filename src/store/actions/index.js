@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { toast } from "react-toastify";
-import { setToken, config, getToken, getUserIdFromLocalStorage } from '../../utils/authHelper';
+import { setToken, configUser, configs, getUser } from '../../utils/authHelper';
+
+const config = configUser(getUser);
+
 
 export const actionTypes = {
   GET_ALL_CATEGORIES: "GET_ALL_CATEGORIES",
@@ -242,7 +245,7 @@ export const loginCustomer = (user, hideModal) => {
           type: actionTypes.LOGIN_CUSTOMER,
           payload: response.data,
         })
-        setToken(response.data.accessToken)
+        setToken(response.data)
         toast.success("Login Successful", {
           onOpen: () => {hideModal()}
         });
@@ -259,16 +262,20 @@ export const loginCustomer = (user, hideModal) => {
     }
 }
 
-export const placeOrder = (order) => {
-  return (dispatch) => {
-    return axios.post("https://backendapi.turing.com/orders", order, config)
+export const placeOrder = (order, configs) => {
+  return (dispatch, getState) => {
+    // console.log(getState().customers, 'getState')
+    console.log(config, 'config');
+    return axios.post("https://backendapi.turing.com/orders", order, configs)
     .then((response) => {
+      console.log(response, 'response')
         dispatch({
           type: actionTypes.PLACE_ORDER,
           payload: response.data,
         })
       })
       .catch((error) => {
+        console.log(error.response)
         if(error.response) {
           dispatch({
             type: actionTypes.PLACE_ORDER_ERROR,
