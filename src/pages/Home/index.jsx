@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import ReactPaginate from 'react-paginate';
+import Pagination from '../../component/presentation/Pagination';
 import { PageLoader } from '../../component/presentation/Loader';
 import TopNav from '../../component/presentation/TopNav';
 import Cart from '../../component/container/Cart';
@@ -29,6 +31,7 @@ class Home extends Component {
     displayProfileModal: false,
     displayShippingDetailsModal: false,
     displayCartModal: false,
+    currentPage: null,
   }
 
   componentDidMount() {
@@ -40,7 +43,7 @@ class Home extends Component {
     
     getAllCategories();
     getAllDepartments();
-    getAllProducts();
+    getAllProducts(1, 5);
   }
   
   handleFilterProduct = (item, department) => {
@@ -82,6 +85,12 @@ class Home extends Component {
     const { displayCartModal } = this.state;
     this.setState(() => ({displayCartModal: !displayCartModal}));
   }
+
+  onPageChanged = data => {
+    const { getAllProducts } = this.props;
+    const { currentPage, pageLimit } = data;
+    getAllProducts(currentPage, pageLimit);
+  };
 
   render() {
     const {categories, departments, products, cart, customers} = this.props;
@@ -127,6 +136,12 @@ class Home extends Component {
             />
           </div>
           {products.isLoading ? <PageLoader />  : <div className="product">
+            <Pagination
+              totalRecords={products.count}
+              pageLimit={5}
+              pageNeighbours={1}
+              onPageChanged={this.onPageChanged}
+            />
             {
               products.rows && products.rows.map((product, index) => {
                 return (
