@@ -63,7 +63,7 @@ class OrderSummaryCard extends Component {
           <hr />
           <div className="checkout">
             <p>Enter Your Card Details</p>
-            <CardElement />
+            <CardElement className="card-element" />
             <Button handleClick={this.handleCheckout}>Pay &pound;{`${cart.total_amount}`}</Button>
           </div>
         </div>}
