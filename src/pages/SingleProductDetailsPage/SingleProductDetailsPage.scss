@@ -52,3 +52,17 @@
     }
   }
 }
+
+@media (max-width: 400px) {
+  .product{
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+    .product-details{
+      margin: 0 auto;
+      text-align: center;
+      .add-to-cart-btn{
+        margin: 20px auto 0;
+      }
+    }
+  }
+}

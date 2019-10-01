@@ -138,6 +138,7 @@ class Home extends Component {
           {products.isLoading ? <PageLoader />  : <div className="product">
             <div className="paginate">
               <Pagination
+                className="page"
                 totalRecords={products.count}
                 pageLimit={5}
                 pageNeighbours={1}

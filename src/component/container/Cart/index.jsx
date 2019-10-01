@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import {withRouter} from 'react'
 import {Redirect, withRouter} from 'react-router-dom';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import {Link} from 'react-router-dom';
@@ -8,7 +7,6 @@ import Modal from '../../presentation/Modal';
 import { getUser, configUser } from '../../../utils/authHelper';
 import LoginForm from '../LoginForm';
 import SignupForm from '../SignupForm';
-import ShippingDetailsForm from '../ShippingDetailsForm';
 import OrderSummaryCard from '../OrderSummaryCard';
 import {
   removeCartItem,
@@ -20,8 +18,6 @@ import {
 } from '../../../store/actions';
 import QuantitySelector from '../../presentation/QuantitySelector';
 import './cart.scss';
-import { async } from 'q';
-import { customers } from '../../../store/reducers';
 
 const config = configUser(getUser);
 
@@ -72,8 +68,6 @@ class Cart extends Component {
     this.setState(() => ({displaySignupModal: !displaySignupModal}));
   }
   
-  // check if user is authenticated else display signup/login modal
-  // proceed to order summary modal and checkout.
   handleShowOrderSummaryModal = () => {
     const { showOrderSummaryModal } = this.state;
     const { placeOrder, cart, customers, login } = this.props;
@@ -116,7 +110,7 @@ class Cart extends Component {
             <p className="size">Size</p>
             <p className="qty">Quantity</p>
             <p className="price">Price</p>
-            <p>SubTotal</p>
+            <p className="subtotal">SubTotal</p>
           </div>
           <div className="cart-container">
             {
