@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { toast } from "react-toastify";
 import { actionTypes } from '../actionTypes';
-import { setToken, configUser, getUser } from '../../utils/authHelper';
+import { setToken, configUser } from '../../utils/authHelper';
 
-const config = configUser(getUser);
+
 
 export const initiateLoading = {
   type: actionTypes.INITIATE_LOADING
@@ -164,7 +164,7 @@ export const signupCustomer = (user, hideModal) => {
           type: actionTypes.SIGNUP_CUSTOMER,
           payload: response.data,
         })
-        setToken(response.data.accessToken)
+        setToken(response.data)
         toast.success("Signup Successful", {
           onOpen: () => {hideModal()}
         });
@@ -212,20 +212,17 @@ export const loginCustomer = (user, hideModal) => {
     }
 }
 
-export const placeOrder = (order, configs) => {
+export const placeOrder = (order) => {
   return (dispatch, getState) => {
-    // console.log(getState().customers, 'getState')
-    console.log(config, 'config');
-    return axios.post("https://backendapi.turing.com/orders", order, configs)
+    const config = configUser(getState().customers);
+    return axios.post("https://backendapi.turing.com/orders", order, config)
     .then((response) => {
-      console.log(response, 'response')
         dispatch({
           type: actionTypes.PLACE_ORDER,
           payload: response.data,
         })
       })
       .catch((error) => {
-        console.log(error.response)
         if(error.response) {
           dispatch({
             type: actionTypes.PLACE_ORDER_ERROR,
@@ -240,26 +237,29 @@ export const createStripeCharge = (data) => {
   return (dispatch) => {
     return axios.post("https://backendapi.turing.com/stripe/charge", data)
     .then((response) => {
-        console.log(response, 'response')
+        dispatch(authRequest)
         dispatch({
           type: actionTypes.CREATE_STRIPE_CHARGE,
           payload: response.data,
         })
+        toast.success("Checkout Successful");
       })
       .catch((error) => {
-        console.log(error.response, 'error')
         if(error.response) {
+          console.log(error.response)
           dispatch({
             type: actionTypes.CREATE_STRIPE_CHARGE_ERROR,
-            payload: error.response.data.error.message
+            payload: error.response.error.message
           })
+          toast.error(error.response.error.message);
         }
       })
   }
 }
 
 export const getOrderDetails = (orderId) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const config = configUser(getState().customers);
     return axios.get(`https://backendapi.turing.com/orders/${orderId}`, config)
     .then((response) => {
         dispatch({
@@ -279,7 +279,8 @@ export const getOrderDetails = (orderId) => {
 }
 
 export const getCustomerProfile = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const config = configUser(getState().customers);
     return axios.get("https://backendapi.turing.com/customer", config)
     .then((response) => {
         dispatch({
@@ -299,7 +300,8 @@ export const getCustomerProfile = () => {
 }
 
 export const updateCustomerProfile = (userProfile, hideModal) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const config = configUser(getState().customers);
     dispatch(authRequest);
     return axios.put("https://backendapi.turing.com/customer", userProfile, config)
     .then((response) => {
@@ -324,8 +326,9 @@ export const updateCustomerProfile = (userProfile, hideModal) => {
 }
 
 export const updateShippingInfo = (shippingDetails, hideModal) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(authRequest);
+    const config = configUser(getState().customers);
     return axios.put("https://backendapi.turing.com/customers/address", shippingDetails, config)
     .then((response) => {
       dispatch({

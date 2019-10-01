@@ -37,9 +37,7 @@ export class SignupForm extends Component {
     if (errors) {
       this.setState({ errors });
     }
-    delete user.repeatPassword;
-    signupCustomer(user);
-    hideModal();
+    signupCustomer(user, hideModal);
   };
   
   /**

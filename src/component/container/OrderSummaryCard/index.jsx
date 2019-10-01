@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toast } from "react-toastify";
 import PropTypes from 'prop-types';
-import Button from '../../presentation/Button';
+import {StripeProvider, Elements } from 'react-stripe-elements';
+import { CardForm } from '../../presentation/CardForm';
 import { MiniLoader } from '../../presentation/Loader';
-import { CardElement, injectStripe } from 'react-stripe-elements';
 import { createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile } from '../../../store/actions'
 import './OrderSummaryCard.scss';
-
 
 class OrderSummaryCard extends Component {
 
   state = {
-    showModal: false
+    showModal: false,
+    errorMessage: '',
   }
 
   componentDidMount() {
@@ -32,21 +33,22 @@ class OrderSummaryCard extends Component {
    * @description This method handles checkout of an order
    * @returns {null}
    */
-  handleCheckout = async() => {
-    const {createStripeCharge, stripe: { createToken }, orders: {orderId}, cart: {total_amount}} = this.props;
-    const { token: {id} } = await createToken();
-    const paymentDetails = {
-      stripeToken: id,
-      order_id: orderId,
-      description: `Checkout with ${orderId}`,
-      amount: total_amount,
-      currency: 'GBP'
-    }
-    createStripeCharge(paymentDetails);
+  handleCheckout = (id) => {
+    const {createStripeCharge, orders: {orderId}, cart: {total_amount}} = this.props;
+    console.log(id)
+      const paymentDetails = {
+        stripeToken: id,
+        order_id: orderId,
+        description: `Checkout with ${orderId}`,
+        amount: Math.round(parseInt(total_amount, 10) * 100),
+        currency: 'GBP'
+      }
+      createStripeCharge(paymentDetails);
+    
   }
 
   render() {
-    const { orders, cart } = this.props;
+    const { orders, cart, stripe } = this.props;
     return (
       <>
         {orders.isLoading ? <MiniLoader /> : <div className="summary">
@@ -68,9 +70,11 @@ class OrderSummaryCard extends Component {
           </div>
           <hr />
           <div className="checkout">
-            <p>Enter Your Card Details</p>
-            <CardElement className="card-element" />
-            <Button handleClick={this.handleCheckout}>Pay &pound;{`${cart.total_amount}`}</Button>
+            <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
+              <Elements>
+                <CardForm stripe={stripe} totalAmount={cart.total_amount} handleResult={(id) => {this.handleCheckout(id)}} />
+              </Elements>
+            </StripeProvider>
           </div>
         </div>}
       </>
@@ -79,8 +83,8 @@ class OrderSummaryCard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { cart, orders, customers } = state;
-  return { cart, orders, customers };
+  const { cart, orders, customers, stripe } = state;
+  return { cart, orders, customers, stripe };
 }
 
 
@@ -94,4 +98,4 @@ OrderSummaryCard.propTypes = {
   getCustomerProfile: PropTypes.func.isRequired,
 };
 
-export default injectStripe(connect(mapStateToProps, {createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile})(OrderSummaryCard));
+export default connect(mapStateToProps, {createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile})(OrderSummaryCard);

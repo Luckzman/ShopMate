@@ -18,6 +18,7 @@ import {
   getAllDepartments,
   getAllProducts,
   searchProducts,
+  getTotalAmount,
   getFilteredProductsByCategory,
   getFilteredProductsByDepartment,
 } from '../../store/actions';
@@ -39,11 +40,13 @@ class Home extends Component {
       getAllCategories,
       getAllDepartments,
       getAllProducts,
+      getTotalAmount
     } = this.props;
     
     getAllCategories();
     getAllDepartments();
-    getAllProducts(1, 5);
+    getAllProducts(1, 10);
+    getTotalAmount()
   }
   
   /**
@@ -142,7 +145,7 @@ class Home extends Component {
     return (
       <div>
         <TopNav
-          name={customers.isAuthenticated ? customers.customer.name : ''}
+          name={customers && (customers.isAuthenticated ? customers.customer.name : '')}
           cartCount={(cart.data) ? cart.data.length: 0}
           triggerLoginModal={this.handleToggleLoginModal}
           triggerSignupModal={this.handleToggleSignupModal}
@@ -184,7 +187,7 @@ class Home extends Component {
               <Pagination
                 className="page"
                 totalRecords={products.count}
-                pageLimit={5}
+                pageLimit={10}
                 pageNeighbours={1}
                 onPageChanged={this.handlePageChange}
               />
@@ -197,7 +200,7 @@ class Home extends Component {
                     name={product.name}
                     thumbnail={`https://backendapi.turing.com/images/products/${product.thumbnail}`}
                     price={product.price}
-                    id={index+1}
+                    id={product.product_id}
                   />)})
             }
           </div>}
@@ -226,7 +229,7 @@ const mapStateToProps = (state) => {
 }
 
 Home.propTypes = {
-  customers: PropTypes.object.isRequired,
+  customers: PropTypes.object,
   categories: PropTypes.array.isRequired, 
   departments: PropTypes.array.isRequired,
   products: PropTypes.array.isRequired,
@@ -239,11 +242,16 @@ Home.propTypes = {
   searchProducts: PropTypes.func.isRequired,
 };
 
+Home.defaultProps = {
+  customers: {}
+}
+
 export default connect(mapStateToProps, {
   getAllCategories,
   getAllDepartments,
   getAllProducts,
   getFilteredProductsByCategory,
   getFilteredProductsByDepartment,
-  searchProducts
+  searchProducts,
+  getTotalAmount,
 })(Home);
