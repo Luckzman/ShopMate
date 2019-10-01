@@ -19,8 +19,6 @@ import {
 import QuantitySelector from '../../presentation/QuantitySelector';
 import './cart.scss';
 
-const config = configUser(getUser);
-
 class Cart extends Component {
   
   state = {
@@ -75,11 +73,8 @@ class Cart extends Component {
         shipping_id: 1,
         tax_id: 1
     }
-    const configs = {
-      headers: { 'user-key': customers.accessToken}
-    }
     if(customers.isAuthenticated){
-      return placeOrder(order, configs);
+      return placeOrder(order);
     }
   }
 
@@ -109,7 +104,7 @@ class Cart extends Component {
     if(!getUser) {
       this.handleToggleLoginModal();
     }
-    placeOrder(order, config);
+    placeOrder(order);
     this.setState({ showOrderSummaryModal: !showOrderSummaryModal });
   }
   
@@ -117,16 +112,13 @@ class Cart extends Component {
     const { cart } = this.props;
     const { showOrderSummaryModal, displaySignupModal, displayLoginModal } = this.state;
     return (
-      <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
         <div className="cart">
           {showOrderSummaryModal &&
             <Modal 
               modalSize={"sm"}
               hideModal={this.handleShowOrderSummaryModal}
             >
-              <Elements>
                 <OrderSummaryCard />
-              </Elements>
             </Modal>}
           {displayLoginModal && <Modal modalSize={"sm"} hideModal={this.handleToggleLoginModal}>
             <LoginForm hideModal={this.handleToggleLoginModal} displaySignup={this.handleToggleSignupModal} />
@@ -170,7 +162,6 @@ class Cart extends Component {
             <button className="checkout-btn" onClick={this.handleShowOrderSummaryModal}>Order</button>
           </div>
         </div>
-      </StripeProvider>
     )
   }
 }

@@ -258,10 +258,19 @@ export const orders = (state = {isLoading: true}, action) => {
   }
 }
 
-export const stripe = (state = {}, action) => {
+export const stripe = (state = {isLoading: false}, action) => {
   switch(action.type) {
+    case actionTypes.AUTH_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      }
     case actionTypes.CREATE_STRIPE_CHARGE:
-      return action.payload
+      return {
+        ...state,
+        ...action.payload,
+        isLoading: false
+      }
     case actionTypes.CREATE_STRIPE_CHARGE_ERROR:
       return action.payload
     default:
