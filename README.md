@@ -1,68 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Turing Challenge (E-commerce Web App)
 
-## Available Scripts
 
-In the project directory, you can run:
+This challenge is about the front-end of an e-commerce system which allows users to search, add items to their shopping cart, create orders, and checkout successfully.
 
-### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Table of Content 
+1. [Built With](#built-with)
+2. [System Design](#system-design)
+3. [Application Features](#application-features)
+4. [How to use](#how-to-use)
+5. [Author](#author)
+6. [License](#license)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Built With
+* [React](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
 
-### `npm test`
+## System Design
+ReactJS is one of the largely used UI Library that helps with the creation of beautiful web applications requiring minimal effort and coding. Things like Atomic design principles, component-driven approach, high-speed etc, make React js a popular choice of framework for building eCommerce web applications.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Redux is an open-source JavaScript library for managing application state. It is most commonly used with libraries such as React or Angular for building user interfaces. Similar to Facebook's Flux architecture, it was created by Dan Abramov and Andrew Clark.
 
-### `npm run build`
+### Benefit of using React Redux Technology
+1. Easy implementation of Atomic Design Principles
+2. Big boost in speed
+3. Allows for component Reusability
+4. Easy to build app with behaviour that is very predictable and consistent.
+5. Using Devtools make app easily debuggable.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### Use-Case Diagram
+![](https://drive.google.com/file/d/18x2jYwE0otFfmRNbDeqLyNx2RuHhGLwz/view?usp=sharing)
 
 ### Deployment
+Ride-My-Way UI is hosted on gh-pages while the app is hosted on Heroku
+* [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2399297)
+* [Heroku app]()
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Application Features
+1.  Users can view all items when entering the website
+2.  Items are displayed properly based on the selected department and category
+3.  Users can search items through search box
+4.  Support paging if we have too many items
+5.  Users can see item details by selecting a specific item
+6.  Users can add items to their shopping carts
+7.  Users can register/login using website custom forms, or social login libraries
+8.  Users can update personal profiles with shipping addresses and other info
+9.  Users can checkout with 3rd party payment gateways: Stripe. This requirement is mandatory, you must use our API to handle the payment.
 
-### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## How to use
+### Prerequisite
+To clone and run this application, you'll need [git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download/)(which comes with [npm](https://www.npmjs.com/)) installed on you computer.
+
+### Installing
+From your command line
+```
+# Clone this repository
+$ git clone https://github.com/Luckzman/Turing-Challenge.git
+
+# Go into the repository directory
+$ cd Turing-Challenge
+
+# Install dependencies
+$ npm install
+
+# run the app
+$ npm start
+```
+
+### Running Test
+* Navigate to the project root directory
+* After installation, run `npm test`
+
+## Author
+Lucky Omokarho Oniovosa
