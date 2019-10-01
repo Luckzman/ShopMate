@@ -45,3 +45,17 @@
     width: 320px;
   }
 }
+
+@media (max-width: 400px) {
+  .overlay{
+    .cart-modal {
+      width: 400px;
+      .modalContent{
+        padding: 0;
+      }
+    }
+    .sm-size {
+      width: 320px;
+    }
+  }
+}

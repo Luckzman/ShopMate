@@ -111,3 +111,43 @@
     }
   }
 }
+
+@media (max-width: 400px) {
+  .cart{
+    .title{
+      font-size: 1rem;
+    }
+    .cart-header{
+      padding: 0;
+      .size{
+        display: none;
+      }
+      .qty{
+        grid-column: 4/7;
+      }
+      .price{
+        display: none;
+      }
+      .subtotal{
+        grid-column: 7/8;
+      }
+    }
+    .cart-container{
+      .cart-body{
+        .size{
+          display: none
+        }
+        .qty{
+          grid-column: 4/7;
+        }
+        .price{
+          display: none;
+        }
+        .subtotal{
+          grid-column: 7/8;
+          text-align: left
+        }
+      }
+    }
+  }
+}

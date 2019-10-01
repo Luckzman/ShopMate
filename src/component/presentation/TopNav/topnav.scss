@@ -22,10 +22,18 @@
       border: none;
       background-color: #fff;
     }
+    .navbar-toggler{
+      border: grey;
+      color: grey;
+      .navbar-toggler-icon{
+        color: grey;
+      }
+    }
     
   }
 
   .center-links{
+    margin: 0 auto;
     a{
       color: map-get($color , app-black );
       padding: 0 10px;
@@ -47,4 +55,17 @@
       }
     }
   }
+}
+
+  @media (max-width: 400px) {
+    .top-nav{
+      .center-links{
+        a{
+          display: block;
+          margin: 5px 0;
+        }
+      }
+
+    }
+
 }
