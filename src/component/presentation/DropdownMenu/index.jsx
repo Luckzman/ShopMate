@@ -1,8 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Dropdown from 'react-bootstrap/Dropdown';
 import {logout} from '../../../utils/authHelper';
 import './DropdownMenu.scss';
 
+/**
+ * @description Reusable DropdownMenu Component
+ * @param {object} props
+ * @returns {JSX}
+ */
 const DropdownMenu = ({name, handleProfileModal, handleShippingDetailsModal }) => {
   return (
     <Dropdown>
@@ -19,6 +25,12 @@ const DropdownMenu = ({name, handleProfileModal, handleShippingDetailsModal }) =
       </Dropdown.Menu>
     </Dropdown>
   )
+}
+
+DropdownMenu.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleProfileModal: PropTypes.func.isRequired,
+  handleShippingDetailsModal: PropTypes.func.isRequired
 }
 
 export default DropdownMenu;

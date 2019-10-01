@@ -10,21 +10,38 @@ class QuantitySelector extends Component {
     quantity: 1,
   }
   
+  /**
+   * @method decrement
+   * @description This method decrement product quantity by 1
+   * @returns {null}
+   */
   decrement = () => {
     const { quantity } = this.state;
     if(quantity > 1) {
       this.setState({quantity: quantity-1})
     }
   }
-
+  
+  /**
+   * @method increment
+   * @description This method increment product quantity by 1
+   * @returns {null}
+   */
   increment = () => {
     const { quantity } = this.state;
     this.setState({quantity: quantity+1})
   }
   
+  
+  /**
+   * @method getUpdatedQuantity
+   * @description This method update product quantity by dispatching the getQuantity action
+   * @returns {null}
+   */
   getUpdatedQuantity = () => {
     const { quantity } = this.state;
-    this.props.getQuantity(quantity)
+    const { getQuantity } = this.props;
+    getQuantity(quantity)
   }
   
   render() {
@@ -42,5 +59,10 @@ class QuantitySelector extends Component {
     )
   }
 }
+
+QuantitySelector.propTypes = {
+  getQuantity: PropTypes.func.isRequired
+}
+
 
 export default QuantitySelector;

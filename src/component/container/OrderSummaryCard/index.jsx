@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Button from '../../presentation/Button';
 import { MiniLoader } from '../../presentation/Loader';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile } from '../../../store/actions'
 import './OrderSummaryCard.scss';
+
 
 class OrderSummaryCard extends Component {
 
@@ -25,6 +27,11 @@ class OrderSummaryCard extends Component {
     }
   }
 
+  /**
+   * @method handleCheckout
+   * @description This method handles checkout of an order
+   * @returns {null}
+   */
   handleCheckout = async() => {
     const {createStripeCharge, stripe: { createToken }, orders: {orderId}, cart: {total_amount}} = this.props;
     const { token: {id} } = await createToken();
@@ -39,8 +46,7 @@ class OrderSummaryCard extends Component {
   }
 
   render() {
-    const {orders, cart, customers} = this.props;
-    console.log(customers, 'cutomers');
+    const { orders, cart } = this.props;
     return (
       <>
         {orders.isLoading ? <MiniLoader /> : <div className="summary">
@@ -76,5 +82,16 @@ const mapStateToProps = (state) => {
   const { cart, orders, customers } = state;
   return { cart, orders, customers };
 }
+
+
+OrderSummaryCard.propTypes = {
+  cart: PropTypes.object.isRequired,
+  orders: PropTypes.object.isRequired,
+  customers: PropTypes.object.isRequired,
+  createStripeCharge: PropTypes.func.isRequired,
+  getOrderDetails: PropTypes.func.isRequired,
+  getTotalAmount: PropTypes.func.isRequired,
+  getCustomerProfile: PropTypes.func.isRequired,
+};
 
 export default injectStripe(connect(mapStateToProps, {createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile})(OrderSummaryCard));

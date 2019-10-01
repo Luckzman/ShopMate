@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './SizePicker.scss';
 
+/**
+ * @description A resuable SizePicker component
+ * @param {object} props
+ * @returns {JSX}
+ */
 const SizePicker = ({ getSize }) => {
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
   return (
@@ -20,7 +25,7 @@ const SizePicker = ({ getSize }) => {
 };
 
 SizePicker.propTypes = {
-  size: PropTypes.array.isRequired,
+  getSize: PropTypes.func.isRequired,
 }
 
 export default SizePicker;

@@ -4,6 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import './CartIcon.scss';
 
+/**
+ * @description Reusable CartIcon Component
+ * @param {object} props
+ * @returns {JSX}
+ */
 const CartIcon = ({ cartCount, inverse, showModal }) => {
   return (
     <div className="cart-icon" onClick={showModal}>
@@ -20,6 +25,7 @@ const CartIcon = ({ cartCount, inverse, showModal }) => {
 CartIcon.propTypes = {
   cartCount: PropTypes.number,
   inverse: PropTypes.bool,
+  showModal: PropTypes.func.isRequired
 }
 
 CartIcon.defaultProps = {

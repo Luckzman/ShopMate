@@ -1,14 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import SearchBar from '../SearchBar';
 import CartIcon from '../CartIcon';
 import './NavBar.scss';
 
+/**
+ * @description Reusable NavBar Component
+ * @param {object} props
+ * @returns {JSX}
+ */
 const NavBar = ({searchProduct, showModal, cartCount}) => {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar" bg="dark" variant="dark">
@@ -34,6 +37,12 @@ const NavBar = ({searchProduct, showModal, cartCount}) => {
       </Container>
     </Navbar>
   )
+}
+
+NavBar.propTypes = {
+  searchProduct: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired,
+  cartCount: PropTypes.number.isRequired
 }
 
 export default NavBar;

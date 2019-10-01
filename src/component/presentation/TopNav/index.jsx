@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import DropdownMenu from '../DropdownMenu';
 import CartIcon from '../CartIcon';
 import './topnav.scss';
 
+/**
+ * @description A resuable TopNav component
+ * @param {object} props
+ * @returns {JSX}
+ */
 const TopNav = ({ name, cartCount, totalAmount, triggerLoginModal, showModal, triggerSignupModal, handleProfileModal, handleShippingDetailsModal }) => {
   return (
       <Navbar collapseOnSelect expand="lg" className="container top-nav">
@@ -48,4 +53,18 @@ const TopNav = ({ name, cartCount, totalAmount, triggerLoginModal, showModal, tr
   )
 }
 
+TopNav.propTypes = {
+  name: PropTypes.string.isRequired,
+  cartCount: PropTypes.number.isRequired,
+  totalAmount: PropTypes.string,
+  triggerLoginModal: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired,
+  triggerSignupModal: PropTypes.func.isRequired,
+  handleProfileModal: PropTypes.func.isRequired,
+  handleShippingDetailsModal: PropTypes.string.isRequired,
+}
+
+TopNav.defaultProps = {
+  totalAmount: 0
+}
 export default TopNav;

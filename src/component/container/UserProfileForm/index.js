@@ -27,23 +27,33 @@ export class UserProfileForm extends Component {
     getCustomerProfile();
   }
 
+  /**
+   * @method handleSubmit
+   * @description This handle update of login data by calling the updateCustomerProfile action dispatcher
+   * @param {object} event - This is the event object
+   * @returns {null}
+   */
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
     const {customers: { customer: { name, email } }} = this.props;
-    console.log(user, 'user');
     user.name = name;
     user.email = email;
     const { updateCustomerProfile, hideModal } = this.props;
     const errors = userProfileValidator(user);
     if (errors) {
-      console.log(errors, 'errors')
       this.setState({ errors });
     }
     updateCustomerProfile(user, hideModal);
     
   };
 
+  /**
+   * @method handleChange
+   * @description This method get user input value from input element
+   * @param {object} event This is the event object
+   * @return {null}
+   */
   handleChange = (event) => {
     const { user } = this.state;
     const { name, value } = event.target;
@@ -113,7 +123,10 @@ const mapStateToProps = state => {
 };
 
 UserProfileForm.propTypes = {
-  customers: PropTypes.object,
+  customers: PropTypes.object.isRequired,
+  getCustomerProfile: PropTypes.func.isRequired,
+  updateCustomerProfile: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired
 };
 
 UserProfileForm.defaultProps = { customers: {} };

@@ -15,6 +15,10 @@ This challenge is about the front-end of an e-commerce system which allows users
 ## Built With
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
+* [Scss](https://redux.js.org/)
+* [JsDoc](https://redux.js.org/)
+* [create-react-app](https://redux.js.org/)
+* [Jest](https://redux.js.org/) & [Enzyme](https://redux.js.org/) 
 
 ## System Design
 ReactJS is one of the largely used UI Library that helps with the creation of beautiful web applications requiring minimal effort and coding. Things like Atomic design principles, component-driven approach, high-speed etc, make React js a popular choice of framework for building eCommerce web applications.

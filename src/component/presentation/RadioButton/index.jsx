@@ -2,6 +2,11 @@ import React from 'react';
 import Proptypes from 'prop-types';
 import './RadioButton.scss';
 
+/**
+ * @description Reusable RadioButton Component
+ * @param {object} props
+ * @returns {JSX}
+ */
 const RadioButton = ({onChange, selected }) => {
   const colors = ['grey', 'blue', 'red', 'magenta', 'yellow', 'green', 'purple'];
   return (
@@ -39,9 +44,8 @@ const RadioButton = ({onChange, selected }) => {
 }
 
 RadioButton.propTypes = {
-  options: Proptypes.arrayOf(Proptypes.object),
-  onChange: Proptypes.func,
-  selected: Proptypes.string,
+  onChange: Proptypes.func.isRequired,
+  selected: Proptypes.string.isRequired,
 }
 
 export default RadioButton;

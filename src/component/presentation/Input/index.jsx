@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import './Input.scss';
 
+/**
+ * @description Reusable Input Component
+ * @param {object} props
+ * @returns {JSX}
+ */
 const Input = (props) => {
   const { name, className, type, value, onChange, placeholder, disabled } = props;
   return (
