@@ -7,14 +7,10 @@ import './ItemCard.scss';
 
 /**
  * @description This component return a card of a single product
- * 
- * @param {string} name - name of the product
- * @param {string} thumbnail - image of the product
- * @param {string} price - price of the product
+ * @param {object} props
  * @returns {JSX}
  */
-const ItemCard = (props) => {
-  const { name, thumbnail, price, id } = props;
+const ItemCard = ({ name, thumbnail, price, id }) => {
   return (
     <div className="item-card">
       <img

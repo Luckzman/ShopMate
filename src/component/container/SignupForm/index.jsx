@@ -23,6 +23,12 @@ export class SignupForm extends Component {
     };
   }
 
+  /**
+   * @method handleSubmit
+   * @description This handle submission of signup data by calling the signupCustomer action dispatcher
+   * @param {object} event - This is the event object
+   * @returns {null}
+   */
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
@@ -36,12 +42,22 @@ export class SignupForm extends Component {
     hideModal();
   };
   
+  /**
+   * @method displayLoginModal
+   * @description This method displays login modal when user clicks on login button link on the signup modal
+   */
   displayLoginModal = () => {
     const {displayLogin, hideModal} = this.props;
     hideModal();
     displayLogin();
   }
 
+  /**
+   * @method handleChange
+   * @description This method get user input value from input element
+   * @param {object} event This is the event object
+   * @return {null}
+   */
   handleChange = (event) => {
     const { user } = this.state;
     const { name, value } = event.target;
@@ -100,14 +116,14 @@ export class SignupForm extends Component {
 
 const mapStateToProps = state => {
   const { customers } = state;
-  console.log(customers,'customer');
   return ({ customers })
 };
 
 SignupForm.propTypes = {
-  user: PropTypes.object,
+  customers: PropTypes.object.isRequired,
+  signupCustomer: PropTypes.func.isRequired,
+  displayLogin: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired
 };
-
-SignupForm.defaultProps = { user: {} };
 
 export default connect(mapStateToProps, {signupCustomer})(SignupForm);

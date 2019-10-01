@@ -1,5 +1,5 @@
 import { getUser } from '../../utils/authHelper';
-import { actionTypes } from '../actions';
+import { actionTypes } from '../actionTypes';
 
 export const categories = (state = {error: false}, action) => {
   switch(action.type) {

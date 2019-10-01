@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import Ratings from 'react-star-ratings';
@@ -14,7 +15,7 @@ import './SingleProductDetailsPage.scss';
 
 class SingleProductDetailPage extends Component {
   state = {
-    color: 'grey',
+    color: '',
     rating: 4,
     size: '',
     displayModal: false,
@@ -26,15 +27,32 @@ class SingleProductDetailPage extends Component {
     getAllCartItem(cart.cart_id);
   }
 
+  /**
+   * @method handleColorChange
+   * @description This method handles color change
+   * @param {object} event
+   * @return {null}
+   */
   handleColorChange = e => {
     const {value} = e.target;
     this.setState(() => ({ color: value }))
   }
   
+  /**
+   * @method handleGetSize
+   * @description This method handles product size
+   * @param {object} size
+   * @return {null}
+   */
   handleGetSize = (size) => {
     this.setState({ size });
   }
   
+  /**
+   * @method handleAddToCart
+   * @description This method add item to cart
+   * @return {null}
+   */
   handleAddToCart = () => {
     const { addProductToCart, match: { params: { id }} } = this.props;
     const {size, color} = this.state;
@@ -42,6 +60,11 @@ class SingleProductDetailPage extends Component {
     addProductToCart(id, attributes)
   }
   
+  /**
+   * @method handleToggleModal
+   * @description This method to handles toggle of cart
+   * @return {null}
+   */
   handleToggleModal = () => {
     const { displayModal } = this.state;
     this.setState(() => ({ displayModal: !displayModal }));
@@ -100,8 +123,18 @@ class SingleProductDetailPage extends Component {
 
 const mapStateToProps = (state) => {
   const {productDetails, cart, customers} = state;
-  // console.log(cart);
   return {productDetails, cart, customers};
 }
+
+SingleProductDetailPage.propTypes = {
+  customers: PropTypes.object.isRequired,
+  productDetails: PropTypes.object.isRequired, 
+  cart: PropTypes.array.isRequired,
+  getSingleProductDetails: PropTypes.func.isRequired, 
+  addProductToCart: PropTypes.func.isRequired,
+  removeCartItem: PropTypes.func.isRequired,
+  updateCartItemQuantity: PropTypes.func.isRequired, 
+  getAllCartItem: PropTypes.func.isRequired, 
+};
 
 export default connect(mapStateToProps, { getSingleProductDetails, addProductToCart, removeCartItem, updateCartItemQuantity, getAllCartItem })(SingleProductDetailPage);

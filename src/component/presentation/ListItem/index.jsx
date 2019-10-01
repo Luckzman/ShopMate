@@ -4,8 +4,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 /**
  * @description This component render List Item of an array
- * 
- * @param {array} listArr
+ * @param {object} props
  * @param {JSX}
  */
 const ListItem = ({ listArr, selectedItem }) => {
@@ -13,7 +12,7 @@ const ListItem = ({ listArr, selectedItem }) => {
   return (
     <ListGroup variant="flush">
       {
-        listArr.map((item, index) => {
+        listArr && listArr.map((item, index) => {
           return (
             <ListGroup.Item key={`${item} ${index}`} action onClick={() => selectedItem(index+1, item)}>
               {item.name}
@@ -26,11 +25,8 @@ const ListItem = ({ listArr, selectedItem }) => {
 }
 
 ListItem.propTypes = {
-  listArr: PropTypes.array,
+  listArr: PropTypes.array.isRequired,
   selectedItem: PropTypes.func.isRequired,
-}
-ListItem.defaultProps = {
-  listArr: [],
 }
 
 export default ListItem;

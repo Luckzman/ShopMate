@@ -32,6 +32,12 @@ export class ShippingDetailsForm extends Component {
     getRegions();
   }
 
+  /**
+   * @method handleSubmit
+   * @description This handle submission of customer shipping information by calling the updateShippingInfo dispatch action
+   * @param {object} event - This is the event object
+   * @returns {null}
+   */
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
@@ -43,6 +49,12 @@ export class ShippingDetailsForm extends Component {
     updateShippingInfo(user, hideModal);
   };
 
+  /**
+   * @method handleChange
+   * @description This method get user input value from input element
+   * @param {object} event This is the event object
+   * @return {null}
+   */
   handleChange = (event) => {
     const { user } = this.state;
     const { name, value } = event.target;
@@ -121,7 +133,11 @@ const mapStateToProps = state => {
 };
 
 ShippingDetailsForm.propTypes = {
-  regions: PropTypes.array,
+  regions: PropTypes.array.isRequired,
+  customers: PropTypes.object.isRequired,
+  getRegions: PropTypes.func.isRequired,
+  updateShippingInfo: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired
 };
 
 ShippingDetailsForm.defaultProps = [];

@@ -21,6 +21,12 @@ export class LoginForm extends Component {
     };
   }
 
+  /**
+   * @method handleSubmit
+   * @description This handle submission of login data by calling the loginCustomer action dispatcher
+   * @param {object} event - This is the event object
+   * @returns {null}
+   */
   handleSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
@@ -32,12 +38,22 @@ export class LoginForm extends Component {
     loginCustomer(user, hideModal);
   };
   
+  /**
+   * @method displaySignupModal
+   * @description This method displays signup modal when user clicks on signup button link on the login modal
+   */
   displaySignupModal = () => {
     const { displaySignup, hideModal } = this.props;
     hideModal();
     displaySignup()
   }
 
+  /**
+   * @method handleChange
+   * @description This method get user input value from input element
+   * @param {object} event This is the event object
+   * @return {null}
+   */
   handleChange = (event) => {
     const { user } = this.state;
     const { name, value } = event.target;
@@ -85,9 +101,10 @@ const mapStateToProps = state => {
 };
 
 LoginForm.propTypes = {
-  user: PropTypes.object,
+  customer: PropTypes.object.isRequired,
+  loginCustomer: PropTypes.func.isRequired,
+  displaySignup: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired
 };
-
-LoginForm.defaultProps = { user: {} };
 
 export default connect(mapStateToProps, { loginCustomer })(LoginForm);

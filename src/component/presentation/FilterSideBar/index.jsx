@@ -5,6 +5,11 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import ListItem from '../ListItem';
 
+/**
+ * @description FilterSideBar Component - This is needed to filter products by category and by product
+ * @param {object} props
+ * @returns {JSX}
+ */
 const FilterSideBar = ({category, department, selectedProduct}) => {
     return (
       <div>
@@ -39,13 +44,9 @@ const FilterSideBar = ({category, department, selectedProduct}) => {
 }
 
 FilterSideBar.propTypes = {
-  category: PropTypes.array,
-  department: PropTypes.array,
-}
-
-FilterSideBar.defaultProps = {
-  category: [],
-  department: [],
+  category: PropTypes.array.isRequired,
+  department: PropTypes.array.isRequired,
+  selectedProduct: PropTypes.func.isRequired
 }
 
 export default FilterSideBar;

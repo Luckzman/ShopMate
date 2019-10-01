@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
 import Pagination from '../../component/presentation/Pagination';
 import { PageLoader } from '../../component/presentation/Loader';
 import TopNav from '../../component/presentation/TopNav';
@@ -46,6 +46,13 @@ class Home extends Component {
     getAllProducts(1, 5);
   }
   
+  /**
+   * @method handleFilterProduct
+   * @description This method filter products by department or category
+   * @param {string} item This is the filter parameter that is passed to the filter action dispatcher
+   * @param {department} string This param is need so we can know if the filter key is from catergory or department
+   * @return {null}
+   */
   handleFilterProduct = (item, department) => {
     if(Object.keys(department)[0].includes('department')) {
       this.props.getFilteredProductsByDepartment(item);
@@ -55,38 +62,75 @@ class Home extends Component {
     }
     this.setState({isLoading: false});
   }
-
+  
+  /**
+   * @method handleSearch
+   * @description This method returns searched products based on user input
+   * @param {string} inputText This is the search parameter that is passed to the search action dispatcher
+   * @return {null}
+   */
   handleSearch = (inputText) => {
     const {searchProducts} = this.props;
     searchProducts(inputText);
   }
-
+  
+  /**
+   * @method handleToggleLoginModal
+   * @description This method toggles login modal
+   * @return {null}
+   */
   handleToggleLoginModal = () => {
     const { displayLoginModal } = this.state;
     this.setState(() => ({displayLoginModal: !displayLoginModal}))
   }
-
+  
+  /**
+   * @method handleToggleSignupnModal
+   * @description This method toggles signup modal
+   * @return {null}
+   */
   handleToggleSignupModal = () => {
     const { displaySignupModal } = this.state;
     this.setState(() => ({displaySignupModal: !displaySignupModal}));
   }
   
+  /**
+   * @method handleToggleProfileModal
+   * @description This method toggles profile modal
+   * @return {null}
+   */
   handleToggleProfileModal = () => {
     const { displayProfileModal } = this.state;
     this.setState(() => ({displayProfileModal: !displayProfileModal}));
   }
   
+  /**
+   * @method handleToggleShippingDetailsModal
+   * @description This method toggles shipping details modal
+   * @return {null}
+   */
   handleToggleShippingDetailsModal = () => {
     const { displayShippingDetailsModal } = this.state;
     this.setState(() => ({displayShippingDetailsModal: !displayShippingDetailsModal}));
   }
-
+  
+  
+  /**
+   * @method handleToggleCartModal
+   * @description This method toggles cart modal
+   * @return {null}
+   */
   handleToggleCartModal = () => {
     const { displayCartModal } = this.state;
     this.setState(() => ({displayCartModal: !displayCartModal}));
   }
-
-  onPageChanged = data => {
+  
+  /**
+   * @method handlePageChange
+   * @description This method handles pagination request
+   * @return {null}
+   */
+  handlePageChange = data => {
     const { getAllProducts } = this.props;
     const { currentPage, pageLimit } = data;
     getAllProducts(currentPage, pageLimit);
@@ -142,7 +186,7 @@ class Home extends Component {
                 totalRecords={products.count}
                 pageLimit={5}
                 pageNeighbours={1}
-                onPageChanged={this.onPageChanged}
+                onPageChanged={this.handlePageChange}
               />
             </div>
             {
@@ -172,7 +216,6 @@ const mapStateToProps = (state) => {
     cart,
     customers,
   } = state;
-  console.log(state, 'state')
   return {
     categories,
     departments,
@@ -181,6 +224,20 @@ const mapStateToProps = (state) => {
     customers
   }
 }
+
+Home.propTypes = {
+  customers: PropTypes.object.isRequired,
+  categories: PropTypes.array.isRequired, 
+  departments: PropTypes.array.isRequired,
+  products: PropTypes.array.isRequired,
+  cart: PropTypes.array.isRequired,
+  getAllCategories: PropTypes.func.isRequired,
+  getAllDepartments: PropTypes.func.isRequired,
+  getAllProducts: PropTypes.func.isRequired,
+  getFilteredProductsByCategory: PropTypes.func.isRequired,
+  getFilteredProductsByDepartment: PropTypes.func.isRequired,
+  searchProducts: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, {
   getAllCategories,

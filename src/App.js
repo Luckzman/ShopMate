@@ -6,7 +6,6 @@ import SingleProductDetailsPage from './pages/SingleProductDetailsPage';
 import NotFound from './pages/NotFound';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import 'react-toastify/dist/ReactToastify.min.css';
-import './App.scss';
 
 const App = () => {
   toast.configure({

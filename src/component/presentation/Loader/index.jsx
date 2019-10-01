@@ -2,9 +2,13 @@ import React from 'react';
 import Loader from 'react-loader-spinner';
 import './Loader.scss';
 
+/**
+ * @description Reusable PageLoader Component
+ * @returns {JSX}
+ */
 const PageLoader = () => {
   return (
-    <div class="page-loader">
+    <div className="page-loader">
       <Loader
         type="ThreeDots"
         color="#ff4363"
@@ -15,9 +19,13 @@ const PageLoader = () => {
   )
 };
 
+/**
+ * @description Reusable MiniLoader Component
+ * @returns {JSX}
+ */
 const MiniLoader = () => {
   return (
-    <div class="mini-loader">
+    <div className="mini-loader">
       <Loader
         type="TailSpin"
         color="#ff4363"
@@ -28,9 +36,13 @@ const MiniLoader = () => {
   )
 }
 
+/**
+ * @description Reusable smallLoader Component
+ * @returns {JSX}
+ */
 const SmallLoader = () => {
   return (
-    <div class="small-loader">
+    <div className="small-loader">
       <Loader
         type="ThreeDots"
         color="#fff"
