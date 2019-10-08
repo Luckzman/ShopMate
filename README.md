@@ -1,7 +1,7 @@
-# Turing Challenge (E-commerce Web App)
+# ShopMate (E-commerce Web App)
 
 
-This challenge is about the front-end of an e-commerce system which allows users to search, add items to their shopping cart, create orders, and checkout successfully.
+ShopMate the front-end of an e-commerce system which allows users to search, add items to their shopping cart, create orders, and checkout successfully.
 
 
 ## Table of Content 
@@ -38,7 +38,7 @@ Redux is an open-source JavaScript library for managing application state. It is
 ### Deployment
 Ride-My-Way UI is hosted on gh-pages while the app is hosted on Heroku
 * [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2399297)
-* [Heroku app]()
+* [Netlify app](https://shopmate1.netlify.com)
 
 ## Application Features
 1.  Users can view all items when entering the website
