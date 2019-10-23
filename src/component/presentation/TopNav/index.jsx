@@ -11,7 +11,7 @@ import './topnav.scss';
  * @param {object} props
  * @returns {JSX}
  */
-const TopNav = ({ name, cartCount, totalAmount, triggerLoginModal, showModal, triggerSignupModal, handleProfileModal, handleShippingDetailsModal }) => {
+const TopNav = ({ name, departments, selectDepartment, cartCount, totalAmount, triggerLoginModal, showModal, triggerSignupModal, handleProfileModal, handleShippingDetailsModal }) => {
   return (
       <Navbar collapseOnSelect expand="lg" className="container top-nav">
         <div className="login-links">
@@ -32,10 +32,9 @@ const TopNav = ({ name, cartCount, totalAmount, triggerLoginModal, showModal, tr
       </div>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-          <div className="center-links ">
-            <Link to="/">Daily Deals</Link>
-            <Link to="/">Help</Link>
-            <Link to="/">Contact</Link>
+          <div className="center-links">
+            {departments.map((department, index) => {
+              return <Navbar.Text key={`${index}1`} onClick={() => selectDepartment(department.department_id)}>{department.name}</Navbar.Text>})}
           </div>
           <div className="cart-links ml-auto">
             <div className="grp">
@@ -56,6 +55,7 @@ const TopNav = ({ name, cartCount, totalAmount, triggerLoginModal, showModal, tr
 TopNav.propTypes = {
   name: PropTypes.string.isRequired,
   cartCount: PropTypes.number.isRequired,
+  departments: PropTypes.string,
   totalAmount: PropTypes.string,
   triggerLoginModal: PropTypes.func.isRequired,
   showModal: PropTypes.func.isRequired,
@@ -65,6 +65,7 @@ TopNav.propTypes = {
 }
 
 TopNav.defaultProps = {
-  totalAmount: 0
+  totalAmount: 0,
+  departments: []
 }
 export default TopNav;

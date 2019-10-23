@@ -49,6 +49,12 @@ class Home extends Component {
     getTotalAmount()
   }
   
+  
+    handleFilterByDepartment = (department) => {
+      console.log(department, 'department');
+      this.props.getFilteredProductsByDepartment(department);
+    }
+    
   /**
    * @method handleFilterProduct
    * @description This method filter products by department or category
@@ -65,7 +71,6 @@ class Home extends Component {
     }
     this.setState({isLoading: false});
   }
-  
   /**
    * @method handleSearch
    * @description This method returns searched products based on user input
@@ -146,6 +151,8 @@ class Home extends Component {
       <div>
         <TopNav
           name={customers && (customers.isAuthenticated ? customers.customer.name : '')}
+          departments={departments}
+          selectDepartment={this.handleFilterByDepartment}
           cartCount={(cart.data) ? cart.data.length: 0}
           triggerLoginModal={this.handleToggleLoginModal}
           triggerSignupModal={this.handleToggleSignupModal}
@@ -178,7 +185,7 @@ class Home extends Component {
           <div className="filter-side-bar">
             <FilterSideBar
               category={categories.rows}
-              department={departments}
+              // departments={departments}
               selectedProduct={this.handleFilterProduct}
             />
           </div>

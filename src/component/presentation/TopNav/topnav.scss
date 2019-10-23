@@ -34,10 +34,10 @@
 
   .center-links{
     margin: 0 auto;
-    a{
+    .navbar-text{
       color: map-get($color , app-black );
-      padding: 0 10px;
-      text-decoration: none;
+      margin: 0 10px;
+      cursor: pointer;
     }
   }
 
