@@ -26,7 +26,7 @@ const FilterSideBar = ({category, department, selectedProduct}) => {
               </Card.Body>
             </Accordion.Collapse>
           </Card>
-          <Card>
+          {/* <Card>
             <Card.Header>
               <Accordion.Toggle as={Button} variant="link" eventKey="1">
                 Departments
@@ -37,7 +37,7 @@ const FilterSideBar = ({category, department, selectedProduct}) => {
                 <ListItem listArr={department} selectedItem={selectedProduct} />
               </Card.Body>
             </Accordion.Collapse>
-          </Card>
+          </Card> */}
         </Accordion>
       </div>
     )
