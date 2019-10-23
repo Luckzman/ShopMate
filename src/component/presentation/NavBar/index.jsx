@@ -12,7 +12,7 @@ import './NavBar.scss';
  * @param {object} props
  * @returns {JSX}
  */
-const NavBar = ({searchProduct, showModal, cartCount}) => {
+const NavBar = ({searchProduct, categories, selectCategory, showModal, cartCount}) => {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar" bg="dark" variant="dark">
       <Container>
@@ -20,13 +20,10 @@ const NavBar = ({searchProduct, showModal, cartCount}) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="/" className="text-light ml-3">Women</Nav.Link>
-            <Nav.Link href="/" className="text-light ml-3">Men</Nav.Link>
-            <Nav.Link href="/" className="text-light ml-3">Kids</Nav.Link>
-            <Nav.Link href="/" className="text-light ml-3">Shoes</Nav.Link>
-            <Nav.Link href="/" className="text-light ml-3">Brands</Nav.Link>
+          {categories && categories.map((category, index) => {
+              return <Navbar.Text className="navbar-texts" key={`${index}1`} onClick={() => selectCategory(category.category_id)}>{category.name}</Navbar.Text>})}
           </Nav>
-          <SearchBar className="search-bar" searchProduct={searchProduct} />
+          <SearchBar className="search-bar" searchProduct={searchProduct} />}
           <CartIcon
             inverse={true}
             className="cart-icon"
@@ -40,9 +37,15 @@ const NavBar = ({searchProduct, showModal, cartCount}) => {
 }
 
 NavBar.propTypes = {
+  categories: PropTypes.array,
+  selectCategory: PropTypes.func.isRequired,
   searchProduct: PropTypes.func.isRequired,
   showModal: PropTypes.func.isRequired,
   cartCount: PropTypes.number.isRequired
+}
+
+NavBar.defaultProps = {
+  categories: [],
 }
 
 export default NavBar;

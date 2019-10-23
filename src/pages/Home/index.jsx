@@ -45,32 +45,31 @@ class Home extends Component {
     
     getAllCategories();
     getAllDepartments();
-    getAllProducts(1, 10);
+    getAllProducts(1, 12);
     getTotalAmount()
   }
   
-  
-    handleFilterByDepartment = (department) => {
-      console.log(department, 'department');
-      this.props.getFilteredProductsByDepartment(department);
-    }
-    
   /**
-   * @method handleFilterProduct
-   * @description This method filter products by department or category
-   * @param {string} item This is the filter parameter that is passed to the filter action dispatcher
-   * @param {department} string This param is need so we can know if the filter key is from catergory or department
+   * @method handleFilterByDepartment
+   * @description This method filter products by department
+   * @param {string} departmentId This is the filter parameter that is passed to the filter action dispatcher
    * @return {null}
    */
-  handleFilterProduct = (item, department) => {
-    if(Object.keys(department)[0].includes('department')) {
-      this.props.getFilteredProductsByDepartment(item);
-    }
-    else {
-      this.props.getFilteredProductsByCategory(item);
-    }
-    this.setState({isLoading: false});
+  handleFilterByDepartment = departmentId => {
+    this.props.getFilteredProductsByDepartment(departmentId);
   }
+  
+  /**
+   * @method handleFilterByCategory
+   * @description This method filter products by category
+   * @param {string} categoryId This is the filter parameter that is passed to the filter action dispatcher
+   * @return {null}
+   */
+  handleFilterByCategory = categoryId => {
+    this.props.getFilteredProductsByCategory(categoryId)
+  }
+
+
   /**
    * @method handleSearch
    * @description This method returns searched products based on user input
@@ -162,6 +161,8 @@ class Home extends Component {
           totalAmount={cart ? cart.total_amount : 0}
         />
         <NavBar 
+          categories={categories.rows}
+          selectCategory={this.handleFilterByCategory}
           searchProduct={this.handleSearch} 
           cartCount={(cart.data) ? cart.data.length: 0}
           showModal={this.handleToggleCartModal}
@@ -183,22 +184,24 @@ class Home extends Component {
         </Modal>}
         <div className="container homepage mt-5">
           <div className="filter-side-bar">
-            <FilterSideBar
+            {/* <FilterSideBar
               category={categories.rows}
               // departments={departments}
               selectedProduct={this.handleFilterProduct}
-            />
+            /> */}
           </div>
-          {products.isLoading ? <PageLoader />  : <div className="product">
+          {products.isLoading ? <PageLoader />  :
+          <>
             <div className="paginate">
               <Pagination
                 className="page"
                 totalRecords={products.count}
-                pageLimit={10}
+                pageLimit={12}
                 pageNeighbours={1}
                 onPageChanged={this.handlePageChange}
               />
             </div>
+            <div className="product">
             {
               products.rows && products.rows.map((product, index) => {
                 return (
@@ -210,7 +213,8 @@ class Home extends Component {
                     id={product.product_id}
                   />)})
             }
-          </div>}
+          </div>
+          </>}
         </div>
       </div>
     
