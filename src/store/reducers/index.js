@@ -29,28 +29,40 @@ export const departments = (state = [], action) => {
   }
 }
 
-export const products = (state = {isLoading: true}, action) => {
+export const products = (state = {isLoading: true, error: false}, action) => {
   switch(action.type) {
     case actionTypes.GET_ALL_PRODUCTS:
       return {
         ...state,
         ...action.payload,
         isLoading: false,
+        error: false
+      }
+    case actionTypes.GET_ALL_PRODUCTS_NETWORK_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: true
       }
     case actionTypes.GET_FILTERED_PRODUCTS_BY_CATEGORY:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
+        isLoading: false,
+        error: false
       }
     case actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT:
         return {
           ...state,
-          ...action.payload
+          ...action.payload,
+          error: false
         }
     case actionTypes.SEARCH_PRODUCTS:
         return {
           ...state,
-          ...action.payload
+          ...action.payload,
+          isLoading: false,
+          error: false
         }
     case actionTypes.SEARCH_PRODUCTS_ERROR:
       return action.payload;
