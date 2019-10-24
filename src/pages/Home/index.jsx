@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import NetworkErrorMessage from '../../component/presentation/NetworkErrorMessage';
 import Pagination from '../../component/presentation/Pagination';
 import { PageLoader } from '../../component/presentation/Loader';
 import TopNav from '../../component/presentation/TopNav';
 import Cart from '../../component/container/Cart';
 import Modal from '../../component/presentation/Modal';
 import NavBar from '../../component/presentation/NavBar';
-import FilterSideBar from '../../component/presentation/FilterSideBar';
 import SignupForm from '../../component/container/SignupForm';
 import LoginForm from '../../component/container/LoginForm';
 import UserProfileForm from '../../component/container/UserProfileForm';
@@ -183,14 +183,8 @@ class Home extends Component {
           <Cart />
         </Modal>}
         <div className="container homepage mt-5">
-          <div className="filter-side-bar">
-            {/* <FilterSideBar
-              category={categories.rows}
-              // departments={departments}
-              selectedProduct={this.handleFilterProduct}
-            /> */}
-          </div>
-          {products.isLoading ? <PageLoader />  :
+          {console.log(products.isLoading)}
+          {products.error ? <NetworkErrorMessage /> : products.isLoading ? <PageLoader />  :
           <>
             <div className="paginate">
               <Pagination
@@ -223,6 +217,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state, 'state')
   const {
     categories,
     departments,
