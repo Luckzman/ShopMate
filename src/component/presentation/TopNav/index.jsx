@@ -44,7 +44,7 @@ const TopNav = ({ name, departments, selectDepartment, cartCount, totalAmount, t
                 alt="british logo" />
               <span>&pound; gbp</span>
             </div>
-            <CartIcon cartCount={cartCount} showModal={showModal} />
+            {/* <CartIcon cartCount={cartCount} showModal={showModal} /> */}
             <div>Your bag: &pound; {totalAmount}</div>
           </div>
       </Navbar.Collapse>

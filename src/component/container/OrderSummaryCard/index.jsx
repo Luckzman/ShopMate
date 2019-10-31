@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { toast } from "react-toastify";
 import PropTypes from 'prop-types';
 import {StripeProvider, Elements } from 'react-stripe-elements';
@@ -43,8 +44,7 @@ class OrderSummaryCard extends Component {
         amount: Math.round(parseInt(total_amount, 10) * 100),
         currency: 'GBP'
       }
-      createStripeCharge(paymentDetails);
-    
+      createStripeCharge(paymentDetails, () => {this.props.history.push("/")});
   }
 
   render() {
@@ -70,7 +70,7 @@ class OrderSummaryCard extends Component {
           </div>
           <hr />
           <div className="checkout">
-            <StripeProvider apiKey="pk_test_NcwpaplBCuTL6I0THD44heRe">
+            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PK}>
               <Elements>
                 <CardForm stripe={stripe} totalAmount={cart.total_amount} handleResult={(id) => {this.handleCheckout(id)}} />
               </Elements>
@@ -98,4 +98,4 @@ OrderSummaryCard.propTypes = {
   getCustomerProfile: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, {createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile})(OrderSummaryCard);
+export default connect(mapStateToProps, {createStripeCharge, getOrderDetails, getTotalAmount, getCustomerProfile})(withRouter(OrderSummaryCard));

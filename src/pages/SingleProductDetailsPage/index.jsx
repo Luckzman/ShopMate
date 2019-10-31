@@ -77,6 +77,7 @@ class SingleProductDetailPage extends Component {
       <>
         <NavBar 
           searchProduct={()=>{}} 
+          showCartIcon={true}
           showModal={this.handleToggleModal} 
           cartCount={(cart.data) ? cart.data.length : 0}
         />

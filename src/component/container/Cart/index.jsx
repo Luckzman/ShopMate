@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Elements, StripeProvider } from 'react-stripe-elements';
-import {Link} from 'react-router-dom';
+import { toast } from "react-toastify";
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Modal from '../../presentation/Modal';
-import { getUser, configUser } from '../../../utils/authHelper';
-import LoginForm from '../LoginForm';
-import SignupForm from '../SignupForm';
+import { getUser } from '../../../utils/authHelper';
+
 import OrderSummaryCard from '../OrderSummaryCard';
 import {
   removeCartItem,
@@ -23,8 +23,6 @@ class Cart extends Component {
   
   state = {
     showOrderSummaryModal: false,
-    displayLoginModal: false,
-    displaySignupModal: false,
   }
   
   componentDidMount() {
@@ -58,59 +56,31 @@ class Cart extends Component {
     updateCartItemQuantity(itemId, quantity); 
   }
 
-  
-  /**
-   * @method handleToggleLoginModal
-   * @description This method toggles the state of the login modal
-   * @returns {null}
-   */
-  handleToggleLoginModal = () => {
-    const { displayLoginModal } = this.state;
-    const { placeOrder, customers,  cart } = this.props;
-    this.setState({displayLoginModal: !displayLoginModal})
-      const order = {
-        cart_id: cart.cart_id,
-        shipping_id: 1,
-        tax_id: 1
-    }
-    if(customers.isAuthenticated){
-      return placeOrder(order);
-    }
-  }
-
-  /**
-   * @method handleToggleSignupModal
-   * @description This method toggles the state of the signup modal
-   * @returns {null}
-   */
-  handleToggleSignupModal = () => {
-    const { displaySignupModal } = this.state;
-    this.setState(() => ({displaySignupModal: !displaySignupModal}));
-  }
-  
   /**
    * @method handleShowOrderSummaryModal
    * @description This method displays  order summary modal if user is authenticated
    * @returns {null}
    */
   handleShowOrderSummaryModal = () => {
-    const { showOrderSummaryModal } = this.state;
-    const { placeOrder, cart } = this.props;
+    const { showOrderSummaryModal, displayLoginModal } = this.state;
+    const { placeOrder, customers, cart } = this.props;
     const order = {
       cart_id: cart.cart_id,
       shipping_id: 1,
       tax_id: 1
     }
     if(!getUser) {
-      this.handleToggleLoginModal();
+      toast.info('Please Login, Redirecting to Homepage', (() => this.props.history.push("/"))())
     }
-    placeOrder(order);
-    this.setState({ showOrderSummaryModal: !showOrderSummaryModal });
+    
+      placeOrder(order);
+      this.setState({ showOrderSummaryModal: !showOrderSummaryModal });
+    
   }
   
   render() {
     const { cart } = this.props;
-    const { showOrderSummaryModal, displaySignupModal, displayLoginModal } = this.state;
+    const { showOrderSummaryModal } = this.state;
     return (
         <div className="cart">
           {showOrderSummaryModal &&
@@ -118,14 +88,8 @@ class Cart extends Component {
               modalSize={"sm"}
               hideModal={this.handleShowOrderSummaryModal}
             >
-                <OrderSummaryCard />
+              <OrderSummaryCard />
             </Modal>}
-          {displayLoginModal && <Modal modalSize={"sm"} hideModal={this.handleToggleLoginModal}>
-            <LoginForm hideModal={this.handleToggleLoginModal} displaySignup={this.handleToggleSignupModal} />
-          </Modal>}
-          {displaySignupModal && <Modal modalSize={"sm"}  hideModal={this.handleToggleSignupModal}>
-            <SignupForm hideModal={this.handleToggleSignupModal} displayLogin={this.handleToggleLoginModal} />
-          </Modal>}
           <h5 className="title">{`${cart.data.length} Item In Your Cart`}</h5>
           <div className="cart-header">
             <p className="item-name">Item</p>
@@ -167,8 +131,9 @@ class Cart extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { cart, customers } = state;
-  return {cart, customers}
+  const { cart, customers, orders } = state;
+  console.log(state)
+  return {cart, customers, orders}
 }
 
 Cart.propTypes = {
@@ -189,4 +154,4 @@ export default connect(mapStateToProps, {
   getAllCartItem,
   getCustomerProfile,
   placeOrder
-})(Cart);
+})(withRouter(Cart));

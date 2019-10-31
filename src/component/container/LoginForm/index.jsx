@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import FacebookLogin from 'react-facebook-login';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
 import Input from '../../presentation/Input';
 import { SmallLoader }  from '../../presentation/Loader';
 import Button from '../../presentation/Button';
@@ -19,6 +23,10 @@ export class LoginForm extends Component {
       },
       errors: {}
     };
+  }
+
+  componentDidMount() {
+    this.loadFbLoginApi();
   }
 
   /**
@@ -61,36 +69,107 @@ export class LoginForm extends Component {
     this.setState({ user });
   };
 
+  loadFbLoginApi() {
+
+    window.fbAsyncInit = function() {
+        window.FB.init({
+            appId      : process.env.REACT_APP_APP_ID,
+            cookie     : true,  // enable cookies to allow the server to access
+            // the session
+            xfbml      : true,  // parse social plugins on this page
+            version    : 'v2.5' // use version 2.1
+        });
+    };
+
+    console.log("Loading fb api");
+      // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }
+
+  testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    window.FB.api('/me', {fields: 'name,email,picture'}, function(response) {
+      console.log(response, 'response')
+    console.log('Successful login for: ' + response.name);
+    // document.getElementById('status').innerHTML =
+    //   'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+
+  statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response, 'response');
+    if (response.status === 'connected') {
+      console.log('connected')
+      this.testAPI();
+    // } else if (response.status === 'not_authorized') {
+    //     console.log("Please log into this app.");
+    } else {
+        console.log("Please log into this facebook.");
+        // window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);
+    }
+  }
+
+  checkLoginState = () => {
+    window.FB.getLoginStatus((response) => {
+      this.statusChangeCallback(response);
+    })
+  }
+
+  handleFacebookLogin = () => {
+    window.FB.login(this.checkLoginState());
+  }
+
   render() {
     const { user, errors } = this.state;
     const { customers } = this.props;
+    library.add(fab);
     return (
-      <form className="custom-form" onSubmit={this.handleSubmit}>
-        <h3 className="heading">LOGIN</h3>
-        <Input
-          name="email"
-          value={user.email}
-          onChange={this.handleChange}
-          placeholder="Email"
-        />
-        {errors.email && <InlineError text={errors.email} />}
+      <>
+        <form className="custom-form" onSubmit={this.handleSubmit}>
+          <h3 className="heading">LOGIN</h3>
+          <Input
+            name="email"
+            value={user.email}
+            onChange={this.handleChange}
+            placeholder="Email"
+          />
+          {errors.email && <InlineError text={errors.email} />}
 
-        <Input
-          name="password"
-          value={user.password}
-          type="password"
-          placeholder="Password"
-          onChange={this.handleChange}
-        />
-        {errors.password && <InlineError text={errors.password} />}
-        <Button
-          type="submit"
-          handleClick={this.handleSubmit}
-        >
-          {customers.isLoading ? <SmallLoader /> : 'Login'}
-        </Button>
-        <p className="mt-3">I don't have an account <span className="register-link" onClick={this.displaySignupModal}>Register</span></p>
-      </form>
+          <Input
+            name="password"
+            value={user.password}
+            type="password"
+            placeholder="Password"
+            onChange={this.handleChange}
+          />
+          {errors.password && <InlineError text={errors.password} />}
+          <Button
+            type="submit"
+            handleClick={this.handleSubmit}
+          >
+            {customers.isLoading ? <SmallLoader /> : 'Login'}
+          </Button>
+          <p className="mt-3">I don't have an account <span className="register-link" onClick={this.displaySignupModal}>Register</span></p>
+          
+          
+          {/* <hr />
+          <Button
+            customClass="facebook-btn"
+            handleClick={this.handleFacebookLogin}
+          >
+            <FontAwesomeIcon icon={['fab', 'facebook']} className="facebook-icon" />
+            Login with facebook
+          </Button> */}
+        </form>
+      </>
+
     );
   }
 }
