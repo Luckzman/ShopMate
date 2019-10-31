@@ -52,18 +52,18 @@ export const products = (state = {isLoading: true, error: false}, action) => {
         error: false
       }
     case actionTypes.GET_FILTERED_PRODUCTS_BY_DEPARTMENT:
-        return {
-          ...state,
-          ...action.payload,
-          error: false
-        }
+      return {
+        ...state,
+        ...action.payload,
+        error: false
+      }
     case actionTypes.SEARCH_PRODUCTS:
-        return {
-          ...state,
-          ...action.payload,
-          isLoading: false,
-          error: false
-        }
+      return {
+        ...state,
+        ...action.payload,
+        isLoading: false,
+        error: false
+      }
     case actionTypes.SEARCH_PRODUCTS_ERROR:
       return action.payload;
     case actionTypes.GET_ALL_PRODUCTS_ERROR:
@@ -245,14 +245,15 @@ export const regions = (state = [], action) => {
   }
 }
 
-export const orders = (state = {isLoading: true}, action) => {
+export const orders = (state = {isLoading: true, error: false}, action) => {
   switch(action.type) {
     case actionTypes.PLACE_ORDER:
       return action.payload
     case actionTypes.PLACE_ORDER_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: true,
+        place_order_error: action.payload
       }
     case actionTypes.GET_ORDER_DETAILS:
       return {

@@ -12,7 +12,7 @@ import './NavBar.scss';
  * @param {object} props
  * @returns {JSX}
  */
-const NavBar = ({searchProduct, categories, selectCategory, showModal, cartCount}) => {
+const NavBar = ({searchProduct, showCartIcon, categories, selectCategory, showModal, cartCount}) => {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar" bg="dark" variant="dark">
       <Container>
@@ -21,15 +21,15 @@ const NavBar = ({searchProduct, categories, selectCategory, showModal, cartCount
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
           {categories && categories.map((category, index) => {
-              return <Navbar.Text className="navbar-texts" key={`${index}1`} onClick={() => selectCategory(category.category_id)}>{category.name}</Navbar.Text>})}
+            return <Navbar.Text className="navbar-texts" key={`${index}1`} onClick={() => selectCategory(category.category_id)}>{category.name}</Navbar.Text>})}
           </Nav>
           <SearchBar className="search-bar" searchProduct={searchProduct} />}
-          <CartIcon
+          {showCartIcon && <CartIcon
             inverse={true}
             className="cart-icon"
             cartCount={cartCount}
             showModal={showModal}
-          />
+          />}
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -37,6 +37,7 @@ const NavBar = ({searchProduct, categories, selectCategory, showModal, cartCount
 }
 
 NavBar.propTypes = {
+  showCartIcon: PropTypes.bool,
   categories: PropTypes.array,
   selectCategory: PropTypes.func.isRequired,
   searchProduct: PropTypes.func.isRequired,
@@ -45,6 +46,7 @@ NavBar.propTypes = {
 }
 
 NavBar.defaultProps = {
+  showCartIcon: false,
   categories: [],
 }
 

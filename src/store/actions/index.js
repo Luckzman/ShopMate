@@ -237,17 +237,25 @@ export const placeOrder = (order) => {
         })
       })
       .catch((error) => {
+        console.log(error, 'error')
+        console.log(error.response, 'error response')
         if(error.response) {
           dispatch({
             type: actionTypes.PLACE_ORDER_ERROR,
             payload: error.response.data.error.message
           })
         }
+        if(error.response && (error.response.data.error === 'TokenExpiredError: jwt expired')) {
+          dispatch({
+            type: actionTypes.PLACE_ORDER_ERROR,
+            payload: error.response.data.error
+          })
+        }
       })
   }
 }
 
-export const createStripeCharge = (data) => {
+export const createStripeCharge = (data, redirect) => {
   return (dispatch) => {
     return axios.post("https://backendapi.turing.com/stripe/charge", data)
     .then((response) => {
@@ -256,7 +264,7 @@ export const createStripeCharge = (data) => {
           type: actionTypes.CREATE_STRIPE_CHARGE,
           payload: response.data,
         })
-        toast.success("Checkout Successful");
+        toast.success("Checkout Successful", redirect());
       })
       .catch((error) => {
         if(error.response) {
