@@ -36,7 +36,6 @@ class OrderSummaryCard extends Component {
    */
   handleCheckout = (id) => {
     const {createStripeCharge, orders: {orderId}, cart: {total_amount}} = this.props;
-    console.log(id)
       const paymentDetails = {
         stripeToken: id,
         order_id: orderId,

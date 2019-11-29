@@ -81,7 +81,7 @@ export class LoginForm extends Component {
         });
     };
 
-    console.log("Loading fb api");
+    //  console.log("Loading fb api");
       // Load the SDK asynchronously
     (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -93,23 +93,17 @@ export class LoginForm extends Component {
   }
 
   testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
     window.FB.api('/me', {fields: 'name,email,picture'}, function(response) {
-      console.log(response, 'response')
-    console.log('Successful login for: ' + response.name);
+      
     // document.getElementById('status').innerHTML =
     //   'Thanks for logging in, ' + response.name + '!';
     });
   }
 
   statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response, 'response');
     if (response.status === 'connected') {
-      console.log('connected')
       this.testAPI();
     // } else if (response.status === 'not_authorized') {
-    //     console.log("Please log into this app.");
     } else {
         console.log("Please log into this facebook.");
         // window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);

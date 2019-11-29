@@ -108,6 +108,12 @@
       background-color: #fff;
       color: #ff4363;
       border: 1px solid #b9b9b9;
+      box-sizing: border-box;
+      height: 37px;
+    }
+    .fix-width{
+      width: 100px;
+      margin-top: 0px;
     }
   }
 }

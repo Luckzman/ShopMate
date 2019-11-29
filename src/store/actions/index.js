@@ -54,21 +54,15 @@ export const getAllDepartments = () => {
 }
 
 export const getAllProducts = (page, limit) => {
-  console.log(page, limit)
   return (dispatch) => {
     return axios.get(`https://backendapi.turing.com/products?page=${page}&limit=${limit}`)
       .then((response) => {
-        console.log(response, 'response')
-        if(!response){
-          console.log('no response')
-        }
         dispatch({
           type: actionTypes.GET_ALL_PRODUCTS,
           payload: response.data,
         })
       })
       .catch((error) => {
-        console.dir(error, 'error');
         if(error.response) {
           dispatch({
             type: actionTypes.GET_ALL_PRODUCTS_ERROR,
@@ -76,8 +70,6 @@ export const getAllProducts = (page, limit) => {
           })
         }
         if(error.message === 'Network Error') {
-          console.log(error.message, 'message')
-
           dispatch({
             type: actionTypes.GET_ALL_PRODUCTS_NETWORK_ERROR
           })
@@ -236,10 +228,7 @@ export const placeOrder = (order) => {
           payload: response.data,
         })
       })
-      .catch((error) => {
-        console.log(error, 'error')
-        console.log(error.response, 'error response')
-        if(error.response) {
+      .catch((error) => {if(error.response) {
           dispatch({
             type: actionTypes.PLACE_ORDER_ERROR,
             payload: error.response.data.error.message
@@ -268,7 +257,6 @@ export const createStripeCharge = (data, redirect) => {
       })
       .catch((error) => {
         if(error.response) {
-          console.log(error.response)
           dispatch({
             type: actionTypes.CREATE_STRIPE_CHARGE_ERROR,
             payload: error.response.error.message
