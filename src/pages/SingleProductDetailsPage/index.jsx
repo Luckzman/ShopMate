@@ -97,7 +97,7 @@ class SingleProductDetailPage extends Component {
             <div className="product-details">
               <Breadcrumb>
                 <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
-                <Breadcrumb.Item><Link to="/">All Categories</Link></Breadcrumb.Item>
+                <Breadcrumb.Item><Link to="/catalog">All Categories</Link></Breadcrumb.Item>
                 <Breadcrumb.Item active>Men's Clothing &amp; Accessories</Breadcrumb.Item>
               </Breadcrumb>
               <Ratings

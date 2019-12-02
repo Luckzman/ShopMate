@@ -26,10 +26,19 @@ const Home = (prop) => {
             </div>
           </div>
         </div>
-        <img
-          className="banner-img"
-          src="https://res.cloudinary.com/dx0nauane/image/upload/v1574769999/images.jpg"
-        />
+      </div>
+
+      <div className="main">
+        <div className="highlight">
+          <div>
+            <img src="../../assets/images-bag.png" />
+          </div>
+          <div>
+            <h1>Vera Brandley</h1>
+            <p></p>
+          </div>
+        </div>
+
       </div>
     </div>
   )
