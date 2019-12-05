@@ -16,7 +16,7 @@ const NavBar = ({searchProduct, showCartIcon, categories, selectCategory, showMo
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="/" className="text-uppercase text-danger">shopmate</Navbar.Brand>
+        <Navbar.Brand href="/home" className="text-uppercase text-danger">shopmate</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">

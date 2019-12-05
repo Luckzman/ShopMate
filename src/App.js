@@ -16,8 +16,8 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Home} exact={true} />
-        <Route path="/catalog" component={Catalog} exact={true} />
+        <Route path="/home" component={Home} exact={true} />
+        <Route path="/" component={Catalog} exact={true} />
         <Route path="/product/:id" component={SingleProductDetailsPage} exact={true} />
         <Route path="*" component={NotFound} exact={true} />
       </Switch>

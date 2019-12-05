@@ -20,20 +20,7 @@
           width: 100%;
           color: #fff;
         }
-        .banner-btn{
-          width: 100px;
-          .btn{
-            color: #ff4363;
-            background-color: #fff;
-            width: 100%;
-            margin-top: 20px;
-            padding: 8px;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-          }
-        }
+        
       }
     }
   }
@@ -43,7 +30,142 @@
     padding: 20px;
     .highlight{
       background-color: #fff;
+      display: flex;
+      position: relative;
+      box-shadow: 1px 1px 2px 1px #b8b8b8;
+      border-radius: 5px;
+      .shop{
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        background-color: rgb(3, 194, 194);
+        color: white;
+        border-radius: 5px;
+        p{
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 5px 15px;
+          margin-block-end: 0;
+          margin-block-start: 0;
+          text-transform: uppercase;
+        };
 
+      }
+      .highlight-img{
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+          margin: 10px;
+        }
+      }
+      .highlight-info{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .highlight-content{
+          width: 75%;
+          h3{
+            margin-bottom: 15px;
+            font-weight: 600;
+          }
+        }
+      }
     }
+    .showcase{
+      margin-top: 20px;
+      display: flex;
+      .section-1{
+        width: 30%;
+        // height: 25%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .wow{
+          width: 100%;
+          padding-top: 100%;
+          position: relative;
+          background-color: #00d3d3;
+          .text{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          }
+        }
+        .men-img{
+          margin-top: 20px;
+          width: 100%;
+          padding-top: 100%;
+          background-image: url("./images-model2.png");
+          background-size: cover;
+          position: relative;
+          .overlay{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(223, 208, 1, 0.616);
+            h1{
+              color: #fff;
+            }
+          }
+        }
+      }
+      .section-2{
+        width: 70%;
+        margin-left: 20px;
+        .img-showcase{
+          width: 100%;
+          // height: 60%;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .reg-section{
+          padding: 20px 0;
+          background-color: #fff;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+.banner-btn{
+  width: 100px;
+  .btn{
+    width: 100%;
+    margin-top: 20px;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .btn-primary{
+    color: #ff4363;
+    background-color: #fff;
+  }
+  .btn-inverse{
+    color: #fff;
+    background-color: #ff4363;
   }
 }
