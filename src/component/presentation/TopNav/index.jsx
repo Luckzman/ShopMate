@@ -65,7 +65,7 @@ TopNav.propTypes = {
 }
 
 TopNav.defaultProps = {
-  totalAmount: 0,
+  totalAmount: '0',
   departments: []
 }
 export default TopNav;

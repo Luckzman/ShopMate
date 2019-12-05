@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Modal from '../../presentation/Modal';
+import Button from '../../presentation/Button';
 import { getUser } from '../../../utils/authHelper';
 
 import OrderSummaryCard from '../OrderSummaryCard';
@@ -72,13 +73,13 @@ class Cart extends Component {
     if(!getUser) {
       toast.info('Please Login, Redirecting to Homepage', (() => this.props.history.push("/"))())
     }
-    
       placeOrder(order);
       this.setState({ showOrderSummaryModal: !showOrderSummaryModal });
     
   }
   
   render() {
+    console.log(this.props.customers);
     const { cart } = this.props;
     const { showOrderSummaryModal } = this.state;
     return (
@@ -123,7 +124,8 @@ class Cart extends Component {
           </div>
           <div className="cart-footer">
             <Link className="back-btn" to="/">Back to Shop</Link>
-            <button className="checkout-btn" onClick={this.handleShowOrderSummaryModal}>Order</button>
+            {!getUser ? <Button customClass="fix-width" >Log in</Button> :
+            <button className="checkout-btn" onClick={this.handleShowOrderSummaryModal}>Order</button>}
           </div>
         </div>
     )
@@ -132,7 +134,6 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   const { cart, customers, orders } = state;
-  console.log(state)
   return {cart, customers, orders}
 }
 

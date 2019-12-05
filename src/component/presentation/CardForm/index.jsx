@@ -60,7 +60,7 @@ class _CardForm extends Component {
 
   render() {
     const { totalAmount, stripe } = this.props;
-    console.log(stripe)
+    // console.log(stripe)
     return (
       <div className="checkout-card">
         <form onSubmit={this.handleSubmit.bind(this)}>
